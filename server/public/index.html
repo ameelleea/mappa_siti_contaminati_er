@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Siti Contaminati Emilia-Romagna</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Mappa dei siti contaminati</h1>
+  <h2>Regione Emilia-Romagna</h2>
+  <select id="provincia">
+    <option value="">-- Seleziona provincia --</option>
+    <option value="CITTA' METROPOLITANA DI BOLOGNA">BOLOGNA</option>
+    <option value="MODENA">MODENA</option>
+    <option value="REGGIO EMILIA">REGGIO EMILIA</option>
+    <option value="FERRARA">FERRARA</option>
+    <option value="RIMINI">RIMINI</option>
+    <option value="PIACENZA">PIACENZA</option>
+    <option value="RAVENNA">RAVENNA</option>
+    <option value="PARMA">PARMA</option>
+    <option value="FORLI'">FORLI' </option>
+  </select>
+
+  <div id="map"></div>
+  <div id="infopanel"></div>
+
+    <button type="button" id="addSite">Aggiungi Sito</button>
+
+    <form id="sitoForm" style="visibility: hidden;">
+    <input type="text" name="comune" placeholder="Comune" required> 
+    <input type="text" name="provincia" placeholder="Provincia" required>
+    <input type="text" name="indirizzo" placeholder="Indirizzo" required><br> 
+    <input type="text" name="attività" placeholder="Attività" required><br>
+    <input type="text" name="messa_sicurezza_emergenza" placeholder="Messa in sicurezza d'emergenza" required>
+    <input type="text" name="messa_sicurezza_operativa" placeholder="Messa in sicurezza operativa" required>
+    <input type="text" name="messa_sicurezza_permanente" placeholder="Messa in sicurezza permanente" required><br>
+    <input type="text" name="bonifica" placeholder="Bonifica e ripristino ambientale" required> 
+    <input type="text" name="bonifica_sicurezza" placeholder="Bonifica e ripristino ambientale con misure di sicurezza" required><br>
+    <input type="text" name="procedura" placeholder="Procedura" required><br>
+    <input type="text" name="note" placeholder="Note" required><br> 
+    <input type="text" name="codice" placeholder="Codice" required><br>
+    <input type="text" name="Longitudine" placeholder="Longitudine" required>
+    <input type="text" name="Latitudine" placeholder="Latitudine" required>
+    <button type="submit">Invia</button>
+    </form>
+
+
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
