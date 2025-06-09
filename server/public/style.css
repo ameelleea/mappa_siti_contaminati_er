@@ -8,3 +8,25 @@ body {
   margin-top: 1em;
   border: 1px solid #aaa;
 }
+
+#filtersForm {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1.5rem;
+  min-width: 200px;
+}
+
+.comune-group {
+  display: none;
+}
+
+.form-group label {
+  margin-bottom: 1px;
+  font-weight: bold;
+}
+

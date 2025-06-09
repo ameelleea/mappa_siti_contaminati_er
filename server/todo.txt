@@ -1,0 +1,3 @@
+-Trovare un modo per compattare i 200 select uguali
+-Nella post controllare se il sito già esiste
+-Resettare automaticamente searchbar e eliminare marker quando ne cerchi uno nuovo

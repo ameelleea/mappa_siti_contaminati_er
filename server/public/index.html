@@ -9,43 +9,150 @@
 <body>
   <h1>Mappa dei siti contaminati</h1>
   <h2>Regione Emilia-Romagna</h2>
-  <select id="provincia">
-    <option value="">-- Seleziona provincia --</option>
-    <option value="CITTA' METROPOLITANA DI BOLOGNA">BOLOGNA</option>
-    <option value="MODENA">MODENA</option>
-    <option value="REGGIO EMILIA">REGGIO EMILIA</option>
-    <option value="FERRARA">FERRARA</option>
-    <option value="RIMINI">RIMINI</option>
-    <option value="PIACENZA">PIACENZA</option>
-    <option value="RAVENNA">RAVENNA</option>
-    <option value="PARMA">PARMA</option>
-    <option value="FORLI'">FORLI' </option>
-  </select>
+
+  <div>
+    <form id="filtersForm">
+      <div class="form-group">
+        <label for="provincia">Provincia:</label><br>
+        <select class="filters" id="provincia">
+          <option value=""></option>
+          <option value="CITTA' METROPOLITANA DI BOLOGNA">BOLOGNA</option>
+          <option value="MODENA">MODENA</option>
+          <option value="REGGIO EMILIA">REGGIO EMILIA</option>
+          <option value="FERRARA">FERRARA</option>
+          <option value="RIMINI">RIMINI</option>
+          <option value="PIACENZA">PIACENZA</option>
+          <option value="RAVENNA">RAVENNA</option>
+          <option value="PARMA">PARMA</option>
+          <option value="FORLI'">FORLI' </option>
+        </select>
+      </div>
+
+      <div class="form-group comune-group">
+        <label id="comuneLabel" for="comune">Comune:</label><br>
+        <select class="filters" id="comune"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza:</label><br>
+        <select class="filters" id="messa_sicurezza_emergenza">
+          <option value=""></option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="messa_sicurezza_operativa">Messa in sicurezza operativa:</label><br>
+        <select class="filters" id="messa_sicurezza_operativa">
+          <option value=""></option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="messa_sicurezza_permanenete">Messa in sicurezza permanente:</label><br>
+        <select class="filters" id="messa_sicurezza_permanenete">
+          <option value=""></option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
+        </label><br>
+      </div>
+
+      <div class="form-group">
+        <label for="bonifica">Bonifica e ripristino ambientale:</label><br>
+        <select class="filters" id="bonifica">
+          <option value=""></option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza:</label><br>
+        <select class="filters" id="bonifica_sicurezza">
+          <option value=""></option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input type="search" name="codice" placeholder="codice" id="codice">
+        <button type="reset">Cancella tutto</button>
+      </div>      
+    </form>
+  </div>
 
   <div id="map"></div>
   <div id="infopanel"></div>
 
-    <button type="button" id="addSite">Aggiungi Sito</button>
+  <button type="button" id="addSite">Aggiungi Sito</button>
 
-    <form id="sitoForm" style="visibility: hidden;">
-    <input type="text" name="comune" placeholder="Comune" required> 
-    <input type="text" name="provincia" placeholder="Provincia" required>
-    <input type="text" name="indirizzo" placeholder="Indirizzo" required><br> 
-    <input type="text" name="attività" placeholder="Attività" required><br>
-    <input type="text" name="messa_sicurezza_emergenza" placeholder="Messa in sicurezza d'emergenza" required>
-    <input type="text" name="messa_sicurezza_operativa" placeholder="Messa in sicurezza operativa" required>
-    <input type="text" name="messa_sicurezza_permanente" placeholder="Messa in sicurezza permanente" required><br>
-    <input type="text" name="bonifica" placeholder="Bonifica e ripristino ambientale" required> 
-    <input type="text" name="bonifica_sicurezza" placeholder="Bonifica e ripristino ambientale con misure di sicurezza" required><br>
-    <input type="text" name="procedura" placeholder="Procedura" required><br>
-    <input type="text" name="note" placeholder="Note" required><br> 
-    <input type="text" name="codice" placeholder="Codice" required><br>
-    <input type="text" name="Longitudine" placeholder="Longitudine" required>
-    <input type="text" name="Latitudine" placeholder="Latitudine" required>
-    <button type="submit">Invia</button>
+    <form id="sitoForm" style="visibility: hidden;"> 
+      <label for="provincia-agg">Provincia:</label><br>
+      <select class="aggiungi" id="provincia-agg" name="provincia" required>
+      <option value=""></option>
+      <option value="CITTA' METROPOLITANA DI BOLOGNA">BOLOGNA</option>
+      <option value="MODENA">MODENA</option>
+      <option value="REGGIO EMILIA">REGGIO EMILIA</option>
+      <option value="FERRARA">FERRARA</option>
+      <option value="RIMINI">RIMINI</option>
+      <option value="PIACENZA">PIACENZA</option>
+      <option value="RAVENNA">RAVENNA</option>
+      <option value="PARMA">PARMA</option>
+      <option value="FORLI'">FORLI' </option>
+      </select>
+      <input type="text" name="comune" placeholder="Comune" required>
+      <input type="text" name="indirizzo" placeholder="Indirizzo" required><br> 
+      <input type="text" name="attività" placeholder="Attività" required><br>
+
+      <input type="hidden" name="messa_sicurezza_emergenza" value="No">
+      <input type="hidden" name="messa_sicurezza_operativa" value="No">
+      <input type="hidden" name="messa_sicurezza_permanente" value="No"><br>
+      <input type="hidden" name="bonifica" value="No"> 
+      <input type="hidden" name="bonifica_sicurezza" value="No"><br>
+
+      <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza</label>
+      <input type="checkbox" name="messa_sicurezza_emergenza" value="Si">
+      <label for="messa_sicurezza_operativa">Messa in sicurezza operativa</label>
+      <input type="checkbox" name="messa_sicurezza_operativa" value="Si">
+      <label for="messa_sicurezza_permanente">Messa in sicurezza permanente</label>
+      <input type="checkbox" name="messa_sicurezza_permanente" value="Si"><br>
+      <label for="bonifica">Bonifica e ripristino ambientale</label>
+      <input type="checkbox" name="bonifica" value="Si"> 
+      <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza</label>
+      <input type="checkbox" name="bonifica_sicurezza" value="Si"><br>
+      <input type="text" name="procedura" placeholder="Procedura" required><br>
+      <input type="text" name="note" placeholder="Note"><br> 
+      <input type="text" name="codice" placeholder="Codice" required><br>
+      <input type="text" name="Longitudine" placeholder="Longitudine" required>
+      <input type="text" name="Latitudine" placeholder="Latitudine" required>
+      <button type="submit">Invia</button>
     </form>
 
-
+    <form id="modificadiv" style="visibility: hidden;">
+      <input type="hidden" name="messa_sicurezza_emergenza" value="No">
+      <input type="hidden" name="messa_sicurezza_operativa" value="No">
+      <input type="hidden" name="messa_sicurezza_permanente" value="No"><br>
+      <input type="hidden" name="bonifica" value="No"> 
+      <input type="hidden" name="bonifica_sicurezza" value="No"><br>
+      <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza</label>
+      <input type="checkbox" id="check-messa_sicurezza_emergenza" value="Si">
+      <label for="messa_sicurezza_operativa">Messa in sicurezza operativa</label>
+      <input type="checkbox" id="check-messa_sicurezza_operativa" value="Si">
+      <label for="messa_sicurezza_permanente">Messa in sicurezza permanente</label>
+      <input type="checkbox" id="check-messa_sicurezza_permanente" value="Si"><br>
+      <label for="bonifica">Bonifica e ripristino ambientale</label>
+      <input type="checkbox" id="check-bonifica" value="Si"> 
+      <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza</label>
+      <input type="checkbox" id="check-bonifica_sicurezza" value="Si"><br>
+      <input type="text" name="procedura" placeholder="Procedura"><br>
+      <input type="text" name="note" placeholder="Note"><br> 
+      <button type="submit">Invia</button>
+    </form>
 
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
   <script src="script.js"></script>
