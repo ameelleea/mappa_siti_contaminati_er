@@ -1,12 +1,19 @@
--Sistemare il frontend
--Sectioning corretto frontend
--Trovare un modo per compattare i 200 select uguali
--Resettare automaticamente searchbar e eliminare marker quando ne cerchi uno nuovo
 -Validazione: https://validator.w3.org/	
--Il tasto cancella tutto deve riportare sulla mappa i markers filtrati
 -Aggiungere gestione degli errori
--Il tasto modifica potrebbe mostrare una tabella anzichè del testo plain
--Sistemare --Seleziona--
 -Aggiungi tasto "mostra meno"
--Impedire di aprire tutti i form contemporaneamente
 -Valutare se implementare filtri si/no con dei radio
+-Definire una sezione di default
+-Ripulire gli id e le class e di conseguenza il class
+-Implementare una grafica carina
+-Quando si chiude il popup di un marker, la sezione attiva deve tornare a default
+-Vedere se la tabella dinamica di infopanel si può implementare in modo più carino
+-Sistemare funzione showless
+-Valutare se dividere gli script js in due file
+-Reset filters è un po' brutta
+-Infopanel non funziona più
+-Ricontrollare il comportamento di tutte le sezioni e metodi ed eventualmente aggiungere messaggi.
+-Capire perchè più filtri va cliccato due volte
+
+Per ultimo:
+-rimuovere tutti i console log non necessari
+-Ripulire backend

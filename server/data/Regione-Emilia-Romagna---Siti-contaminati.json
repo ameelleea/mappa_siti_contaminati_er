@@ -144,20 +144,12 @@
     "Longitudine": 9.905662
   },
   {
-    "Codice": "pc000003",
-    "Comune": "FIORENZUOLA D'ARDA",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "localita' C? Nova,",
-    "Attività": "industriale",
     "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
     "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "Si",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "soggetto obbligato non individuato: in corso monitoraggio semestrale acque sotterranee",
-    "Latitudine": 44.901698,
-    "Longitudine": 9.89025
+    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
+    "Procedura": "",
+    "Note": ""
   },
   {
     "Codice": "pc000001",
@@ -2162,7 +2154,9 @@
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
     "Procedura": "",
-    "Note": ""
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "MOMO0024",

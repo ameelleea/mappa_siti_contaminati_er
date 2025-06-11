@@ -4,30 +4,33 @@
   <meta charset="UTF-8" />
   <title>Siti Contaminati Emilia-Romagna</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <!--<link rel="stylesheet" href="reset.css"/>-->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <section id="headers">
       <img src="img/marchio_rer.png" alt="Regione Emilia-Romagna" height="50px">
       <h1>Mappa dei siti contaminati</h1>
-  </section>
 
     <div class="options">
-    <button onclick="mostraSezione('cerca')">Cerca</button>
-    <button onclick="mostraSezione('filters')">Filtri</button>
-    <button onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
-  </div>
+      <button name='cerca' onclick="mostraSezione('cerca')" style="text-decoration: underline;">Cerca</button>
+      <button name='filters' onclick="mostraSezione('filters')">Filtri</button>
+      <button name='aggiungiSito' onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
+    </div>
+  </section>
 
-    <section id="cerca" class="sezione">
-      <h2>Cerca per codice:</h2>
-      <form>
-        <input type="search" name="codice" placeholder="codice" id="codice">
-        <button type="submit">Cerca</button>
-      </form>
-    </section id="cerca">
+  <section id="default" class="sezione"></section>
 
-  <section id="filters" class="sezione attiva">
-    <h2>Filtri</h2>
+  <section id="cerca" class="sezione attiva">
+    <h3>Cerca per codice:</h3>
+    <form>
+      <input type="text" name="codice" placeholder="Inserisci codice...">
+      <button type="submit">Cerca</button>
+    </form>
+  </section>
+
+  <section id="filters" class="sezione">
+    <h3>Filtri</h3>
       <div class="filters-section" id="visible-items">
         <div style="display: flex;">
           <div class="filter-item">
@@ -42,7 +45,7 @@
       </div>
 
         <div class="filter-item" id="filters-buttons">
-          <button type="button" id="more-filters">Filtri Avanzati</button>
+          <button type="button" id="more-filters">Più filtri</button>
           <button type="button" id="reset-filters">Resetta</button>
         </div>
       </div>  
@@ -70,14 +73,14 @@
         </div>
 
         <div class="filter-item">
-          <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza:</label>
+          <label for="bonifica_sicurezza">Bonifica e ripristino con misure di sicurezza:</label>
           <select id="bonifica_sicurezza"></select>
         </div>
       </div>    
   </section>
 
   <section id="aggiungiSito" class="sezione">
-    <h2>Aggiungi un nuovo sito alla mappa:</h2>
+    <h3>Aggiungi un nuovo sito alla mappa:</h3>
     <form style="border: 1px solid gray;">
       <div class="site-details"> 
       <div>
@@ -95,6 +98,18 @@
       <div>
         <label for="attività">Attività:</label>
         <input type="text" name="attività" placeholder="Attività" required>
+      </div>
+            <div>
+        <label for="codice">Codice:</label>
+        <input type="text" name="codice" placeholder="Codice" required>
+      </div>
+      <div>
+        <label for="Longitudine">Longitudine:</label>
+        <input type="text" name="Longitudine" placeholder="Longitudine" required>
+      </div>
+      <div>
+        <label for="Latitudine">Latitudine:</label>
+        <input type="text" name="Latitudine" placeholder="Latitudine" required>
       </div>
       </div>
 
@@ -135,36 +150,21 @@
         <label for="note">Note:</label>
         <input type="text" name="note" placeholder="Note"> 
       </div>
-      <div>
-        <label for="codice">Codice:</label>
-        <input type="text" name="codice" placeholder="Codice" required>
-      </div>
-      <div>
-        <label for="Longitudine">Longitudine:</label>
-        <input type="text" name="Longitudine" placeholder="Longitudine" required>
-      </div>
-      <div>
-        <label for="Latitudine">Latitudine:</label>
-        <input type="text" name="Latitudine" placeholder="Latitudine" required>
-      </div>
       <button type="submit" style="margin-top: 1.5rem;">Invia</button>
     </form>
   </section>
 
-  <div id="map"></div>
-
-
-
-  <div id="infopanel" style="display: none;">
+  <section id="infopanel" class="sezione">
+    <h3>Informazioni aggiuntive:</h3>
     <table>
       <tbody>
      </tbody>
     </table>
-  </div>
+  </section>
 
-  
-
-    <form id="modificadiv" style="display: none;">
+  <section id="modificadiv" class="sezione">
+    <h3>Modifica informazioni sito:</h3>
+    <form>
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">
       <input type="hidden" name="messa_sicurezza_operativa" value="No">
       <input type="hidden" name="messa_sicurezza_permanente" value="No">
@@ -201,6 +201,9 @@
       </div>
       <button type="submit">Invia</button>
     </form>
+  </section>
+
+  <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
   <script src="script.js"></script>

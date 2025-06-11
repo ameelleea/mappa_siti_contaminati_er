@@ -1,52 +1,66 @@
-const map = L.map('map').setView([44.5, 11.3], 8);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-
 let markersMap = {};
 let queryFields = {};
 let filterOptions = ["Si", "No"];
 let province = ["CITTA' METROPOLITANA DI BOLOGNA", "MODENA", "REGGIO EMILIA", "FERRARA", "RIMINI", "PIACENZA", "RAVENNA", "PARMA", "FORLI'"];
 
-function mostraSezione(id) {
-      // Nasconde tutte le sezioni
-      const sezioni = document.querySelectorAll('.sezione');
-      sezioni.forEach(s => s.classList.remove('attiva'));
+const map = L.map('map').setView([44.5, 11.3], 8);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-      // Mostra solo quella con l'ID selezionato
-      document.getElementById(id).classList.add('attiva');
+
+function mostraSezione(id) {
+    // Nasconde tutte le sezioni
+    const sezioni = document.querySelectorAll('.sezione');
+    sezioni.forEach(s => s.classList.remove('attiva'));
+
+    // Mostra solo quella con l'ID selezionato
+    document.getElementById(id).classList.add('attiva');
+    document.querySelector('.options').querySelectorAll('button').forEach(b => {
+      if(b.name === id){
+        b.style.textDecoration = 'underline';
+      }
+      else{
+        b.style.textDecoration = 'none';
+      }
+    })
+    resetFilters();
 }
+
 
 function markSites(sites){
-  Object.values(markersMap).forEach(m => map.removeLayer(m));
-  Object.keys(markersMap).forEach(k => delete markersMap[k]);
+    Object.values(markersMap).forEach(m => map.removeLayer(m));
+    Object.keys(markersMap).forEach(k => delete markersMap[k]);
   
-  sites.forEach(sito => {
-    if (sito.lat && sito.lon) {
-      const marker = L.marker([parseFloat(sito.lat), parseFloat(sito.lon)])
-                      .addTo(map)
-                      .bindPopup(`
-                        <b>Codice: ${sito.codice}</b><br>
-                        Attività: ${sito.attività}<br>
-                        Indirizzo: ${sito.indirizzo}<br>
-                        ${sito.comune + ', ' + sito.provincia}<br>
-                        <button type="button" class="show-more-btn" data-id="${sito.codice}">Mostra altro</button>
-                        <button type="button" class="modify-btn" data-id="${sito.codice}">Modifica</button>
-                        <button type="button" class="delete-btn" data-id="${sito.codice}">Elimina</button>
-                      `);  
-    
-      markersMap[sito.codice] = marker;
-      marker.on('popupclose', function () {
-      showLess();
-      });
-    }
-  });
+    sites.forEach(sito => {
+        if (sito.lat && sito.lon) {
+            const marker = L.marker([parseFloat(sito.lat), parseFloat(sito.lon)])
+                            .addTo(map)
+                            .bindPopup(`
+                              <b>Codice: ${sito.codice}</b><br>
+                              Attività: ${sito.attività}<br>
+                              Indirizzo: ${sito.indirizzo}<br>
+                              ${sito.comune + ', ' + sito.provincia}<br>
+                              <button type="button" class="show-more-btn" data-id="${sito.codice}">Mostra altro</button>
+                              <button type="button" class="modify-btn" data-id="${sito.codice}">Modifica</button>
+                              <button type="button" class="delete-btn" data-id="${sito.codice}">Elimina</button>
+                            `);  
+                            
+            markersMap[sito.codice] = marker;
+                            
+            //Chiusura pannello informazioni
+            marker.on('popupclose', function () {
+            showLess();
+            });
+        }
+    });
 }
+
 
 function showMore(sito){
     const infopanel = document.getElementById("infopanel");
     const tbody = infopanel.querySelector("table tbody");
-    tbody.innerHTML =     `<tr>
+    tbody.innerHTML = `<tr>
       <th>Messa in sicurezza emergenza</th>
       <td>${sito.messa_sicurezza_emergenza}</td>
      </tr>
@@ -75,7 +89,7 @@ function showMore(sito){
       <td>${sito.note}</td>
      </tr>`;
 
-     infopanel.style.display = "block";
+    mostraSezione("infopanel");
 }
 
 function showLess(){
@@ -85,25 +99,33 @@ function showLess(){
 
 async function getSites() {
     try {
-        const res = await fetch(`/siti`);
-        
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const sites = await res.json();
-        return sites;
+      const res = await fetch(`/siti`);
+      
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      const sites = await res.json();
+      return sites;
       
 
     } catch (err) {
-        console.error('Errore caricando siti:', err);
+      console.error('Errore caricando siti:', err);
     }
 }
 
-async function filterSites(e) {
+async function resetFilters() {
+  filterSites('reset', '');
+}
+
+async function filterSites(filterType, filter) {
     try {
-        const filterType = e.target.id;
-        const filter = e.target.value;
         console.log(filter);
         console.log(queryFields);
         
+        if((filterType === 'codice' || filterType === 'reset')){
+          queryFields = {};
+        }else{
+          delete queryFields['codice'];
+        }
+
         if(filterType === 'provincia'){
           delete queryFields['comune'];
         }
@@ -138,11 +160,7 @@ async function addSite(params){
       console.log('Risposta dal server:', data);
     })
     .catch(error => console.error('Errore nella POST:', error));
-     {
-
-    }
 }
-
 
 async function modifySite(sito, params) {
     fetch(`/siti/${sito.codice}`, {
@@ -157,7 +175,6 @@ async function modifySite(sito, params) {
           console.log('Aggiornato con successo:', data);
         })
         .catch(error => console.error('Errore nella PUT:', error));
-
 }
 
 async function deleteSite(sito) {
@@ -175,8 +192,8 @@ async function deleteSite(sito) {
       
       const marker = markersMap[sito.codice];
       if (marker) {
-        map.removeLayer(marker); // oppure marker.remove();
-        delete markersMap[sito.codice]; // rimuovilo anche dalla mappa dei marker
+        map.removeLayer(marker);
+        delete markersMap[sito.codice];
         console.log(`Marker con codice ${sito.codice} rimosso`);
       } else {
         console.warn(`Nessun marker trovato per il codice ${sito.codice}`);
@@ -189,47 +206,47 @@ window.addEventListener("load", async () => {
 });
 
 
+/*EventListeners*/
 document.querySelectorAll("select").forEach(el => {
-        const firstOption = document.createElement("option");
-        firstOption.value = "";
-        firstOption.textContent = "-- Seleziona --"
-        el.appendChild(firstOption);
+    const firstOption = document.createElement("option");
+    firstOption.value = "";
+    firstOption.textContent = "-- Seleziona --"
+    el.appendChild(firstOption);
 });
 
 document.getElementById("filters").querySelectorAll("select").forEach(el => {
-  el.addEventListener('change', async (e) => {
-    console.log("Eventlistener attivo");
-    filterSites(e);
+    el.addEventListener('change', async (e) => {
+        filterSites(e.target.id, e.target.value);
 
-    if(e.target.id === "provincia"){
-      const selectComune = document.getElementById('comune');
-      Array.from(selectComune.children).slice(1).forEach(child => selectComune.removeChild(child));
+        if(e.target.id === "provincia"){
+            const selectComune = document.getElementById('comune');
+            Array.from(selectComune.children).slice(1).forEach(child => selectComune.removeChild(child));
 
-      if(e.target.value !== ''){
-              
-        const sites = await getSites();
-        sites.forEach(sito  => {
-            if(sito.provincia === e.target.value){
-                const optionDefault = document.createElement("option");
-                optionDefault.value = optionDefault.textContent = sito.comune;
+            if(e.target.value !== ''){
 
-                const esiste = Array.from(selectComune.children).some(
-                (figlio) => figlio.innerHTML === optionDefault.innerHTML
-                );
+              const sites = await getSites();
+              sites.forEach(sito  => {
+                  if(sito.provincia === e.target.value){
+                      const optionDefault = document.createElement("option");
+                      optionDefault.value = optionDefault.textContent = sito.comune;
 
-                if (!esiste) {
-                  selectComune.appendChild(optionDefault);
-                }
-            }
-        })
+                      const esiste = Array.from(selectComune.children).some(
+                      (figlio) => figlio.innerHTML === optionDefault.innerHTML
+                      );
 
-        document.querySelector('.comune-group').style.display = 'flex';
-      }
-      else{
-        document.querySelector('.comune-group').style.display = "none";
-      }
-    }
-  })  
+                      if (!esiste) {
+                        selectComune.appendChild(optionDefault);
+                      }
+                  }
+              })
+
+              document.querySelector('.comune-group').style.display = 'flex';
+          }
+          else{
+              document.querySelector('.comune-group').style.display = "none";
+          }
+        }
+    })  
 });
 
 document.querySelectorAll(".provincia").forEach(el => {
@@ -254,91 +271,91 @@ document.addEventListener('click', async (event) => {
     
     if(event.target.classList.contains('show-more-btn')) {
       showMore(sitoSelezionato);
-  }else if(event.target.classList.contains('modify-btn')){
+    }else if(event.target.classList.contains('modify-btn')){
 
-    const modificaForm = document.getElementById("modificadiv");
+      const targetKeys = [
+                          "messa_sicurezza_emergenza",
+                          "messa_sicurezza_operativa",
+                          "messa_sicurezza_permanenete",
+                          "bonifica",
+                          "bonifica_sicurezza",
+                        ];
+      const modificaForm = document.getElementById("modificadiv").querySelector("form");
 
-    if(sitoSelezionato['messa_sicurezza_emergenza'] === 'Si'){
-      document.getElementById("check-messa_sicurezza_emergenza").checked = true;
-    }
-    if(sitoSelezionato['messa_sicurezza_operativa'] === 'Si'){
-      document.getElementById("check-messa_sicurezza_operativa").checked = true;
-    }
-    if(sitoSelezionato['messa_sicurezza_permanente'] === 'Si'){
-      document.getElementById("check-messa_sicurezza_permanente").checked = true;
-    }
-    if(sitoSelezionato['bonifica'] === 'Si'){
-      document.getElementById("check-bonifica").checked = true;
-    }
-    if(sitoSelezionato['bonifica_sicurezza'] === 'Si'){
-      document.getElementById("check-bonifica_sicurezza").checked = true;
-    } 
-     
-    modificaForm.style.display = "block";
+      targetKeys.forEach(key => {
+        if(sitoSelezionato[key] === 'Si'){
+          document.getElementById("check-"+key).checked = true;
+        }
+      });
 
-    modificaForm.addEventListener("submit", function (e) {
-    e.preventDefault(); // Impedisce il refresh della pagina
+      mostraSezione("modificadiv");
+
+      modificaForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const objData = Object.fromEntries(formData.entries())
+
+        Object.keys(objData).forEach(k => {
+          sitoSelezionato[k] = objData[k];
+        })
+        const data = JSON.stringify(objData);
+      
+        modifySite(sitoSelezionato, data);
+        this.reset();
+        this.style.display = "none";
+      });
+    }else if(event.target.classList.contains('delete-btn')){
+      if (confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")) {
+        deleteSite(sitoSelezionato);
+      } else {
+        console.log("Annullato");
+      }
+    }
+  } 
+}});
+
+
+document.getElementById("cerca").querySelector("form").addEventListener('submit', async (e) => {
+    e.preventDefault();
     
-    const formData = new FormData(this);
+    const formData = new FormData(e.target);
     const objData = Object.fromEntries(formData.entries())
-    console.log(objData);
-    Object.keys(objData).forEach(k => {
-      sitoSelezionato[k] = objData[k];
+    filterSites('codice', objData.codice)
+    e.target.querySelector('input[name="codice"]').value = '';
+});
+
+document.querySelector("#provincia-agg").addEventListener('change', async function (e) {
+    const comuneSelect = document.querySelector("#comune-agg");
+
+    const res = await fetch('/comuni');
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const comuni = await res.json();
+
+    comuni[e.target.value].forEach(c => {
+      const optionDefault = document.createElement("option");
+      optionDefault.value = optionDefault.textContent = c.toUpperCase();
+      
+      const esiste = Array.from(comuneSelect.children).some(
+                      (child) => child.innerHTML === optionDefault.innerHTML
+                      );
+
+      if (!esiste) {
+        comuneSelect.appendChild(optionDefault);
+      }
     })
-    const data = JSON.stringify(objData);
-    console.log(data);
-    
-    modifySite(sitoSelezionato, data);
-    this.reset();
-    this.style.display = "none";
-});
-  }else if(event.target.classList.contains('delete-btn')){
-    if (confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")) {
-      deleteSite(sitoSelezionato);
-  } else {
-    // L'utente ha cliccato Annulla
-    console.log("Annullato");
-  }
-    
-  }
-}
-}
 });
 
-//document.getElementById("codice").addEventListener('keydown', async (e) => {
-//  if (e.key === 'Enter') {
-//    e.preventDefault();  // evita che il form si invii se c'è
-//    console.log(e);
-//    console.log(e.target.id);
-//    console.log(e.target.value);
-//    filterSites(e)
-//  }
-//});
-
-//document.getElementById("codice").addEventListener('onfocus', (e) => {
-//  this.value = '';
-//  delete queryFields['codice'];
-//});
-
-document.getElementById("sitoForm").addEventListener("submit", function (e) {
-    e.preventDefault(); // Impedisce il refresh della pagina
+document.getElementById("aggiungiSito").querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
     
     const formData = new FormData(this);
     const objData = Object.fromEntries(formData.entries())
-    objData.comune = objData.comune.toUpperCase();
-    console.log(objData);
     const data = JSON.stringify(objData);
-    console.log(data);
     
     addSite(data);
     this.reset();
     this.style.display = "none";
-});
-
-document.getElementById("addSite").addEventListener('click', () => {
-    const form = document.getElementById("sitoForm");
-
-    form.style.display = (form.style.display === "none") ? "block" : "none";
 });
 
 document.querySelector("#hidden-items").querySelectorAll("select").forEach(el => {
@@ -350,7 +367,7 @@ document.querySelector("#hidden-items").querySelectorAll("select").forEach(el =>
     })
 });
 
-document.getElementById("more-filters").addEventListener('click', () => {
+document.getElementById("more-filters").addEventListener('click', (e) => {
   const moreFilters = document.getElementById("hidden-items");
   const displayStyle = moreFilters.style.display;
 
@@ -359,13 +376,20 @@ document.getElementById("more-filters").addEventListener('click', () => {
   }else{
     moreFilters.style.display = "none";
   }
+
+  if(e.target.textContent === 'Più filtri'){
+    e.target.textContent = 'Meno filtri'
+  }else{
+    e.target.textContent = 'Più filtri'
+  }
 });
 
 document.getElementById("reset-filters").addEventListener('click', () => {
   document.getElementById("filters").querySelectorAll("select").forEach(sel => {
     sel.value = "";
-    sel.dispatchEvent(new Event("change"));
   })
+
+  resetFilters();
 });
  
 

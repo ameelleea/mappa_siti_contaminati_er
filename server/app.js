@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const jsonFilePath = path.join(__dirname, "data/Regione-Emilia-Romagna---Siti-contaminati.json");
+const comunePath = path.join(__dirname, "data/comuni_emilia_romagna.json")
 
 // Caricamento dati dal CSV
 function loadSitesFromJSON() {
@@ -66,6 +67,13 @@ function saveData(data, jsonFilePath) {
 }
 
 loadSitesFromJSON();
+
+app.get('/comuni', (req, res) => {
+  const comuni = fs.readFileSync(comunePath, 'utf-8');
+  const comuniObj = JSON.parse(comuni);
+  
+  res.json(comuniObj);
+});
 
 // --- API ---
 app.get('/siti', (req, res) => {
