@@ -176,20 +176,14 @@
     "Longitudine": 9.917214
   },
   {
-    "Codice": "pc000005",
-    "Comune": "LUGAGNANO VAL D'ARDA",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "localita' oltre arda,",
-    "Attività": "altro",
     "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "Si",
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "soggetto obbligato non individuato: Confinamento dei rifiuti contenenti amianto",
-    "Latitudine": 44.792755,
-    "Longitudine": 9.810289
+    "Procedura": "",
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "pc000048",
@@ -288,20 +282,14 @@
     "Longitudine": 9.698246
   },
   {
-    "Codice": "pc000016",
-    "Comune": "SAN GIORGIO PIACENTINO",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "localita' Cae Nuove,",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "Si",
+    "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "Si",
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "Con Nota arpa n. 3758 del 29/03/2001 si comunicano gli interventi necessari per la Messa in Sic.d'emergenza di 2. vasche interrate in area Demanio. e intervento di Messa in Sic.Permanente. Del Comune di San Giorgio Piacentino Il documento",
-    "Latitudine": 44.921357,
-    "Longitudine": 9.758855
+    "Procedura": "",
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Provincia": "MO",
@@ -906,7 +894,9 @@
     "Bonifica e ripristino ambientale": "Si",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
     "Procedura": "",
-    "Note": ""
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "PR000035",
@@ -1869,20 +1859,14 @@
     "Longitudine": 10.809884
   },
   {
-    "Codice": "MOPA0006",
-    "Comune": "FRASSINORO",
-    "Provincia": "MODENA",
-    "Indirizzo": "via Fontanaluccia,",
-    "Attività": "altro",
     "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
+    "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "Raggiunte CSC. In attesa formulari rimozione residuo contaminazione per chiusura procedimento.",
-    "Latitudine": 44.296834,
-    "Longitudine": 10.573
+    "Procedura": "",
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "MOSV0013",
@@ -2173,20 +2157,12 @@
     "Longitudine": 10.934154
   },
   {
-    "Codice": "MOPA0007",
-    "Comune": "PAVULLO NEL FRIGNANO",
-    "Provincia": "MODENA",
-    "Indirizzo": "via Marchiani,90",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
+    "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "art. 242 non bonificato",
-    "Note": "Rimozione parziale suoli contaminati. AdR rischio non accettabile avviato C SG",
-    "Latitudine": 44.334345,
-    "Longitudine": 10.832611
+    "Procedura": "",
+    "Note": ""
   },
   {
     "Codice": "MOMO0024",
@@ -3533,20 +3509,14 @@
     "Longitudine": 11.347945
   },
   {
-    "Codice": "BOU00191",
-    "Comune": "PIANORO",
-    "Provincia": "CITTA' METROPOLITANA DI BOLOGNA",
-    "Indirizzo": "via nazionale,79",
-    "Attività": "industriale",
     "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
+    "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "art. 242 non bonificato",
+    "Procedura": "",
     "Note": "",
-    "Latitudine": 44.378149,
-    "Longitudine": 11.342487
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "BOP00019",
@@ -5019,38 +4989,6 @@
     "Note": "",
     "Latitudine": 44.396661,
     "Longitudine": 12.182578
-  },
-  {
-    "Codice": "RAr00057",
-    "Comune": "RAVENNA",
-    "Provincia": "RAVENNA",
-    "Indirizzo": "via CLASSICANA,629",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.407815,
-    "Longitudine": 12.174665
-  },
-  {
-    "Codice": "RAr00057",
-    "Comune": "RAVENNA",
-    "Provincia": "RAVENNA",
-    "Indirizzo": "via CLASSICANA,629",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.407815,
-    "Longitudine": 12.174665
   },
   {
     "Codice": "RAr00058",

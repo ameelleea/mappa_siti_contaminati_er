@@ -8,15 +8,6 @@ let queryFields = {};
 let filterOptions = ["Si", "No"];
 let province = ["CITTA' METROPOLITANA DI BOLOGNA", "MODENA", "REGGIO EMILIA", "FERRARA", "RIMINI", "PIACENZA", "RAVENNA", "PARMA", "FORLI'"];
 
-function mostraSezione(id) {
-      // Nasconde tutte le sezioni
-      const sezioni = document.querySelectorAll('.sezione');
-      sezioni.forEach(s => s.classList.remove('attiva'));
-
-      // Mostra solo quella con l'ID selezionato
-      document.getElementById(id).classList.add('attiva');
-}
-
 function markSites(sites){
   Object.values(markersMap).forEach(m => map.removeLayer(m));
   Object.keys(markersMap).forEach(k => delete markersMap[k]);
@@ -368,7 +359,6 @@ document.getElementById("reset-filters").addEventListener('click', () => {
   })
 });
  
-
 
 
 

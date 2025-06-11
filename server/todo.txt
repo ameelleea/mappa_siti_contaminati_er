@@ -1,3 +1,12 @@
+-Sistemare il frontend
+-Sectioning corretto frontend
 -Trovare un modo per compattare i 200 select uguali
--Nella post controllare se il sito già esiste
 -Resettare automaticamente searchbar e eliminare marker quando ne cerchi uno nuovo
+-Validazione: https://validator.w3.org/	
+-Il tasto cancella tutto deve riportare sulla mappa i markers filtrati
+-Aggiungere gestione degli errori
+-Il tasto modifica potrebbe mostrare una tabella anzichè del testo plain
+-Sistemare --Seleziona--
+-Aggiungi tasto "mostra meno"
+-Impedire di aprire tutti i form contemporaneamente
+-Valutare se implementare filtri si/no con dei radio

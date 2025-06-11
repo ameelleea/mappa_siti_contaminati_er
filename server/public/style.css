@@ -9,24 +9,81 @@ body {
   border: 1px solid #aaa;
 }
 
-#filtersForm {
+.sezione {
+  display: none;
+  padding-top: 1.5rem;
+}
+
+.attiva {
+  display: block;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  padding-left: 5px;
+}
+
+#filters h2 {
+  margin: 0;
+}
+
+.filter-item select {
+  width: auto;
+  max-width: max-content;
+}
+
+.filters-section {
   display: flex;
   flex-wrap: wrap;
 }
 
-.form-group {
+.filter-item, .site-details {
   display: flex;
   flex-direction: column;
   margin-right: 1.5rem;
-  min-width: 200px;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#filters-buttons {
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+#filters-buttons button {
+  margin-left: 1.5rem;
+  height: 19px;
 }
 
 .comune-group {
   display: none;
 }
 
-.form-group label {
-  margin-bottom: 1px;
+.filter-item label {
+  margin-bottom: 5px;
   font-weight: bold;
+}
+
+#visible-items{
+  justify-content: space-between;
+}
+
+#hidden-items {
+  border-top: 1px solid gray;
+  display: none;
+  padding-top: 1.5rem;
+}
+
+#addSite, #infopanel, #sitoForm {
+  margin-top: 1.5rem;
+}
+
+#aggiungiSito div, #modificadiv div {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  border-bottom: 1px solid gray;
 }
 

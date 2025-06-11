@@ -12,74 +12,70 @@
       <h1>Mappa dei siti contaminati</h1>
   </section>
 
-    <div class="options">
-    <button onclick="mostraSezione('cerca')">Cerca</button>
-    <button onclick="mostraSezione('filters')">Filtri</button>
-    <button onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
-  </div>
-
-    <section id="cerca" class="sezione">
-      <h2>Cerca per codice:</h2>
-      <form>
-        <input type="search" name="codice" placeholder="codice" id="codice">
-        <button type="submit">Cerca</button>
-      </form>
-    </section id="cerca">
-
-  <section id="filters" class="sezione attiva">
-    <h2>Filtri</h2>
+  <section id="filters">
       <div class="filters-section" id="visible-items">
-        <div style="display: flex;">
-          <div class="filter-item">
-            <label for="provincia">Provincia:</label>
-            <select class="provincia" id="provincia"></select>
-          </div>
+        <div class="form-item">
+          <label for="provincia">Provincia:</label>
+          <select class="provincia" id="provincia"></select>
+        </div>
 
-          <div class="filter-item comune-group">
-            <label for="comune">Comune:</label>
-            <select id="comune"></select>
-          </div>
+        <div class="form-item comune-group">
+          <label for="comune">Comune:</label>
+          <select id="comune"></select>
+        </div>
       </div>
 
-        <div class="filter-item" id="filters-buttons">
-          <button type="button" id="more-filters">Filtri Avanzati</button>
-          <button type="button" id="reset-filters">Resetta</button>
-        </div>
-      </div>  
-
-      <div class="filters-section" id="hidden-items">
-        <div class="filter-item">
+      <div class="filters-section" id="hidden-items" style="display: none;">
+        <div class="form-item">
           <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza:</label>
           <select id="messa_sicurezza_emergenza"></select>
         </div>
 
-        <div class="filter-item">
+        <div class="form-item">
           <label for="messa_sicurezza_operativa">Messa in sicurezza operativa:</label>
           <select id="messa_sicurezza_operativa"></select>
         </div>
 
-        <div class="filter-item">
+        <div class="form-item">
           <label for="messa_sicurezza_permanenete">Messa in sicurezza permanente:</label>
           <select id="messa_sicurezza_permanenete"></select>
           </label>
         </div>
 
-        <div class="filter-item">
+        <div class="form-item">
           <label for="bonifica">Bonifica e ripristino ambientale:</label>
           <select id="bonifica"></select>
         </div>
 
-        <div class="filter-item">
+        <div class="form-item">
           <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza:</label>
           <select id="bonifica_sicurezza"></select>
         </div>
-      </div>    
+      </div>
+
+      <div class="filters-section" id="filters-buttons">
+        <button type="button" id="more-filters">Altri Filtri</button>
+        <button type="button" id="reset-filters">Cancella tutto</button>
+      </div>
+
+      <!--
+
+      -->      
   </section>
 
-  <section id="aggiungiSito" class="sezione">
-    <h2>Aggiungi un nuovo sito alla mappa:</h2>
-    <form style="border: 1px solid gray;">
-      <div class="site-details"> 
+  <div id="map"></div>
+
+  <button type="button" id="addSite">Aggiungi Sito</button>
+
+  <div id="infopanel" style="display: none;">
+    <table>
+      <tbody>
+     </tbody>
+    </table>
+  </div>
+
+  <section id="aggiungiSito">
+    <form id="sitoForm" style="display: none; border-top: 1px solid gray;"> 
       <div>
         <label for="provincia-agg">Provincia:</label>
         <select class="aggiungi provincia" id="provincia-agg" name="provincia" required></select>
@@ -96,7 +92,6 @@
         <label for="attività">Attività:</label>
         <input type="text" name="attività" placeholder="Attività" required>
       </div>
-      </div>
 
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">
       <input type="hidden" name="messa_sicurezza_operativa" value="No">
@@ -104,8 +99,7 @@
       <input type="hidden" name="bonifica" value="No"> 
       <input type="hidden" name="bonifica_sicurezza" value="No">
 
-        <div class="checkboxes">
-          <div>
+        <div>
           <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza</label>
           <input type="checkbox" name="messa_sicurezza_emergenza" value="Si">
         </div>
@@ -124,7 +118,6 @@
         <div>
           <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza</label>
           <input type="checkbox" name="bonifica_sicurezza" value="Si">
-      </div>
       </div>
 
       <div>
@@ -150,19 +143,6 @@
       <button type="submit" style="margin-top: 1.5rem;">Invia</button>
     </form>
   </section>
-
-  <div id="map"></div>
-
-
-
-  <div id="infopanel" style="display: none;">
-    <table>
-      <tbody>
-     </tbody>
-    </table>
-  </div>
-
-  
 
     <form id="modificadiv" style="display: none;">
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">

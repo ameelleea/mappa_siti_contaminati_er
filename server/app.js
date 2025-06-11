@@ -71,7 +71,6 @@ loadSitesFromJSON();
 app.get('/siti', (req, res) => {
     const queryKeys = Object.keys(req.query);
     const data = loadSitesFromJSON();
-    console.log(data);
 
     if(queryKeys.length === 0){
       return res.json(data);
@@ -90,7 +89,10 @@ app.get('/siti', (req, res) => {
 app.post('/siti', (req, res) => {
   const newSito = req.body;
   const data = loadSitesFromJSON();
-  data.push(newSito);
+  if(!data.filter(s => s === newSito)){
+    data.push(newSito);
+  }
+  
   saveData(data, jsonFilePath);
   res.status(201).json({ message: 'Sito aggiunto' });
 });
