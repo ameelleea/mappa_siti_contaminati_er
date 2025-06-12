@@ -13,7 +13,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 function mostraSezione(id) {
     // Nasconde tutte le sezioni
-    const sezioni = document.querySelectorAll('.sezione');
+    const sezioni = document.querySelectorAll('section');
     sezioni.forEach(s => s.classList.remove('attiva'));
 
     // Mostra solo quella con l'ID selezionato
@@ -25,7 +25,8 @@ function mostraSezione(id) {
         b.style.textDecoration = 'none';
     }
     })
-    resetFilters();
+    if(id !== 'infopanel')
+        resetFilters();
 }
 
 
@@ -96,6 +97,7 @@ function showMore(sito){
 function showLess(){
     document.getElementById("infopanel").style.display = "none";
     document.getElementById("infopanel").querySelector("table tbody").innerHTML = "";
+    mostraSezione("default");
 }
 
 window.addEventListener("load", async () => {

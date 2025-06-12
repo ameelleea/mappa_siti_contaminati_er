@@ -1,44 +1,3 @@
-/*
-
-.filter-item {
-  display: flex;
-  flex-direction: column;
-  margin-right: 1.5rem;
-  margin-top: 0.5rem;
-}
-
-#hidden-items .filter-item {
-  margin-bottom: 1rem;
-}
-
-.filter-item label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-#visible-items{
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-}
-
-#hidden-items {
-  border-top: 1px solid gray;
-  display: none;
-  padding-top: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-#addSite, #infopanel, #sitoForm {
-  margin-top: 1.5rem;
-}
-
-#aggiungiSito div, #modificadiv div {
-  padding-bottom: 0.5rem;
-  padding-top: 0.5rem;
-}
-*/
-
 /* Layout di base */
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -70,12 +29,8 @@ button:hover {
   background-color: #03A65A;
 }
 
-.marker-button {
-  box-sizing: initial;
-}
-
-/* Sezioni principali */
-.sezione {
+/* Sezioni */
+section {
   display: none;
   background-color: #f9f9f9;
   padding: 2rem;
@@ -92,7 +47,7 @@ button:hover {
   display: block;
 }
 
-/* Options (tipo menu) */
+/* Options (menu) */
 .options {
   background-color: #F23041;
   border-radius: 10px;
@@ -126,12 +81,8 @@ form {
   gap: 1rem;
 }
 
-.site-details {
+.site-details, .checkboxes {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.checkboxes {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .site-details div,
@@ -149,7 +100,7 @@ form label {
 
 /* Checkboxes */
 .checkboxes label {
-  font-weight: normal;
+  font-weight: bold;
   margin-right: 0.5rem;
 }
 
@@ -193,6 +144,11 @@ form label {
   font-size: 0.875rem;
 }
 
+#visible-items{
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
 #hidden-items {
   display: none;
   border-top: 1px solid gray;
@@ -202,6 +158,7 @@ form label {
 
 #filters-buttons {
   display: flex;
+  flex-direction: row;
   margin-right: 0;
   align-items: flex-end;
 }
@@ -209,18 +166,7 @@ form label {
 
 #filters-buttons button {
   height: 2rem;
-  margin-left: 0;
-}
-
-/* Utility */
-#addSite,
-#infopanel,
-#sitoForm {
-  margin-top: 1.5rem;
-}
-
-.comune-group {
-  display: none;
+  margin-left: 0.75rem;
 }
 
 th {

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <section id="headers">
+  <header id="headers">
       <img src="img/marchio_rer.png" alt="Regione Emilia-Romagna" height="50px">
       <h1>Mappa dei siti contaminati</h1>
 
@@ -18,16 +18,20 @@
       <button name='filters' onclick="mostraSezione('filters')">Filtri</button>
       <button name='aggiungiSito' onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
     </div>
-  </section>
+  </header>
 
-  <section id="default" class="sezione attiva">
+  <section id="default" class="attiva">
     Numero totale dei siti contaminati: <br>
     Numero di siti contaminati per provincia: <br>
-
+    <table>
+      <tbody>
+        <!-- Da implementare in js -->
+      </tbody>
+    </table>
 
   </section>
 
-  <section id="cerca" class="sezione">
+  <section id="cerca">
     <h3>Cerca per codice:</h3>
     <form>
       <input type="text" name="codice" placeholder="Inserisci codice...">
@@ -35,7 +39,7 @@
     </form>
   </section>
 
-  <section id="filters" class="sezione">
+  <section id="filters">
     <h3>Filtri</h3>
       <div class="filters-section" id="visible-items">
         <div style="display: flex;">
@@ -44,7 +48,7 @@
             <select class="provincia" id="provincia"></select>
           </div>
 
-          <div class="filter-item comune-group">
+          <div class="filter-item comune-group" style="display: none;">
             <label for="comune">Comune:</label>
             <select id="comune"></select>
           </div>
@@ -85,7 +89,7 @@
       </div>    
   </section>
 
-  <section id="aggiungiSito" class="sezione">
+  <section id="aggiungiSito">
     <h3>Aggiungi un nuovo sito alla mappa:</h3>
     <form style="border: 1px solid gray;">
       <div class="site-details"> 
@@ -160,7 +164,7 @@
     </form>
   </section>
 
-  <section id="infopanel" class="sezione">
+  <section id="infopanel">
     <h3>Informazioni aggiuntive:</h3>
     <table>
       <tbody>
@@ -168,7 +172,7 @@
     </table>
   </section>
 
-  <section id="modificadiv" class="sezione">
+  <section id="modificadiv">
     <h3>Modifica informazioni sito:</h3>
     <form>
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">
