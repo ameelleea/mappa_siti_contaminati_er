@@ -13,15 +13,21 @@
       <h1>Mappa dei siti contaminati</h1>
 
     <div class="options">
-      <button name='cerca' onclick="mostraSezione('cerca')" style="text-decoration: underline;">Cerca</button>
+      <button name='home' onclick="mostraSezione('default')" style="text-decoration: underline;">Home</button>
+      <button name='cerca' onclick="mostraSezione('cerca')">Cerca</button>
       <button name='filters' onclick="mostraSezione('filters')">Filtri</button>
       <button name='aggiungiSito' onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
     </div>
   </section>
 
-  <section id="default" class="sezione"></section>
+  <section id="default" class="sezione attiva">
+    Numero totale dei siti contaminati: <br>
+    Numero di siti contaminati per provincia: <br>
 
-  <section id="cerca" class="sezione attiva">
+
+  </section>
+
+  <section id="cerca" class="sezione">
     <h3>Cerca per codice:</h3>
     <form>
       <input type="text" name="codice" placeholder="Inserisci codice...">
@@ -206,6 +212,7 @@
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-  <script src="script.js"></script>
+  <script src="api.js"></script>
+  <script src="ui.js"></script>
 </body>
 </html>

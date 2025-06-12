@@ -149,7 +149,9 @@
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
     "Procedura": "",
-    "Note": ""
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "pc000001",
@@ -178,20 +180,12 @@
     "Longitudine": null
   },
   {
-    "Codice": "pc000048",
-    "Comune": "PIACENZA",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "ponte Palatini - Campo Madonna,1",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "Si",
-    "Messa in sicurezza permanente": "No",
+    "Messa in sicurezza d'emergenza": "No",
+    "Messa in sicurezza operativa": "No",
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "art. 242 non bonificato",
-    "Note": "Adeguamento iter amministrativo ai sensi dell'art. 242 D.Lgs.152/2006. Piano di Caratterizzazione integrativo Emergenza Ambientale dolosa 02/03/2014. Misure di messa in sicurezza in campo : Aspirazione del contaminante sversato e assorbimento con Panne oleoassorbenti. Spurgo forzato per la messa in sicurezza della falda superficiale con l'installazione di sistema di recupero delle acque tipo PUMP&STOCK / PUMP&TREAT",
-    "Latitudine": 45.032577,
-    "Longitudine": 9.607765
+    "Procedura": "",
+    "Note": ""
   },
   {
     "Codice": "pc000030",

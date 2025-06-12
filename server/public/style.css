@@ -1,53 +1,4 @@
-body {
-  font-family: Arial, sans-serif;
-  padding: 1em;
-  background-color: white;
-}
-
-.options {
-  background-color: #F23041;
-}
-
-.options button {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  border: none;
-  background-color: transparent;
-  padding: 1rem;
-}
-
-.sezione {
-  display: none;
-  padding-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.attiva {
-  display: block;
-}
-
-th {
-  text-align: left;
-}
-
-td {
-  padding-left: 5px;
-}
-
-#filters h2 {
-  margin: 0;
-}
-
-.filter-item select {
-  width: auto;
-  max-width: max-content;
-}
-
-.filters-section {
-  display: flex;
-  flex-wrap: wrap;
-}
+/*
 
 .filter-item {
   display: flex;
@@ -58,21 +9,6 @@ td {
 
 #hidden-items .filter-item {
   margin-bottom: 1rem;
-}
-
-#filters-buttons {
-  flex-direction: row;
-  align-items: flex-end;
-  margin-right: 0;
-}
-
-#filters-buttons button {
-  margin-left: 1.5rem;
-  height: 19px;
-}
-
-.comune-group {
-  display: none;
 }
 
 .filter-item label {
@@ -101,24 +37,197 @@ td {
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
 }
+*/
 
-.site-details, .checkboxes {
-  display: flex;
+/* Layout di base */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 1em;
+  background-color: #fff;
 }
 
-.site-details div {
+button,
+input,
+select {
+  font-size: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Stile generale dei bottoni */
+button {
+  background-color: #038C5A;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #03A65A;
+}
+
+.marker-button {
+  box-sizing: initial;
+}
+
+/* Sezioni principali */
+.sezione {
+  display: none;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 100%;
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+  margin: 1rem 0;
+}
+
+.attiva {
+  display: block;
+}
+
+/* Options (tipo menu) */
+.options {
+  background-color: #F23041;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.options button {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+  background-color: transparent;
+  padding: 1rem;
+}
+
+/* Form base */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+/* Layout a griglia per dettagli */
+.site-details,
+.checkboxes {
+  display: grid;
+  gap: 1rem;
+}
+
+.site-details {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.checkboxes {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.site-details div,
+.checkboxes div,
+form > div {
   display: flex;
   flex-direction: column;
 }
 
-#aggiungiSito label {
-  font-weight: bold;
-  font-size: 14px;
-  padding: 0.5rem;
+form label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
 }
 
+/* Checkboxes */
+.checkboxes label {
+  font-weight: normal;
+  margin-right: 0.5rem;
+}
+
+.checkboxes input[type="checkbox"] {
+  transform: scale(1.1);
+  margin-top: 0.3rem;
+}
+
+/* Header del form */
+#aggiungiSito h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Mappa */
 #map {
   height: 500px;
   border: 1px solid #aaa;
+  width: 100%;
+}
+
+/* Filtri */
+#filters h2 {
+  margin: 0;
+}
+
+.filters-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-item label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+#hidden-items {
+  display: none;
+  border-top: 1px solid gray;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+#filters-buttons {
+  display: flex;
+  margin-right: 0;
+  align-items: flex-end;
+}
+
+
+#filters-buttons button {
+  height: 2rem;
+  margin-left: 0;
+}
+
+/* Utility */
+#addSite,
+#infopanel,
+#sitoForm {
+  margin-top: 1.5rem;
+}
+
+.comune-group {
+  display: none;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  padding-left: 5px;
 }
 
