@@ -26,7 +26,7 @@ function mostraSezione(id) {
     }
     })
     if(id !== 'infopanel')
-        resetFilters();
+        filterSites();
 }
 
 
@@ -288,5 +288,5 @@ document.getElementById("reset-filters").addEventListener('click', () => {
     sel.value = "";
   })
 
-  resetFilters();
+  filterSites();
 });

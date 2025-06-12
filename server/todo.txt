@@ -1,17 +1,22 @@
 -Validazione: https://validator.w3.org/	
 -Aggiungere gestione degli errori
--Ripulire gli id e le class e di conseguenza il css
+-Ripulire gli id e le class
+-Ripulire il css
 -Quando si chiude il popup di un marker, la sezione attiva deve tornare a default
 -Vedere se la tabella dinamica di infopanel si può implementare in modo più carino
 -Sistemare funzione showless
--Valutare se dividere gli script js in due file
--Reset filters è un po' brutta
 -Ricontrollare il comportamento di tutte le sezioni e metodi ed eventualmente aggiungere messaggi.
 -Capire perchè più filtri va cliccato due volte
 -In aggiungi sito calcolare lat e lon dall'indirizzo
 -Modificare dimensione button popup
 -Cambiare icona markers
 -Restyle popup
+-Implementazione api default
+-Ricontrollare cerca
+-Ricontrollare filters
+-Ricontrollare aggiungi sito
+-Ricontrollare infopanel
+-Ricontrollare modifica sito
 
 Per ultimo:
 -rimuovere tutti i console log non necessari

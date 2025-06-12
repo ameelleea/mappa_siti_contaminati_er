@@ -14,16 +14,12 @@ async function getSites() {
     }
 }
 
-async function resetFilters() {
-  filterSites('reset', '');
-}
-
-async function filterSites(filterType, filter) {
+async function filterSites(filterType='', filter='') {
     try {
         console.log(filter);
         console.log(queryFields);
         
-        if((filterType === 'codice' || filterType === 'reset')){
+        if((filterType === 'codice' || filterType === '')){
           queryFields = {};
         }else{
           delete queryFields['codice'];
