@@ -6,17 +6,15 @@
 -Vedere se la tabella dinamica di infopanel si può implementare in modo più carino
 -Sistemare funzione showless
 -Ricontrollare il comportamento di tutte le sezioni e metodi ed eventualmente aggiungere messaggi.
--Capire perchè più filtri va cliccato due volte
 -In aggiungi sito calcolare lat e lon dall'indirizzo
 -Modificare dimensione button popup
 -Cambiare icona markers
 -Restyle popup
 -Implementazione api default
--Ricontrollare cerca
--Ricontrollare filters
 -Ricontrollare aggiungi sito
 -Ricontrollare infopanel
 -Ricontrollare modifica sito
+-Aggiungere autozoom sui siti
 
 Per ultimo:
 -rimuovere tutti i console log non necessari

@@ -267,20 +267,15 @@ document.querySelector("#hidden-items").querySelectorAll("select").forEach(el =>
 });
 
 document.getElementById("more-filters").addEventListener('click', (e) => {
-  const moreFilters = document.getElementById("hidden-items");
-  const displayStyle = moreFilters.style.display;
+    const moreFilters = document.getElementById("hidden-items");
 
-  if(displayStyle === "none"){
-    moreFilters.style.display = "flex";
-  }else{
-    moreFilters.style.display = "none";
-  }
-
-  if(e.target.textContent === 'Più filtri'){
-    e.target.textContent = 'Meno filtri'
-  }else{
-    e.target.textContent = 'Più filtri'
-  }
+    if(e.target.textContent === 'Più filtri'){
+        moreFilters.style.display = 'flex';
+        e.target.textContent = 'Meno filtri';
+    }else{
+        moreFilters.style.display = 'none';
+        e.target.textContent = 'Più filtri';
+    }
 });
 
 document.getElementById("reset-filters").addEventListener('click', () => {
