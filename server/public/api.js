@@ -1,6 +1,6 @@
 //Comunicazione col backend
 
-async function getSites() {
+async function getSites(filterType='', filter='') {
     try {
       const res = await fetch(`/siti`);
       
@@ -16,9 +16,6 @@ async function getSites() {
 
 async function filterSites(filterType='', filter='') {
     try {
-        console.log(filter);
-        console.log(queryFields);
-        
         if((filterType === 'codice' || filterType === '')){
           queryFields = {};
         }else{

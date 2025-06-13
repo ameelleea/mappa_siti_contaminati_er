@@ -21,14 +21,17 @@
   </div>
 
   <section id="default" class="attiva">
-    Numero totale dei siti contaminati: <br>
-    Numero di siti contaminati per provincia: <br>
-    <table>
-      <tbody>
-        <!-- Da implementare in js -->
-      </tbody>
-    </table>
-
+    <div id="content">
+      <div>
+        <b>Numero totale dei siti contaminati:</b>
+      </div>
+      <div>
+        <b>Siti bonificati:</b>
+      </div>
+      <div>
+        <b>Siti messi in sicurezza:</b>
+      </div>
+    </div>
   </section>
 
   <section id="cerca">
@@ -93,34 +96,36 @@
     <h3>Aggiungi un nuovo sito alla mappa:</h3>
     <form>
       <div class="site-details"> 
-      <div>
-        <label for="provincia-agg">Provincia:</label>
-        <select class="aggiungi provincia" id="provincia-agg" name="provincia" required></select>
+        <div>
+          <label for="provincia-agg">Provincia:</label>
+          <select class="aggiungi provincia" id="provincia-agg" name="provincia" required></select>
+        </div>
+        <div>
+          <label for="comune">Comune:</label>
+          <select name="comune" id="comune-agg" required></select>
+        </div>
+        <div>
+          <label for="indirizzo">Indirizzo:</label>
+          <input type="text" name="indirizzo" placeholder="Indirizzo" required> 
+        </div>
+        <div>
+          <label for="attività">Attività:</label>
+          <input type="text" name="attività" placeholder="Attività" required>
+        </div>
+        <div>
+          <label for="codice">Codice:</label>
+          <input type="text" name="codice" placeholder="Codice" required>
+        </div>
       </div>
-      <div>
-        <label for="comune">Comune:</label>
-        <select name="comune" id="comune-agg" required></select>
-      </div>
-      <div>
-        <label for="indirizzo">Indirizzo:</label>
-        <input type="text" name="indirizzo" placeholder="Indirizzo" required> 
-      </div>
-      <div>
-        <label for="attività">Attività:</label>
-        <input type="text" name="attività" placeholder="Attività" required>
-      </div>
-            <div>
-        <label for="codice">Codice:</label>
-        <input type="text" name="codice" placeholder="Codice" required>
-      </div>
-      <div>
-        <label for="Longitudine">Longitudine:</label>
-        <input type="text" name="Longitudine" placeholder="Longitudine" required>
-      </div>
-      <div>
-        <label for="Latitudine">Latitudine:</label>
-        <input type="text" name="Latitudine" placeholder="Latitudine" required>
-      </div>
+      <div class="site-details">
+        <div>
+          <label for="Longitudine">Longitudine:</label>
+          <input type="text" name="Longitudine" placeholder="Longitudine">
+        </div>
+        <div>
+          <label for="Latitudine">Latitudine:</label>
+          <input type="text" name="Latitudine" placeholder="Latitudine">
+        </div>
       </div>
 
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">
@@ -147,7 +152,7 @@
           <input type="checkbox" name="bonifica" value="Si"> 
         </div>
         <div>
-          <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza</label>
+          <label for="bonifica_sicurezza">Bonifica con misure di sicurezza</label>
           <input type="checkbox" name="bonifica_sicurezza" value="Si">
       </div>
       </div>
@@ -166,13 +171,38 @@
 
   <section id="infopanel">
     <h3>Informazioni aggiuntive:</h3>
-    <table>
+    <!--<table>
       <tbody>
      </tbody>
-    </table>
+    </table>-->
+    <div id="info">
+      <div>
+       <b>Messa in sicurezza emergenza:</b>
+      </div>
+      <div>
+       <b>Messa in sicurezza operativa:</b>
+      </div>
+      <div>
+       <b>Messa in sicurezza permanente:</b>
+      </div>
+      <div>
+       <b>Bonifica:</b>
+      </div>
+      <div>
+       <b>Bonifica sicurezza:</b>
+      </div>
+      <div>
+       <b>Procedure:</b>
+      </div>
+      <div>
+       <b>Note:</b>
+      </div>
+    </div>
+    <button type="button" class="modify-btn">Modifica</button>
+    <button type="button" class="delete-btn">Elimina</button>
   </section>
 
-  <section id="modificadiv">
+  <section id="modificaSito">
     <h3>Modifica informazioni sito:</h3>
     <form>
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">

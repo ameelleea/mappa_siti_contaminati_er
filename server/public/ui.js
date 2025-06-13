@@ -1,5 +1,4 @@
 //Frontend
-
 let markersMap = {};
 let queryFields = {};
 let filterOptions = ["Si", "No"];
@@ -25,10 +24,33 @@ function mostraSezione(id) {
         b.style.textDecoration = 'none';
     }
     })
-    if(id !== 'infopanel')
+    if(id !== 'infopanel' && id !== "modificaSito")
         filterSites();
 }
 
+async function statsSiti(){
+    const sites = await getSites();
+    const sitesSizes = [sites.length, 0, 0]
+    console.log(sitesSizes);
+    sites.forEach(s => {
+        if(s["bonifica"] === 'Si' || s["bonifica_sicurezza"] === 'Si'){
+            sitesSizes[1] += 1;
+        }
+        else if(s["messa_sicurezza_emergenza"] === "Si"){
+            sitesSizes[2] += 1;
+        }
+        else if(s["messa_sicurezza_operativa"] === "Si"){
+            sitesSizes[2] += 1;
+        }
+        else if(s["messa_sicurezza_permanenete"] === "Si"){
+            sitesSizes[2] += 1;
+        }
+    });
+    console.log(sitesSizes);
+    document.getElementById("content").querySelectorAll('div').forEach((d, i=0) => {
+        d.innerHTML += sitesSizes[i];
+    });
+}
 
 function markSites(sites){
     Object.values(markersMap).forEach(m => map.removeLayer(m));
@@ -39,13 +61,11 @@ function markSites(sites){
             const marker = L.marker([parseFloat(sito.lat), parseFloat(sito.lon)])
                             .addTo(map)
                             .bindPopup(`
-                              <b>Codice: ${sito.codice}</b><br>
-                              Attività: ${sito.attività}<br>
-                              Indirizzo: ${sito.indirizzo}<br>
-                              ${sito.comune + ', ' + sito.provincia}<br>
+                              <b style='color:#F23041; font-size:medium;'>Codice: ${sito.codice}</b><br>
+                              <b>Attività:</b> ${sito.attività}<br>
+                              <b>Indirizzo:</b> ${sito.indirizzo}<br>
+                              <b>${sito.comune + ', ' + sito.provincia}<br></b>
                               <button type="button" class="marker-button show-more-btn" data-id="${sito.codice}">Mostra altro</button>
-                              <button type="button" class="marker-button modify-btn" data-id="${sito.codice}">Modifica</button>
-                              <button type="button" class="marker-button delete-btn" data-id="${sito.codice}">Elimina</button>
                             `);  
                             
             markersMap[sito.codice] = marker;
@@ -60,47 +80,32 @@ function markSites(sites){
 
 
 function showMore(sito){
-    const infopanel = document.getElementById("infopanel");
-    const tbody = infopanel.querySelector("table tbody");
-    tbody.innerHTML = `<tr>
-      <th>Messa in sicurezza emergenza</th>
-      <td>${sito.messa_sicurezza_emergenza}</td>
-     </tr>
-     <tr>
-      <th>Messa in sicurezza operativa</th>
-      <td>${sito.messa_sicurezza_operativa}</td>
-     </tr>
-     <tr>
-      <th>Messa in sicurezza permanente</th>
-      <td>${sito.messa_sicurezza_permanenete}</td>
-     </tr>
-     <tr>
-      <th>Bonifica</th>
-      <td>${sito.bonifica}</td>
-     </tr>
-     <tr>
-      <th>Bonifica sicurezza</th>
-      <td>${sito.bonifica_sicurezza}</td>
-     </tr>
-     <tr>
-      <th>Procedure</th>
-      <td>${sito.procedura}</td>
-     </tr>
-     <tr>
-      <th>Note</th>
-      <td>${sito.note}</td>
-     </tr>`;
+    const targetKeys = [
+              "messa_sicurezza_emergenza",
+              "messa_sicurezza_operativa",
+              "messa_sicurezza_permanenete",
+              "bonifica",
+              "bonifica_sicurezza",
+              "procedura",
+              "note"
+            ];
+
+    let divArray = document.getElementById('info').querySelectorAll('div');
+
+    targetKeys.forEach((t, i=0) => {
+        divArray[i].innerHTML += sito[t];
+    });
 
     mostraSezione("infopanel");
 }
 
 function showLess(){
-    document.getElementById("infopanel").style.display = "none";
-    document.getElementById("infopanel").querySelector("table tbody").innerHTML = "";
+    document.getElementById("modificaSito").querySelector('form').reset();
     mostraSezione("default");
 }
 
 window.addEventListener("load", async () => {
+    statsSiti();
     markSites(await getSites());
 });
 
@@ -170,40 +175,40 @@ document.addEventListener('click', async (event) => {
     
     if(event.target.classList.contains('show-more-btn')) {
       showMore(sitoSelezionato);
-    }else if(event.target.classList.contains('modify-btn')){
-
-      const targetKeys = [
+      document.querySelector('.modify-btn').addEventListener('click', async (e) => {
+            const targetKeys = [
                           "messa_sicurezza_emergenza",
                           "messa_sicurezza_operativa",
                           "messa_sicurezza_permanenete",
                           "bonifica",
                           "bonifica_sicurezza",
                         ];
-      const modificaForm = document.getElementById("modificadiv").querySelector("form");
+            const modificaForm = document.getElementById("modificaSito").querySelector("form");
 
-      targetKeys.forEach(key => {
-        if(sitoSelezionato[key] === 'Si'){
-          document.getElementById("check-"+key).checked = true;
-        }
-      });
+            targetKeys.forEach(key => {
+              if(sitoSelezionato[key] === 'Si'){
+                document.getElementById("check-"+key).checked = true;
+              }
+            });
 
-      mostraSezione("modificadiv");
+            mostraSezione("modificaSito");
 
-      modificaForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const objData = Object.fromEntries(formData.entries())
-
-        Object.keys(objData).forEach(k => {
-          sitoSelezionato[k] = objData[k];
+            modificaForm.addEventListener("submit", function (e) {
+              e.preventDefault();
+            
+              const formData = new FormData(this);
+              const objData = Object.fromEntries(formData.entries())
+            
+              Object.keys(objData).forEach(k => {
+                sitoSelezionato[k] = objData[k];
+              })
+              const data = JSON.stringify(objData);
+          
+              modifySite(sitoSelezionato, data);
+              showMore(sitoSelezionato);
+            });
+            
         })
-        const data = JSON.stringify(objData);
-      
-        modifySite(sitoSelezionato, data);
-        this.reset();
-        this.style.display = "none";
-      });
     }else if(event.target.classList.contains('delete-btn')){
       if (confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")) {
         deleteSite(sitoSelezionato);
@@ -270,7 +275,7 @@ document.getElementById("more-filters").addEventListener('click', (e) => {
     const moreFilters = document.getElementById("hidden-items");
 
     if(e.target.textContent === 'Più filtri'){
-        moreFilters.style.display = 'flex';
+        moreFilters.style.display = 'grid';
         e.target.textContent = 'Meno filtri';
     }else{
         moreFilters.style.display = 'none';
@@ -285,3 +290,5 @@ document.getElementById("reset-filters").addEventListener('click', () => {
 
   filterSites();
 });
+
+
