@@ -102,7 +102,7 @@ function showMore(sito){
 
 function showLess(){
 
-    document.getElementById('info').querySelectorAll('div').forEach(d => {
+    document.getElementById('infopanel').querySelector('.card').querySelectorAll('div').forEach(d => {
         d.querySelector('span').innerHTML = '';
     })
 
