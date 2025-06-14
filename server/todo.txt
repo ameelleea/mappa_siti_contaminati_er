@@ -8,8 +8,6 @@
 -Cambiare icona markers
 -Aggiungere autozoom sui siti
 -C'è un problema con la put
--Qua e la aggiungere tasti annulla
--Modificare api per fare marksite(await filtersites)
 
 Per ultimo:
 -rimuovere tutti i console log non necessari

@@ -6,13 +6,38 @@ body {
   background-color: #fff;
 }
 
+.flex-clmn {
+  display: flex;
+  flex-direction: column;
+}
+
+.responsive-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.input-base {
+  font-size: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.p-1-5 { 
+  padding: 1.5rem; 
+}
+
+.mb-1-5 { 
+  margin-bottom: 1.5rem; 
+}
+
 header {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   align-items: flex-end;
-  gap: 2 rem;
-  margin-bottom: 1.5rem;
+  gap: 2rem;
 }
 
 header image, header h1 {
@@ -54,7 +79,25 @@ section {
   max-width: -webkit-fill-available;
   max-width: -moz-available;
   margin: 1rem 0;
+  position: relative;
 }
+
+button.chiudi {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #555;
+}
+
+button.chiudi:hover {
+  color: #F23041;
+}
+
 
 .attiva {
   display: block;
@@ -81,17 +124,6 @@ section {
   margin: 0;
 }
 
-.filters-section {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.filter-item {
-  display: flex;
-  flex-direction: column;
-}
-
 .filter-item label {
   margin-bottom: 5px;
   font-weight: bold;
@@ -99,9 +131,6 @@ section {
 }
 
 #visible-items{
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   margin-bottom: 0.5rem;
 }
 
@@ -110,8 +139,6 @@ section {
   border-top: 1px solid gray;
   padding-top: 1.5rem;
   margin-top: 1.5rem;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 #filters-buttons {
@@ -136,23 +163,6 @@ form {
   border: 1px solid #ccc;
   padding: 1.5rem;
   border-radius: 8px;
-}
-
-/* Layout a griglia per dettagli */
-.site-details,
-.checkboxes {
-  display: grid;
-  gap: 1rem;
-}
-
-.site-details, .checkboxes {
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.site-details div,
-form > div {
-  display: flex;
-  flex-direction: column;
 }
 
 form label {

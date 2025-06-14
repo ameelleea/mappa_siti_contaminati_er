@@ -1,6 +1,5 @@
 //Frontend
 let markersMap = {};
-let queryFields = {};
 let filterOptions = ["Si", "No"];
 let province = ["CITTA' METROPOLITANA DI BOLOGNA", "MODENA", "REGGIO EMILIA", "FERRARA", "RIMINI", "PIACENZA", "RAVENNA", "PARMA", "FORLI'"];
 
@@ -10,10 +9,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-function mostraSezione(id) {
+async function mostraSezione(id) {
     // Nasconde tutte le sezioni
     const sezioni = document.querySelectorAll('section');
-    sezioni.forEach(s => s.classList.remove('attiva'));
+    sezioni.forEach(s => {
+        s.classList.remove('attiva');
+    });
 
     // Mostra solo quella con l'ID selezionato
     document.getElementById(id).classList.add('attiva');
@@ -25,7 +26,7 @@ function mostraSezione(id) {
     }
     })
     if(id !== 'infopanel' && id !== "modificaSito")
-        filterSites();
+        markSites(await getSites());
 }
 
 async function statsSiti(){
@@ -93,13 +94,18 @@ function showMore(sito){
     let divArray = document.getElementById('info').querySelectorAll('div');
 
     targetKeys.forEach((t, i=0) => {
-        divArray[i].innerHTML += sito[t];
+        divArray[i].querySelector('span').innerHTML = sito[t];
     });
 
     mostraSezione("infopanel");
 }
 
 function showLess(){
+
+    document.getElementById('info').querySelectorAll('div').forEach(d => {
+        d.querySelector('span').innerHTML = '';
+    })
+
     document.getElementById("modificaSito").querySelector('form').reset();
     mostraSezione("default");
 }
@@ -120,7 +126,7 @@ document.querySelectorAll("select").forEach(el => {
 
 document.getElementById("filters").querySelectorAll("select").forEach(el => {
     el.addEventListener('change', async (e) => {
-        filterSites(e.target.id, e.target.value);
+        markSites(await getSites(e.target.id, e.target.value));
 
         if(e.target.id === "provincia"){
             const selectComune = document.getElementById('comune');
@@ -225,7 +231,7 @@ document.getElementById("cerca").querySelector("form").addEventListener('submit'
     
     const formData = new FormData(e.target);
     const objData = Object.fromEntries(formData.entries())
-    filterSites('codice', objData.codice)
+    markSites(await getSites('codice', objData.codice));
     e.target.querySelector('input[name="codice"]').value = '';
 });
 
@@ -250,7 +256,7 @@ document.querySelector("#provincia-agg").addEventListener('change', async functi
     })
 });
 
-document.getElementById("aggiungiSito").querySelector("form").addEventListener("submit", function (e) {
+document.getElementById("aggiungiSito").querySelector("form").addEventListener("submit", async function (e) {
     e.preventDefault();
     
     const formData = new FormData(this);
@@ -259,7 +265,8 @@ document.getElementById("aggiungiSito").querySelector("form").addEventListener("
     
     addSite(data);
     this.reset();
-    this.style.display = "none";
+    markSites(await getSites());
+    mostraSezione("default");
 });
 
 document.querySelector("#hidden-items").querySelectorAll("select").forEach(el => {
@@ -283,12 +290,12 @@ document.getElementById("more-filters").addEventListener('click', (e) => {
     }
 });
 
-document.getElementById("reset-filters").addEventListener('click', () => {
+document.getElementById("reset-filters").addEventListener('click', async () => {
   document.getElementById("filters").querySelectorAll("select").forEach(sel => {
     sel.value = "";
   })
 
-  filterSites();
+  markSites(await getSites());
 });
 
 

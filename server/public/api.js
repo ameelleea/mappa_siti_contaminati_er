@@ -1,46 +1,31 @@
 //Comunicazione col backend
+let queryFields = {};
 
 async function getSites(filterType='', filter='') {
+
+    if((filterType === 'codice' || filterType === '')){
+        queryFields = {};
+    }else{
+        delete queryFields['codice'];
+    }
+    if(filterType === 'provincia'){
+        delete queryFields['comune'];
+    }
+
+    filter === '' ? delete queryFields[filterType] : queryFields[filterType] = filter;
+    const queryString = filterType === '' ? '' : '?' + new URLSearchParams(queryFields).toString();
+
     try {
-      const res = await fetch(`/siti`);
+      const res = await fetch(`/siti${queryString}`);
       
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
       const sites = await res.json();
       return sites;
-      
 
     } catch (err) {
       console.error('Errore caricando siti:', err);
     }
-}
-
-async function filterSites(filterType='', filter='') {
-    try {
-        if((filterType === 'codice' || filterType === '')){
-          queryFields = {};
-        }else{
-          delete queryFields['codice'];
-        }
-
-        if(filterType === 'provincia'){
-          delete queryFields['comune'];
-        }
-
-        filter === '' ? delete queryFields[filterType] : queryFields[filterType] = filter;
-
-        console.log(queryFields);
-        const queryString = new URLSearchParams(queryFields).toString()
-        console.log(queryString);
-        const res = await fetch(`/siti?${queryString}`);
-        
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const dati = await res.json();
-        console.log(dati);
-        
-        markSites(dati);
-  } catch (err) {
-    console.error('Errore caricando siti:', err);
-  }
 }
 
 async function addSite(params){

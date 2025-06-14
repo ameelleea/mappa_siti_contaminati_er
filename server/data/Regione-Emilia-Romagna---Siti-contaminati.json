@@ -350,7 +350,9 @@
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
     "Procedura": "",
-    "Note": ""
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Messa in sicurezza d'emergenza": "No",
