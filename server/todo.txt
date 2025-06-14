@@ -8,6 +8,7 @@
 -Cambiare icona markers
 -Aggiungere autozoom sui siti
 -C'è un problema con la put
+-Aggiungere animazioni che ti riportino sulla card
 
 Per ultimo:
 -rimuovere tutti i console log non necessari
