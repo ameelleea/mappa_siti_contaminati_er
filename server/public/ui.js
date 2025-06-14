@@ -91,7 +91,7 @@ function showMore(sito){
               "note"
             ];
 
-    let divArray = document.getElementById('info').querySelectorAll('div');
+    let divArray = document.getElementById('infopanel').querySelector(`.card`).querySelectorAll('div');
 
     targetKeys.forEach((t, i=0) => {
         divArray[i].querySelector('span').innerHTML = sito[t];

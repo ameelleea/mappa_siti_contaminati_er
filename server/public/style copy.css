@@ -1,32 +1,3 @@
-/* Layout di base */
-body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 1em;
-  background-color: #fff;
-}
-
-header {
-  display: flex;
-  align-items: flex-end;
-  gap: 2 rem;
-  margin-bottom: 1.5rem;
-}
-
-header image, header h1 {
-  margin: 0;
-}
-
-button,
-input,
-select {
-  font-size: 1rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
 /* Stile generale dei bottoni */
 button {
   background-color: #038C5A;
@@ -40,55 +11,7 @@ button:hover {
   background-color: #03A65A;
 }
 
-/* Sezioni */
-section {
-  display: none;
-  background-color: #FEE9E0;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  width: 100%;
-  max-width: 100%;
-  max-width: -webkit-fill-available;
-  max-width: -moz-available;
-  margin: 1rem 0;
-}
-
-.attiva {
-  display: block;
-}
-
-/* Options (menu) */
-.options {
-  background-color: #F23041;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.options button {
-  font-size: 1.125rem;
-  font-weight: bold;
-  color: white;
-  border: none;
-  background-color: transparent;
-  padding: 1rem;
-}
-
 /* Filtri */
-#filters h2 {
-  margin: 0;
-}
-
-.filters-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.filter-item {
-  display: flex;
-  flex-direction: column;
-}
 
 .filter-item label {
   margin-bottom: 5px;
@@ -96,35 +19,8 @@ section {
   font-size: 0.875rem;
 }
 
-#visible-items{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-}
-
-#hidden-items {
-  display: none;
-  border-top: 1px solid gray;
-  padding-top: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-#filters-buttons {
-  display: flex;
-  flex-direction: row;
-  margin-right: 0;
-  align-items: flex-end;
-}
-
-
-#filters-buttons button {
-  height: 2rem;
-  margin-left: 0.75rem;
-}
-
 /* Form base */
-form {
+.modificaSito form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

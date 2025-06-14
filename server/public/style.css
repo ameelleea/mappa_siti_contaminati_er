@@ -9,6 +9,13 @@ body {
 .flex-clmn {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+}
+
+.flex-clmn label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.875rem;
 }
 
 .responsive-grid {
@@ -24,12 +31,9 @@ body {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-.p-1-5 { 
-  padding: 1.5rem; 
-}
 
-.mb-1-5 { 
-  margin-bottom: 1.5rem; 
+.mt-1-5 { 
+  margin-top: 1.5rem; 
 }
 
 header {
@@ -40,7 +44,7 @@ header {
   gap: 2rem;
 }
 
-header image, header h1 {
+header img, header h1 {
   margin: 0;
 }
 
@@ -54,7 +58,20 @@ select {
   box-sizing: border-box;
 }
 
-/* Stile generale dei bottoni */
+.card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.card label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+/* Bottoni */
 button {
   background-color: #038C5A;
   color: white;
@@ -65,21 +82,6 @@ button {
 
 button:hover {
   background-color: #03A65A;
-}
-
-/* Sezioni */
-section {
-  display: none;
-  background-color: #FEE9E0;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  width: 100%;
-  max-width: 100%;
-  max-width: -webkit-fill-available;
-  max-width: -moz-available;
-  margin: 1rem 0;
-  position: relative;
 }
 
 button.chiudi {
@@ -98,6 +100,25 @@ button.chiudi:hover {
   color: #F23041;
 }
 
+/* Sezioni */
+section {
+  display: none;
+  background-color: #FEE9E0;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 100%;
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+  margin: 1rem 0;
+  position: relative;
+}
+
+section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
 
 .attiva {
   display: block;
@@ -120,20 +141,6 @@ button.chiudi:hover {
 }
 
 /* Filtri */
-#filters h2 {
-  margin: 0;
-}
-
-.filter-item label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 0.875rem;
-}
-
-#visible-items{
-  margin-bottom: 0.5rem;
-}
-
 #hidden-items {
   display: none;
   border-top: 1px solid gray;
@@ -155,37 +162,12 @@ button.chiudi:hover {
 }
 
 /* Form base */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 1.5rem;
-  border-radius: 8px;
-}
 
-form label {
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  font-size: 0.95rem;
-}
 
 /* Checkboxes */
-.checkboxes label {
-  font-weight: bold;
-  margin-right: 0.5rem;
-}
-
 .checkboxes input[type="checkbox"] {
   transform: scale(1.1);
   margin-top: 0.3rem;
-}
-
-/* Header del form */
-#aggiungiSito h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
 }
 
 /* Mappa */
@@ -198,14 +180,6 @@ form label {
 .marker-button {
   margin-top: 0.5rem;
   font-size: 0.8rem;
-}
-
-#info, #content {
-  margin-bottom: 1rem;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 1.5rem;
-  border-radius: 8px;
 }
 
 #info div, #content div {

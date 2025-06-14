@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="md-1-5">
+  <header>
       <img src="img/marchio_rer.png" alt="Regione Emilia-Romagna" height="60px">
       <h1>Mappa dei siti contaminati</h1>
   </header>
@@ -21,7 +21,7 @@
   </div>
 
   <section id="default" class="attiva">
-    <div id="content">
+    <div id="content" class="card">
       <div>
         <b>Numero totale dei siti contaminati:</b>
       </div>
@@ -37,7 +37,7 @@
   <section id="cerca">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Cerca per codice:</h3>
-    <form>
+    <form class="card flex-clmn">
       <input type="text" name="codice" placeholder="Inserisci codice...">
       <button type="submit">Cerca</button>
     </form>
@@ -46,8 +46,8 @@
   <section id="filters">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Filtri</h3>
-      <div id="visible-items" class="responsive-grid">
-        <div class="responsive-grid">
+    <div class="card">
+      <div class="responsive-grid">
           <div class="flex-clmn">
             <label for="provincia">Provincia:</label>
             <select class="provincia" id="provincia"></select>
@@ -57,9 +57,8 @@
             <label for="comune">Comune:</label>
             <select id="comune"></select>
           </div>
-        </div>
 
-        <div id="filters-buttons" class="flex-clmn" >
+        <div id="filters-buttons">
           <button id="more-filters">Più filtri</button>
           <button id="reset-filters">Resetta</button>
         </div>
@@ -91,14 +90,15 @@
           <label for="bonifica_sicurezza">Bonifica e ripristino con misure di sicurezza:</label>
           <select id="bonifica_sicurezza"></select>
         </div>
-      </div>    
+      </div> 
+    </div>   
   </section>
 
   <section id="aggiungiSito">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Aggiungi un nuovo sito alla mappa:</h3>
-    <form>
-      <div class="site-details responsive-grid"> 
+    <form class="flex-clmn card">
+      <div class="responsive-grid"> 
         <div class="flex-clmn">
           <label for="provincia-agg">Provincia:</label>
           <select class="aggiungi provincia" id="provincia-agg" name="provincia" required></select>
@@ -120,7 +120,7 @@
           <input type="text" name="codice" placeholder="Codice" required>
         </div>
       </div>
-      <div class="site-details responsive-grid">
+      <div class="responsive-grid">
         <div class="flex-clmn">
           <label for="Longitudine">Longitudine:</label>
           <input type="text" name="Longitudine" placeholder="Longitudine">
@@ -160,11 +160,11 @@
       </div>
       </div>
 
-      <div>
+      <div class="flex-clmn">
         <label for="procedura">Procedura:</label>
         <input type="text" name="procedura" placeholder="Procedura" required>
       </div>
-      <div>
+      <div class="flex-clmn">
         <label for="note">Note:</label>
         <input type="text" name="note" placeholder="Note"> 
       </div>
@@ -175,11 +175,7 @@
   <section id="infopanel">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Informazioni aggiuntive:</h3>
-    <!--<table>
-      <tbody>
-     </tbody>
-    </table>-->
-    <div id="info">
+    <div class="card">
       <div>
        <b>Messa in sicurezza emergenza:</b><span></span>
       </div>
@@ -202,14 +198,14 @@
        <b>Note:</b><span></span>
       </div>
     </div>
-    <button type="button" class="modify-btn">Modifica</button>
-    <button type="button" class="delete-btn">Elimina</button>
+    <button type="button" class="mt-1-5 modify-btn">Modifica</button>
+    <button type="button" class="mt-1-5 delete-btn">Elimina</button>
   </section>
 
   <section id="modificaSito">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Modifica informazioni sito:</h3>
-    <form>
+    <form class="card flex-clmn">
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">
       <input type="hidden" name="messa_sicurezza_operativa" value="No">
       <input type="hidden" name="messa_sicurezza_permanente" value="No">
