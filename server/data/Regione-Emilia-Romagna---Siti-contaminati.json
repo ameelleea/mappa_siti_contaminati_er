@@ -112,38 +112,6 @@
     "Longitudine": 9.930247
   },
   {
-    "Codice": "pc000042",
-    "Comune": "FIORENZUOLA D'ARDA",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "autostrada A1 MI-BO,",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "Si",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "ANALISI di RISCHIO presentato in data 02/05/2013. Attualmente in corso il monitoraggio. PUMP&TREAT",
-    "Latitudine": 44.963571,
-    "Longitudine": 9.904962
-  },
-  {
-    "Codice": "pc000040",
-    "Comune": "FIORENZUOLA D'ARDA",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "autostrada A1 MI-BO,",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "Si",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "IMPIANTO PUMP& TREAT SOIL VAPOR EXTRACTION, AIR SPARGING e PUMP&TREAT da marzo ad agosto 2013.",
-    "Latitudine": 44.961564,
-    "Longitudine": 9.905662
-  },
-  {
     "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
     "Bonifica e ripristino ambientale": "No",
@@ -363,22 +331,6 @@
     "Note": "",
     "Latitudine": null,
     "Longitudine": null
-  },
-  {
-    "Codice": "PR000018",
-    "Comune": "LESIGNANO DE'BAGNI",
-    "Provincia": "PARMA",
-    "Indirizzo": "strada Provinciale di Mulazzano,",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.611988,
-    "Longitudine": 10.293001
   },
   {
     "Codice": "PR000046",
@@ -811,22 +763,6 @@
     "Note": "SIN",
     "Latitudine": 44.844286,
     "Longitudine": 9.988527
-  },
-  {
-    "Codice": "PR000011",
-    "Comune": "SALSOMAGGIORE TERME",
-    "Provincia": "PARMA",
-    "Indirizzo": "viale matteotti,38",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "Rimozione serbatoi interrati ed asportazione terreno contaminato (192 t)",
-    "Latitudine": 44.820838,
-    "Longitudine": 9.987117
   },
   {
     "Messa in sicurezza d'emergenza": "No",
@@ -5735,22 +5671,6 @@
     "Note": "",
     "Latitudine": 43.964065,
     "Longitudine": 12.728055
-  },
-  {
-    "Codice": "RNMr0001",
-    "Comune": "MORCIANO DI ROMAGNA",
-    "Provincia": "RIMINI",
-    "Indirizzo": "via ROMA,127",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "Si",
-    "Procedura": "art. 242 non bonificato",
-    "Note": "soggetto non individuato",
-    "Latitudine": 43.909215,
-    "Longitudine": 12.643197
   },
   {
     "Codice": "RNRc0001",

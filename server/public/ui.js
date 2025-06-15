@@ -8,15 +8,28 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
+function populateSelect(selects, values, includeEmpty = false) {
+  selects.forEach(el => {
+    if (includeEmpty) {
+      const firstOption = document.createElement("option");
+      firstOption.value = "";
+      firstOption.textContent = "-- Seleziona --";
+      el.appendChild(firstOption);
+    }
+
+    values.forEach(val => {
+      const option = document.createElement("option");
+      option.value = val;
+      option.textContent = val;
+      el.appendChild(option);
+    });
+  });
+}
 
 async function mostraSezione(id) {
-    // Nasconde tutte le sezioni
     const sezioni = document.querySelectorAll('section');
-    sezioni.forEach(s => {
-        s.classList.remove('attiva');
-    });
+    sezioni.forEach(s => {s.classList.remove('attiva')});
 
-    // Mostra solo quella con l'ID selezionato
     document.getElementById(id).classList.add('attiva');
     document.querySelector('.options').querySelectorAll('button').forEach(b => {
     if(b.name === id){
@@ -25,37 +38,37 @@ async function mostraSezione(id) {
         b.style.textDecoration = 'none';
     }
     })
+
     if(id !== 'infopanel' && id !== "modificaSito")
         markSites(await getSites());
 }
 
-async function statsSiti(){
+async function defaultCard(){
     const sites = await getSites();
-    const sitesSizes = [sites.length, 0, 0]
-    console.log(sitesSizes);
-    sites.forEach(s => {
-        if(s["bonifica"] === 'Si' || s["bonifica_sicurezza"] === 'Si'){
-            sitesSizes[1] += 1;
-        }
-        else if(s["messa_sicurezza_emergenza"] === "Si"){
-            sitesSizes[2] += 1;
-        }
-        else if(s["messa_sicurezza_operativa"] === "Si"){
-            sitesSizes[2] += 1;
-        }
-        else if(s["messa_sicurezza_permanenete"] === "Si"){
-            sitesSizes[2] += 1;
-        }
+    const keysStarts = ['bonifica', 'messa'];
+    const sitesSizes = [sites.length, 0, 0];
+
+    keysStarts.forEach((start, idx) => {
+      sites.forEach(s => {
+        sitesSizes[idx+1] += Object.keys(s)
+                                                        .filter(k => k.startsWith(start) && s[k] === 'Si')
+                                                        .length;
+      })
     });
-    console.log(sitesSizes);
-    document.getElementById("content").querySelectorAll('div').forEach((d, i=0) => {
-        d.innerHTML += sitesSizes[i];
+
+    document.getElementById("default")
+            .querySelector('.card')
+            .querySelectorAll('div')
+            .forEach((d, i) => {
+              d.querySelector('span').innerHTML = sitesSizes[i];
     });
 }
 
 function markSites(sites){
-    Object.values(markersMap).forEach(m => map.removeLayer(m));
-    Object.keys(markersMap).forEach(k => delete markersMap[k]);
+    Object.values(markersMap).forEach(m => {
+      map.removeLayer(m);
+      delete markersMap[m];
+    });
   
     sites.forEach(sito => {
         if (sito.lat && sito.lon) {
@@ -79,21 +92,12 @@ function markSites(sites){
     });
 }
 
-
 function showMore(sito){
-    const targetKeys = [
-              "messa_sicurezza_emergenza",
-              "messa_sicurezza_operativa",
-              "messa_sicurezza_permanenete",
-              "bonifica",
-              "bonifica_sicurezza",
-              "procedura",
-              "note"
-            ];
+    const targetKeys = Object.keys(sito).slice(5, 12);
 
     let divArray = document.getElementById('infopanel').querySelector(`.card`).querySelectorAll('div');
 
-    targetKeys.forEach((t, i=0) => {
+    targetKeys.forEach((t, i) => {
         divArray[i].querySelector('span').innerHTML = sito[t];
     });
 
@@ -110,20 +114,42 @@ function showLess(){
     mostraSezione("default");
 }
 
+function prepareModificaForm(sitoSelezionato) {
+  const form = document.getElementById("modificaSito").querySelector("form");
+  const keys = Object.keys(sitoSelezionato)
+                     .filter(k => k.startsWith('bonifica') || k.startsWith('messa_sicurezza'));
+
+  keys.forEach(k => {
+    if (sitoSelezionato[k] === 'Si') {
+      form.querySelectorAll(`input[name=${k}]`).forEach(i => i.checked = true);
+    }
+  });
+
+  mostraSezione("modificaSito");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const objData = Object.fromEntries(formData.entries());
+    Object.assign(sitoSelezionato, objData);
+
+    await modifySite(sitoSelezionato, JSON.stringify(objData));
+    defaultCard();
+    showMore(sitoSelezionato);
+  });
+}
+
+
 window.addEventListener("load", async () => {
-    statsSiti();
+    defaultCard();
     markSites(await getSites());
+    populateSelect(document.querySelectorAll("select"), [], true);
+    populateSelect(document.querySelectorAll(".provincia"), province);
+    populateSelect(document.querySelector("#hidden-items").querySelectorAll("select"), filterOptions);
 });
 
 
 /*EventListeners*/
-document.querySelectorAll("select").forEach(el => {
-    const firstOption = document.createElement("option");
-    firstOption.value = "";
-    firstOption.textContent = "-- Seleziona --"
-    el.appendChild(firstOption);
-});
-
 document.getElementById("filters").querySelectorAll("select").forEach(el => {
     el.addEventListener('change', async (e) => {
         markSites(await getSites(e.target.id, e.target.value));
@@ -131,24 +157,19 @@ document.getElementById("filters").querySelectorAll("select").forEach(el => {
         if(e.target.id === "provincia"){
             const selectComune = document.getElementById('comune');
             Array.from(selectComune.children).slice(1).forEach(child => selectComune.removeChild(child));
+            const comuniPresenti = new Set();
 
             if(e.target.value !== ''){
 
               const sites = await getSites();
               sites.forEach(sito  => {
-                  if(sito.provincia === e.target.value){
-                      const optionDefault = document.createElement("option");
-                      optionDefault.value = optionDefault.textContent = sito.comune;
-
-                      const esiste = Array.from(selectComune.children).some(
-                      (figlio) => figlio.innerHTML === optionDefault.innerHTML
-                      );
-
-                      if (!esiste) {
-                        selectComune.appendChild(optionDefault);
-                      }
+                  if(sito.provincia === e.target.value && !comuniPresenti.has(sito.comune)){
+                      comuniPresenti.add(sito.comune);
+                      const comuneOption = document.createElement("option");
+                      comuneOption.value = comuneOption.textContent = sito.comune;
+                      selectComune.appendChild(comuneOption);
                   }
-              })
+              });
 
               document.querySelector('.comune-group').style.display = 'flex';
           }
@@ -159,72 +180,38 @@ document.getElementById("filters").querySelectorAll("select").forEach(el => {
     })  
 });
 
-document.querySelectorAll(".provincia").forEach(el => {
-  province.forEach(val => {
-    const optionDefault = document.createElement("option");
-    optionDefault.value = val;
-    optionDefault.textContent = val;
-    el.appendChild(optionDefault);
-  })
-})
-
 document.addEventListener('click', async (event) => {
-  if (event.target){
+  if(event.target){
     const codice = event.target.getAttribute('data-id');
-    const res = await fetch(`/siti`);
-        
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    const sites = await res.json();
+    const sites = await getSites();
     const sitoSelezionato = sites.find(s => s.codice === codice);
+
     if (sitoSelezionato) {
-      
-    
-    if(event.target.classList.contains('show-more-btn')) {
-      showMore(sitoSelezionato);
-      document.querySelector('.modify-btn').addEventListener('click', async (e) => {
-            const targetKeys = [
-                          "messa_sicurezza_emergenza",
-                          "messa_sicurezza_operativa",
-                          "messa_sicurezza_permanenete",
-                          "bonifica",
-                          "bonifica_sicurezza",
-                        ];
-            const modificaForm = document.getElementById("modificaSito").querySelector("form");
+      if(event.target.classList.contains('show-more-btn')) {
+        showMore(sitoSelezionato);
+        document.querySelector('.modify-btn')
+                .addEventListener('click', (e)=> prepareModificaForm(sitoSelezionato));
 
-            targetKeys.forEach(key => {
-              if(sitoSelezionato[key] === 'Si'){
-                document.getElementById("check-"+key).checked = true;
-              }
-            });
-
-            mostraSezione("modificaSito");
-
-            modificaForm.addEventListener("submit", function (e) {
-              e.preventDefault();
-            
-              const formData = new FormData(this);
-              const objData = Object.fromEntries(formData.entries())
-            
-              Object.keys(objData).forEach(k => {
-                sitoSelezionato[k] = objData[k];
-              })
-              const data = JSON.stringify(objData);
-          
-              modifySite(sitoSelezionato, data);
-              showMore(sitoSelezionato);
-            });
-            
-        })
-    }else if(event.target.classList.contains('delete-btn')){
-      if (confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")) {
-        deleteSite(sitoSelezionato);
-      } else {
-        console.log("Annullato");
+        document.querySelector('.delete-btn').addEventListener('click', async (e) => {
+          if(confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")){
+            deleteSite(codice);
+            const marker = markersMap[codice];
+            if (marker) {
+              map.removeLayer(marker);
+              delete markersMap[codice];
+              console.log(`Marker con codice ${codice} rimosso`);
+            } else {
+              console.warn(`Nessun marker trovato per il codice ${codice}`);
+            }
+            defaultCard();
+          } else {
+            console.log("Annullato");
+          }
+        });
       }
     }
-  } 
-}});
-
+  }
+});
 
 document.getElementById("cerca").querySelector("form").addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -235,23 +222,20 @@ document.getElementById("cerca").querySelector("form").addEventListener('submit'
     e.target.querySelector('input[name="codice"]').value = '';
 });
 
-document.querySelector("#provincia-agg").addEventListener('change', async function (e) {
+document.querySelector("#aggiungiSito").querySelector('.provincia').addEventListener('change', async function (e) {
     const comuneSelect = document.querySelector("#comune-agg");
 
     const res = await fetch('/comuni');
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
     const comuni = await res.json();
+    const comuniPresenti = new Set();
 
     comuni[e.target.value].forEach(c => {
-      const optionDefault = document.createElement("option");
-      optionDefault.value = optionDefault.textContent = c.toUpperCase();
-      
-      const esiste = Array.from(comuneSelect.children).some(
-                      (child) => child.innerHTML === optionDefault.innerHTML
-                      );
-
-      if (!esiste) {
-        comuneSelect.appendChild(optionDefault);
+      if(!comuniPresenti.has(c)){
+        const comuneOption = document.createElement("option");
+        comuneOption.value = comuneOption.textContent = c.toUpperCase();
+        comuneSelect.append(comuneOption);
       }
     })
 });
@@ -266,16 +250,8 @@ document.getElementById("aggiungiSito").querySelector("form").addEventListener("
     addSite(data);
     this.reset();
     markSites(await getSites());
+    defaultCard();
     mostraSezione("default");
-});
-
-document.querySelector("#hidden-items").querySelectorAll("select").forEach(el => {
-    filterOptions.forEach(val => {
-      const optionDefault = document.createElement("option");
-      optionDefault.value = val;
-      optionDefault.textContent = val;
-      el.appendChild(optionDefault);
-    })
 });
 
 document.getElementById("more-filters").addEventListener('click', (e) => {
