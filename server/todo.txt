@@ -1,12 +1,7 @@
 -Validazione: https://validator.w3.org/	
 -Aggiungere gestione degli errori
--Cambiare icona markers
--Aggiungere autozoom sui siti
--C'è un problema con la put
--Aggiungere animazioni che ti riportino sulla card
 -Valutare header sticky
--Ui linea 25 valutare di spostare
+-Ricontrollare comportamento metodi
 
 Per ultimo:
--rimuovere tutti i console log non necessari
 -Ripulire backend

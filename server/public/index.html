@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Siti Contaminati Emilia-Romagna</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-  <!--<link rel="stylesheet" href="reset.css"/>-->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-      <img src="img/marchio_rer.png" alt="Regione Emilia-Romagna" height="60px">
+    <div class="title">
+      <img src="img/marchio_rer.png" alt="Regione Emilia-Romagna">
       <h1>Mappa dei siti contaminati</h1>
-        <div class="options">
-    <button name='home' onclick="mostraSezione('default')" style="text-decoration: underline;">Home</button>
-    <button name='cerca' onclick="mostraSezione('cerca')">Cerca</button>
-    <button name='filters' onclick="mostraSezione('filters')">Filtri</button>
-    <button name='aggiungiSito' onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
-  </div>
+    </div>
+
+    <div class="options">
+      <button name='default' onclick="mostraSezione('default')" style="text-decoration: underline;">Home</button>
+      <button name='cerca' onclick="mostraSezione('cerca')">Cerca</button>
+      <button name='filters' onclick="mostraSezione('filters')">Filtri</button>
+      <button name='aggiungiSito' onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
+    </div>
   </header>
 
   <section id="default" class="attiva">
@@ -47,15 +49,15 @@
     <h3>Filtri</h3>
     <div class="card">
       <div class="responsive-grid">
-          <div class="flex-clmn">
-            <label for="provincia">Provincia:</label>
-            <select class="provincia" id="provincia"></select>
-          </div>
-
-          <div class="flex-clmn comune-group" style="display: none;">
-            <label for="comune">Comune:</label>
-            <select id="comune"></select>
-          </div>
+        <label class="flex-clmn">
+          Provincia:
+          <select class="provincia" id="provincia"></select>
+        </label>
+      
+        <label class="flex-clmn comune-group" style="display: none;">
+          Comune:
+          <select id="comune"></select>
+        </label>
 
         <div id="filters-buttons">
           <button id="more-filters">Più filtri</button>
@@ -63,32 +65,31 @@
         </div>
       </div>  
 
-      <div id="hidden-items" class="responsive-grid" >
-        <div class="flex-clmn">
-          <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza:</label>
+      <div id="hidden-items" class="responsive-grid">
+        <label class="flex-clmn">
+          Messa in sicurezza d'emergenza:
           <select id="messa_sicurezza_emergenza"></select>
-        </div>
+        </label>
 
-        <div class="flex-clmn">
-          <label for="messa_sicurezza_operativa">Messa in sicurezza operativa:</label>
+        <label class="flex-clmn">
+          Messa in sicurezza operativa:
           <select id="messa_sicurezza_operativa"></select>
-        </div>
+        </label>
 
-        <div class="flex-clmn">
-          <label for="messa_sicurezza_permanenete">Messa in sicurezza permanente:</label>
+        <label class="flex-clmn">
+          Messa in sicurezza permanente:
           <select id="messa_sicurezza_permanenete"></select>
-          </label>
-        </div>
+        </label>
 
-        <div class="flex-clmn">
-          <label for="bonifica">Bonifica e ripristino ambientale:</label>
+        <label class="flex-clmn">
+          Bonifica e ripristino ambientale:
           <select id="bonifica"></select>
-        </div>
+        </label>
 
-        <div class="flex-clmn">
-          <label for="bonifica_sicurezza">Bonifica e ripristino con misure di sicurezza:</label>
+        <label class="flex-clmn">
+          Bonifica e ripristino con misure di sicurezza:
           <select id="bonifica_sicurezza"></select>
-        </div>
+        </label>
       </div> 
     </div>   
   </section>
@@ -98,36 +99,41 @@
     <h3>Aggiungi un nuovo sito alla mappa:</h3>
     <form class="flex-clmn card">
       <div class="responsive-grid"> 
-        <div class="flex-clmn">
-          <label for="provincia-agg">Provincia:</label>
-          <select class="aggiungi provincia" id="provincia-agg" name="provincia" required></select>
-        </div>
-        <div class="flex-clmn">
-          <label for="comune">Comune:</label>
+        <label class="flex-clmn">
+          Provincia:
+          <select class="aggiungi provincia" name="provincia" required></select>
+        </label>
+
+        <label class="flex-clmn">
+          Comune:
           <select name="comune" id="comune-agg" required></select>
-        </div>
-        <div class="flex-clmn">
-          <label for="indirizzo">Indirizzo:</label>
+        </label>
+
+        <label class="flex-clmn">
+          Indirizzo:
           <input type="text" name="indirizzo" placeholder="Indirizzo" required> 
-        </div>
-        <div class="flex-clmn">
-          <label for="attività">Attività:</label>
+        </label>
+      
+        <label class="flex-clmn">
+          Attività:
           <input type="text" name="attività" placeholder="Attività" required>
-        </div>
-        <div class="flex-clmn">
-          <label for="codice">Codice:</label>
+        </label>
+
+        <label class="flex-clmn">
+          Codice:
           <input type="text" name="codice" placeholder="Codice" required>
-        </div>
+        </label>
       </div>
+
       <div class="responsive-grid">
-        <div class="flex-clmn">
-          <label for="Longitudine">Longitudine:</label>
-          <input type="text" name="Longitudine" placeholder="Longitudine">
-        </div>
-        <div class="flex-clmn">
-          <label for="Latitudine">Latitudine:</label>
-          <input type="text" name="Latitudine" placeholder="Latitudine">
-        </div>
+          <label class="flex-clmn">
+            Longitudine:
+            <input type="text" name="Longitudine" placeholder="Longitudine">
+          </label>
+          <label class="flex-clmn">
+            Latitudine:
+           <input type="text" name="Latitudine" placeholder="Latitudine">
+          </label>
       </div>
 
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">
@@ -137,36 +143,42 @@
       <input type="hidden" name="bonifica_sicurezza" value="No">
 
       <div class="checkboxes responsive-grid">
-          <div>
-          <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza</label>
+        <label>
+          Messa in sicurezza d'emergenza
           <input type="checkbox" name="messa_sicurezza_emergenza" value="Si">
-        </div>
-        <div>
-          <label for="messa_sicurezza_operativa">Messa in sicurezza operativa</label>
+        </label>
+
+        <label>
+          Messa in sicurezza operativa:
           <input type="checkbox" name="messa_sicurezza_operativa" value="Si">
-        </div>
-        <div>
-          <label for="messa_sicurezza_permanente">Messa in sicurezza permanente</label>
+        </label>
+
+        <label>
+          Messa in sicurezza permanente:
           <input type="checkbox" name="messa_sicurezza_permanente" value="Si">
-        </div>
-        <div>
-          <label for="bonifica">Bonifica e ripristino ambientale</label>
+        </label>
+
+        <label>
+          Bonifica e ripristino ambientale:
           <input type="checkbox" name="bonifica" value="Si"> 
-        </div>
-        <div>
-          <label for="bonifica_sicurezza">Bonifica con misure di sicurezza</label>
+        </label>
+
+        <label>
+          Bonifica con misure di sicurezza:
           <input type="checkbox" name="bonifica_sicurezza" value="Si">
-      </div>
+        </label>
       </div>
 
-      <div class="flex-clmn">
-        <label for="procedura">Procedura:</label>
+      <label class="flex-clmn">
+        Procedura:
         <input type="text" name="procedura" placeholder="Procedura" required>
-      </div>
-      <div class="flex-clmn">
-        <label for="note">Note:</label>
-        <input type="text" name="note" placeholder="Note"> 
-      </div>
+      </label>
+
+      <label class="flex-clmn">
+        Note:
+        <input type="text" name="note" placeholder="Note">
+      </label>
+
       <button type="submit" style="margin-top: 1.5rem;">Invia</button>
     </form>
   </section>
@@ -211,34 +223,35 @@
       <input type="hidden" name="bonifica" value="No"> 
       <input type="hidden" name="bonifica_sicurezza" value="No">
 
-      <div class="flex-clmn">
-        <label for="messa_sicurezza_emergenza">Messa in sicurezza d'emergenza</label>
+      <label class="flex-clmn">
+        Messa in sicurezza d'emergenza:
         <input type="checkbox" name="messa_sicurezza_emergenza" value="Si">
-      </div>
-      <div class="flex-clmn">
-        <label for="messa_sicurezza_operativa">Messa in sicurezza operativa</label>
+      </label>
+      <label class="flex-clmn">
+        Messa in sicurezza operativa:
         <input type="checkbox" name="messa_sicurezza_operativa" value="Si">
-      </div>
-      <div class="flex-clmn">
-        <label for="messa_sicurezza_permanente">Messa in sicurezza permanente</label>
+      </label>
+      <label class="flex-clmn">
+        Messa in sicurezza permanente:
         <input type="checkbox" name="messa_sicurezza_permanente" value="Si"><br>
-      </div>
-      <div class="flex-clmn">
-        <label for="bonifica">Bonifica e ripristino ambientale</label>
+      </label>
+      <label class="flex-clmn">
+        Bonifica e ripristino ambientale:
         <input type="checkbox" name="bonifica" value="Si"> 
-      </div>
-      <div class="flex-clmn">
-        <label for="bonifica_sicurezza">Bonifica e ripristino ambientale con misure di sicurezza</label>
+      </label>
+      <label class="flex-clmn">
+        Bonifica e ripristino ambientale con misure di sicurezza:
         <input type="checkbox" name="bonifica_sicurezza" value="Si"><br>
-      </div>
-      <div class="flex-clmn">
-        <label for="procedura">Procedura:</label>
+      </label>
+      <label class="flex-clmn">
+        Procedura:
         <input type="text" name="procedura" placeholder="Procedura"><br>
-      </div>
-      <div class="flex-clmn">
-        <label for="note">Note:</label>
+      </label>
+      <label class="flex-clmn">
+        Note:
         <input type="text" name="note" placeholder="Note"><br> 
-      </div>
+      </label>
+
       <button type="submit">Invia</button>
     </form>
   </section>

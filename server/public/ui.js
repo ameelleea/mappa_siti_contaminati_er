@@ -30,7 +30,13 @@ async function mostraSezione(id) {
     const sezioni = document.querySelectorAll('section');
     sezioni.forEach(s => {s.classList.remove('attiva')});
 
-    document.getElementById(id).classList.add('attiva');
+    const sezione = document.getElementById(id);
+    sezione.classList.add('attiva');
+    sezione.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+
     document.querySelector('.options').querySelectorAll('button').forEach(b => {
     if(b.name === id){
         b.style.textDecoration = 'underline';
