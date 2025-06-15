@@ -8,20 +8,22 @@
 </head>
 <body>
   <header>
-    <div class="title">
+    <div id="top-bar">Regione Emilia-Romagna</div>
+    <div class="title side-gap">
       <img src="img/marchio_rer.png" alt="Regione Emilia-Romagna">
       <h1>Mappa dei siti contaminati</h1>
     </div>
 
-    <div class="options">
-      <button name='default' onclick="mostraSezione('default')" style="text-decoration: underline;">Home</button>
+    <div class="options side-gap">
+      <button name='default' onclick="mostraSezione('default')">Home</button>
       <button name='cerca' onclick="mostraSezione('cerca')">Cerca</button>
       <button name='filters' onclick="mostraSezione('filters')">Filtri</button>
       <button name='aggiungiSito' onclick="mostraSezione('aggiungiSito')">Aggiungi sito</button>
     </div>
   </header>
 
-  <section id="default" class="attiva">
+  <section id="default" class="side-gap attiva">
+    <h3>Statistiche:</h3>
     <div class="card">
       <div>
         <b>Numero totale dei siti contaminati:</b><span></span>
@@ -35,7 +37,7 @@
     </div>
   </section>
 
-  <section id="cerca">
+  <section class="side-gap" id="cerca">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Cerca per codice:</h3>
     <form class="card flex-clmn">
@@ -44,7 +46,7 @@
     </form>
   </section>
 
-  <section id="filters">
+  <section class="side-gap" id="filters">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Filtri</h3>
     <div class="card">
@@ -94,7 +96,7 @@
     </div>   
   </section>
 
-  <section id="aggiungiSito">
+  <section class="side-gap" id="aggiungiSito">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Aggiungi un nuovo sito alla mappa:</h3>
     <form class="flex-clmn card">
@@ -183,7 +185,7 @@
     </form>
   </section>
 
-  <section id="infopanel">
+  <section class="side-gap" id="infopanel">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Informazioni aggiuntive:</h3>
     <div class="card">
@@ -213,7 +215,7 @@
     <button type="button" class="mt-1-5 delete-btn">Elimina</button>
   </section>
 
-  <section id="modificaSito">
+  <section class="side-gap" id="modificaSito">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Modifica informazioni sito:</h3>
     <form class="card flex-clmn">
@@ -256,7 +258,7 @@
     </form>
   </section>
 
-  <div id="map"></div>
+  <div id="map" class="side-gap"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
   <script src="api.js"></script>

@@ -2,7 +2,18 @@
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  background-color: #fff;
+  background-color: white;
+}
+
+.side-gap {
+  margin: 1.5rem 3rem;
+}
+
+#top-bar {
+  color: white;
+  background-color: #025928;
+  padding: 1rem 3rem;
+  font-size: 0.8rem;
 }
 
 .flex-clmn {
@@ -37,26 +48,47 @@ body {
 }
 
 header {
-  background-color: white;
+  background-color: #F2F2F2;
   position: sticky;
   top: 0;
   z-index: 999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
 }
 
-header .title{
+header .title {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 2rem;
-}
-
-header img, header h1 {
-  margin: 0;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
 }
 
 header img {
-  height: 60px;
+  height: 50px;
+}
+
+header h1 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin: 0;
+  color: #03A65A;
+}
+
+@media (max-width: 600px) {
+  .title {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .options {
+    flex-wrap: wrap;
+  }
+
+  .options button {
+    flex: 1 1 40%;
+  }
 }
 
 button,
@@ -67,13 +99,14 @@ select {
   border-radius: 6px;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  background-color: #F2F2F2;
 }
 
 .card {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .card label {
@@ -114,21 +147,22 @@ button.chiudi:hover {
 /* Sezioni */
 section {
   display: none;
-  background-color: #FEE9E0;
-  padding: 2rem;
-  border-radius: 10px;
+  background-color: #025928;
+  padding: 0 0.5rem 0.5rem;
+  border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   width: 100%;
   max-width: 100%;
   max-width: -webkit-fill-available;
   max-width: -moz-available;
-  margin: 1rem 1em;
   position: relative;
 }
 
 section h3 {
+  color: white;
   font-size: 1.5rem;
-  margin: 0.5rem 0 1.5rem;
+  padding: 1.5rem 0 0.5rem;
+  margin: 0;
 }
 
 .attiva {
@@ -137,18 +171,34 @@ section h3 {
 
 /* Options (menu) */
 .options {
-  background-color: #F23041;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0 0;
+  border-top: 2px solid #025928;
 }
 
+/* BOTTONI */
 .options button {
-  font-size: 1.125rem;
-  font-weight: bold;
-  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #025928;
   border: none;
   background-color: transparent;
-  padding: 1rem;
+  padding: 0.6rem 1rem 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-radius: 0;
+}
+
+.options button:hover {
+  text-decoration: underline;
+  border-bottom: 4px solid #C4C4C4;
+}
+
+.options button.active,
+.options button:focus {
+  border-bottom: 4px solid #C4C4C4;
 }
 
 /* Filtri */
@@ -183,13 +233,13 @@ section h3 {
 .checkboxes input[type="checkbox"] {
   transform: scale(1.1);
   margin-top: 0.3rem;
+  background-color: #F2F2F2;
 }
 
 /* Mappa */
 #map {
   height: 500px;
   border: 1px solid #aaa;
-  margin: 0 1em;
 }
 
 .marker-button {

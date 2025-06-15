@@ -32,18 +32,18 @@ async function mostraSezione(id) {
 
     const sezione = document.getElementById(id);
     sezione.classList.add('attiva');
-    sezione.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-    });
 
-    document.querySelector('.options').querySelectorAll('button').forEach(b => {
-    if(b.name === id){
-        b.style.textDecoration = 'underline';
-    }else{
-        b.style.textDecoration = 'none';
-    }
-    })
+    const header = document.querySelector('header');
+    const stile = window.getComputedStyle(header);
+    const headerOffset = header.getBoundingClientRect().height + parseFloat(stile.marginBottom);
+    console.log(headerOffset);
+    const elementPosition = sezione.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
 
     if(id !== 'infopanel' && id !== "modificaSito")
         markSites(await getSites());
