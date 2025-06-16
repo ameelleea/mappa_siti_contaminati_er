@@ -57,16 +57,16 @@ async function defaultCard(){
     keysStarts.forEach((start, idx) => {
       sites.forEach(s => {
         sitesSizes[idx+1] += Object.keys(s)
-                                                        .filter(k => k.startsWith(start) && s[k] === 'Si')
-                                                        .length;
+                                  .filter(k => k.startsWith(start) && s[k] === 'Si')
+                                  .length;
       })
     });
 
     document.getElementById("default")
             .querySelector('.card')
-            .querySelectorAll('div')
+            .querySelectorAll('dd')
             .forEach((d, i) => {
-              d.querySelector('span').innerHTML = sitesSizes[i];
+              d.innerHTML = sitesSizes[i];
     });
 }
 
@@ -101,10 +101,10 @@ function markSites(sites){
 function showMore(sito){
     const targetKeys = Object.keys(sito).slice(5, 12);
 
-    let divArray = document.getElementById('infopanel').querySelector(`.card`).querySelectorAll('div');
+    let ddArray = document.getElementById('infopanel').querySelector(`.card`).querySelectorAll('dd');
 
     targetKeys.forEach((t, i) => {
-        divArray[i].querySelector('span').innerHTML = sito[t];
+        ddArray[i].innerHTML = sito[t];
     });
 
     mostraSezione("infopanel");
@@ -112,8 +112,8 @@ function showMore(sito){
 
 function showLess(){
 
-    document.getElementById('infopanel').querySelector('.card').querySelectorAll('div').forEach(d => {
-        d.querySelector('span').innerHTML = '';
+    document.getElementById('infopanel').querySelector('.card').querySelectorAll('dd').forEach(d => {
+        d.innerHTML = '';
     })
 
     document.getElementById("modificaSito").querySelector('form').reset();

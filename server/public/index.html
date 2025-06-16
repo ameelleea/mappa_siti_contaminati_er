@@ -28,17 +28,23 @@
   <section id="default" class="side-gap attiva">
     <h3>Statistiche:</h3>
     <div class="card">
-      <div>
-        <b>Numero totale dei siti contaminati:</b><span></span>
-      </div>
-      <div>
-        <b>Siti bonificati:</b><span></span>
-      </div>
-      <div>
-        <b>Siti messi in sicurezza:</b><span></span>
-      </div>
+      <dl class="flex-clmn" style="margin: 0;">
+        <div class="flex-row">
+          <dt><b>Numero totale dei siti contaminati:</b></dt>
+          <dd id="totale-siti"></dd>
+        </div>
+        <div class="flex-row">
+          <dt><b>Siti bonificati:</b></dt>
+          <dd id="siti-bonificati"></dd>
+        </div>
+        <div class="flex-row">
+          <dt><b>Siti messi in sicurezza:</b></dt>
+          <dd id="siti-sicurezza"></dd>
+        </div>
+      </dl>
     </div>
   </section>
+
 
   <section class="side-gap" id="cerca">
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
@@ -192,27 +198,36 @@
     <button class="chiudi" onclick="mostraSezione('default')">X</button>
     <h3>Informazioni aggiuntive:</h3>
     <div class="card">
-      <div>
-       <b>Messa in sicurezza emergenza:  </b><span></span>
-      </div>
-      <div>
-       <b>Messa in sicurezza operativa:  </b><span></span>
-      </div>
-      <div>
-       <b>Messa in sicurezza permanente:  </b><span></span>
-      </div>
-      <div>
-       <b>Bonifica:  </b><span></span>
-      </div>
-      <div>
-       <b>Bonifica sicurezza:  </b><span></span>
-      </div>
-      <div>
-       <b>Procedure:  </b><span></span>
-      </div>
-      <div>
-       <b>Note:  </b><span></span>
-      </div>
+        <dl class="flex-clmn" style="margin: 0;"></dl>
+        <div class="flex-row">
+         <dt><b>Messa in sicurezza emergenza:</b></dt>
+         <dd></dd>
+        </div>
+        <div class="flex-row">
+         <dt><b>Messa in sicurezza operativa:</b></dt>
+         <dd></dd>
+        </div>
+        <div class="flex-row">
+         <dt><b>Messa in sicurezza permanente:</b></dt>
+         <dd></dd>
+        </div>
+        <div class="flex-row">
+         <dt><b>Bonifica:</b></dt>
+         <dd></dd>
+        </div>
+        <div class="flex-row">
+         <dt><b>Bonifica sicurezza:</b></dt>
+         <dd></dd>
+        </div>
+        <div class="flex-row">
+         <dt><b>Procedure:</b></dt>
+         <dd></dd>
+        </div>
+        <div class="flex-row">
+         <dt><b>Note:</b></dt>
+         <dd></dd>
+        </div>
+      </dl>
       <button type="button" class="modify-btn">Modifica</button>
       <button type="button" class="delete-btn">Elimina</button>
     </div>
@@ -228,26 +243,26 @@
       <input type="hidden" name="bonifica" value="No"> 
       <input type="hidden" name="bonifica_sicurezza" value="No">
 
-      <label class="flex-clmn">
-        Messa in sicurezza d'emergenza:
-        <input type="checkbox" name="messa_sicurezza_emergenza" value="Si">
-      </label>
-      <label class="flex-clmn">
-        Messa in sicurezza operativa:
-        <input type="checkbox" name="messa_sicurezza_operativa" value="Si">
-      </label>
-      <label class="flex-clmn">
-        Messa in sicurezza permanente:
-        <input type="checkbox" name="messa_sicurezza_permanente" value="Si"><br>
-      </label>
-      <label class="flex-clmn">
-        Bonifica e ripristino ambientale:
-        <input type="checkbox" name="bonifica" value="Si"> 
-      </label>
-      <label class="flex-clmn">
-        Bonifica e ripristino ambientale con misure di sicurezza:
-        <input type="checkbox" name="bonifica_sicurezza" value="Si"><br>
-      </label>
+      <div class="flex-row">
+        <label for="mod-check-1">Messa in sicurezza d'emergenza:</label>
+        <input type="checkbox" id="mod-check-1" name="messa_sicurezza_emergenza" value="Si">
+      </div>
+      <div class="flex-row">
+        <label for="mod-check-2">Messa in sicurezza operativa:</label>
+        <input type="checkbox" id="mod-check-2" name="messa_sicurezza_operativa" value="Si">
+      </div>
+      <div class="flex-row">
+        <label for="mod-check-3">Messa in sicurezza permanente:</label>
+        <input type="checkbox" id="mod-check-3" name="messa_sicurezza_permanente" value="Si"><br>
+      </div>
+      <div class="flex-row">
+        <label for="mod-check-4">Bonifica e ripristino ambientale:</label>
+        <input type="checkbox" id="mod-check-4" name="bonifica" value="Si"> 
+      </div>
+      <div class="flex-row">
+        <label for="mod-check-5">Bonifica e ripristino ambientale con misure di sicurezza:</label>
+        <input type="checkbox" id="mod-check-5" name="bonifica_sicurezza" value="Si"><br>
+      </div>
       <label class="flex-clmn">
         Procedura:
         <input type="text" name="procedura" placeholder="Procedura"><br>

@@ -31,6 +31,13 @@ body {
   font-size: 0.875rem;
 }
 
+.flex-row {
+  display: flex;
+}
+
+.flex-row label, .flex-row dt {
+  width: 22.5rem;
+}
 
 .responsive-grid {
   display: grid;
@@ -245,9 +252,5 @@ section h3 {
 
 #info div, #content div {
   margin: 0.75rem 0;
-}
-
-#modificaSito form {
-  gap: 0;
 }
 
