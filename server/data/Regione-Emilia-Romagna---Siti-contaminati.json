@@ -1,35 +1,13 @@
 [
   {
-    "Codice": "pc000026",
-    "Comune": "BESENZONE",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "strada del bersano,",
-    "Attività": "industriale",
     "Messa in sicurezza d'emergenza": "No",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
     "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
+    "Bonifica e ripristino ambientale con misure di sicurezza": "Si",
+    "Procedura": "",
     "Note": "",
-    "Latitudine": 44.986569,
-    "Longitudine": 9.952705
-  },
-  {
-    "Codice": "pc000025",
-    "Comune": "BESENZONE",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "strada del bersano,",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "Piano di Caratterizzazione Approvato con DD 2316 del 12/11/2010.Piano Operativo di Bonifica Approvato con DD 2191 del 19/11/2013 Amministrazione Provinciale Piano di Caratterizzazione Approvato con DD 2316 del 12/11/2010.Piano Operativo di Bonifica Approvato con DD 2191 del 19/11/2013 Amministrazione Provinciale",
-    "Latitudine": 44.986567,
-    "Longitudine": 9.952706
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "pc000020",
@@ -48,36 +26,14 @@
     "Longitudine": 9.958539
   },
   {
-    "Codice": "pc000043",
-    "Comune": "CADEO",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "strada Vittoria,90",
-    "Attività": "industriale",
     "Messa in sicurezza d'emergenza": "Si",
     "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
     "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "Progetto Operativo di Bonifica Approvato con DD 1996 del 16/11/2009 dalla Amministrazione Provinciale con condizione di monitoraggio Decennale. Ultima nota da parte della ditta RDB ? la trasmissione dei certificati di analisi del monitoraggio acque del 2",
-    "Latitudine": 44.977685,
-    "Longitudine": 9.829495
-  },
-  {
-    "Codice": "pc000039",
-    "Comune": "CADEO",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "via Emilia,245+707",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "Si",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "ADEGUAMENTO TECNOLOGICO DELL'IMPIANTO ANNO 2013.",
-    "Latitudine": 44.966319,
-    "Longitudine": 9.849896
+    "Bonifica e ripristino ambientale con misure di sicurezza": "Si",
+    "Procedura": "",
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   },
   {
     "Codice": "pc000038",
@@ -94,22 +50,6 @@
     "Note": "Approvazione Progetto Operativo e Analisi di Rischio in sede di CdS del 24/03/2015 dal Comune di Cortemaggiore",
     "Latitudine": 44.993714,
     "Longitudine": 9.930249
-  },
-  {
-    "Codice": "pc000037",
-    "Comune": "CORTEMAGGIORE",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "localita' Forca Grossa,",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "favorevolmente all'approvazione dell'ANALISI DI RISCHIO. Il rilascio dell'area ? subordinato alla CERTIFICAZIONE PROVINCIALE",
-    "Latitudine": 44.993718,
-    "Longitudine": 9.930247
   },
   {
     "Messa in sicurezza d'emergenza": "No",

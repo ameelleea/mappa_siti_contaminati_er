@@ -141,10 +141,24 @@ function prepareModificaForm(sitoSelezionato) {
 
     await modifySite(sitoSelezionato, JSON.stringify(objData));
     defaultCard();
+    showPopup('infopanel');
     showMore(sitoSelezionato);
   });
 }
 
+function showPopup(sezione) {
+  const popup = document.getElementById(sezione).querySelector('.popup-confirm');
+
+  popup.style.opacity = '1';
+  popup.style.transform = 'translateY(0)';
+  popup.style.pointerEvents = 'auto';
+
+  setTimeout(() => {
+    popup.style.opacity = '0';
+    popup.style.transform = 'translateY(-10px)';
+    popup.style.pointerEvents = 'none';
+  }, 2000);
+}
 
 window.addEventListener("load", async () => {
     defaultCard();
@@ -210,6 +224,7 @@ document.addEventListener('click', async (event) => {
               console.warn(`Nessun marker trovato per il codice ${codice}`);
             }
             defaultCard();
+            showPopup('default');
           } else {
             console.log("Annullato");
           }

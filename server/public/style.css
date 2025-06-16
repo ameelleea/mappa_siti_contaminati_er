@@ -136,6 +136,23 @@ header h1 {
 }
 
 /*Sezioni*/
+.popup-confirm {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #03A65A;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
 section {
   display: none;
   padding: 0 0.5rem 0.5rem;
