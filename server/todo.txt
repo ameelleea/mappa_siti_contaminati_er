@@ -1,7 +1,6 @@
 -Aggiungere gestione degli errori
 -Ricontrollare comportamento metodi
--Sistemare font
--Pulire css
+-Popup conferma aggiunta/modifica
 
 
 Per ultimo:

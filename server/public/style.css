@@ -12,33 +12,6 @@ body {
   margin: 1.5rem 3rem;
 }
 
-#top-bar {
-  color: white;
-  background-color: #025928;
-  padding: 1rem 3rem;
-  font-size: 0.8rem;
-}
-
-.flex-clmn {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.flex-clmn label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 0.875rem;
-}
-
-.flex-row {
-  display: flex;
-}
-
-.flex-row label, .flex-row dt {
-  width: 22.5rem;
-}
-
 .responsive-grid {
   display: grid;
   gap: 1rem;
@@ -46,12 +19,61 @@ body {
   margin: 1rem 0;
 }
 
-.input-base {
-  font-size: 1rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+.flex-clmn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-row label {
+  width: 22.5rem;
+}
+
+.flex-row dt {
+  width: 15rem;
+}
+
+.flex-row dd {
+  margin: 0;
+}
+
+.card {
+  padding: 1.5rem;
+}
+
+.card label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  .title {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .options {
+    flex-wrap: wrap;
+  }
+
+  .options button {
+    flex: 1 1 40%;
+  }
+}
+
+/*Header*/
+#top-bar {
+  color: white;
+  background-color: #025928;
+  padding: 1rem 3rem;
+  font-size: 0.8rem;
 }
 
 header {
@@ -72,7 +94,7 @@ header .title {
 }
 
 header img {
-  height: 50px;
+  height: 3.125rem;
 }
 
 header h1 {
@@ -82,73 +104,38 @@ header h1 {
   color: #03A65A;
 }
 
-@media (max-width: 600px) {
-  .title {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .options {
-    flex-wrap: wrap;
-  }
-
-  .options button {
-    flex: 1 1 40%;
-  }
+/* Options (menu) */
+.options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0 0;
+  border-top: 2px solid #025928;
 }
 
-button,
-input,
-select {
+.options button {
   font-size: 1rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  background-color: #F2F2F2;
-}
-
-.card {
-  padding: 1.5rem;
-}
-
-.card label {
   font-weight: 600;
-  margin-bottom: 0.4rem;
-  font-size: 0.95rem;
-}
-
-/* Bottoni */
-button {
-  background-color: #038C5A;
-  color: white;
+  color: #025928;
   border: none;
+  background-color: transparent;
+  padding: 0.6rem 1rem 0.8rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease-in-out;
+  border-radius: 0;
 }
 
-button:hover {
-  background-color: #03A65A;
+.options button:hover {
+  text-decoration: underline;
+  border-bottom: 4px solid #C4C4C4;
 }
 
-button.chiudi {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: transparent;
-  border: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  color: #555;
+.options button.active,
+.options button:focus {
+  border-bottom: 4px solid #C4C4C4;
 }
 
-button.chiudi:hover {
-  color: #038C5A;
-}
-
-/* Sezioni */
+/*Sezioni*/
 section {
   display: none;
   padding: 0 0.5rem 0.5rem;
@@ -172,39 +159,7 @@ section h3 {
   display: block;
 }
 
-/* Options (menu) */
-.options {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 0 0;
-  border-top: 2px solid #025928;
-}
-
-/* BOTTONI */
-.options button {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #025928;
-  border: none;
-  background-color: transparent;
-  padding: 0.6rem 1rem 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  border-radius: 0;
-}
-
-.options button:hover {
-  text-decoration: underline;
-  border-bottom: 4px solid #C4C4C4;
-}
-
-.options button.active,
-.options button:focus {
-  border-bottom: 4px solid #C4C4C4;
-}
-
-/* Filtri */
+/*Filtri*/
 #hidden-items {
   display: none;
   border-top: 1px solid gray;
@@ -225,14 +180,42 @@ section h3 {
   margin-left: 0.75rem;
 }
 
-#infopanel .card div {
-  margin: 1rem 0;
-}
-#modificaSito form > div {
-  gap: 0;
+/* Bottoni e input */
+button,
+input,
+select {
+  font-size: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-color: #F2F2F2;
 }
 
-/* Checkboxes */
+button {
+  background-color: #038C5A;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.chiudi {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #555;
+}
+
+button.chiudi:hover {
+  color: #038C5A;
+}
+
 .checkboxes input[type="checkbox"] {
   transform: scale(1.1);
   margin-top: 0.3rem;
@@ -248,9 +231,5 @@ section h3 {
 .marker-button {
   margin-top: 0.5rem;
   font-size: 0.8rem;
-}
-
-#info div, #content div {
-  margin: 0.75rem 0;
 }
 
