@@ -1,7 +1,8 @@
--Validazione: https://validator.w3.org/	
 -Aggiungere gestione degli errori
--Valutare header sticky
 -Ricontrollare comportamento metodi
+-Sistemare font
+-Pulire css
+
 
 Per ultimo:
 -Ripulire backend
