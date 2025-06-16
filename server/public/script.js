@@ -1,49 +1,91 @@
+//Frontend
 let markersMap = {};
-let queryFields = {};
 let filterOptions = ["Si", "No"];
 let province = ["CITTA' METROPOLITANA DI BOLOGNA", "MODENA", "REGGIO EMILIA", "FERRARA", "RIMINI", "PIACENZA", "RAVENNA", "PARMA", "FORLI'"];
+let sitoSelezionato;
 
 const map = L.map('map').setView([44.5, 11.3], 8);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
+function populateSelect(selects, values, includeEmpty = false) {
+  selects.forEach(el => {
+    if (includeEmpty) {
+      const firstOption = document.createElement("option");
+      firstOption.value = "";
+      firstOption.textContent = "-- Seleziona --";
+      el.appendChild(firstOption);
+    }
 
-function mostraSezione(id) {
-    // Nasconde tutte le sezioni
-    const sezioni = document.querySelectorAll('.sezione');
-    sezioni.forEach(s => s.classList.remove('attiva'));
-
-    // Mostra solo quella con l'ID selezionato
-    document.getElementById(id).classList.add('attiva');
-    document.querySelector('.options').querySelectorAll('button').forEach(b => {
-      if(b.name === id){
-        b.style.textDecoration = 'underline';
-      }
-      else{
-        b.style.textDecoration = 'none';
-      }
-    })
-    resetFilters();
+    values.forEach(val => {
+      const option = document.createElement("option");
+      option.value = val;
+      option.textContent = val;
+      el.appendChild(option);
+    });
+  });
 }
 
+async function mostraSezione(id) {
+    const sezioni = document.querySelectorAll('section');
+    sezioni.forEach(s => {s.classList.remove('attiva')});
+
+    const sezione = document.getElementById(id);
+    sezione.classList.add('attiva');
+
+    const header = document.querySelector('header');
+    const stile = window.getComputedStyle(header);
+    const headerOffset = header.getBoundingClientRect().height + parseFloat(stile.marginBottom);
+    const elementPosition = sezione.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
+
+    if(id !== 'infopanel' && id !== "modificaSito")
+        markSites(await getSites());
+}
+
+async function defaultCard(){
+    const sites = await getSites();
+    const keysStarts = ['bonifica', 'messa'];
+    const sitesSizes = [sites.length, 0, 0];
+
+    keysStarts.forEach((start, idx) => {
+      sites.forEach(s => {
+        sitesSizes[idx+1] += Object.keys(s)
+                                  .filter(k => k.startsWith(start) && s[k] === 'Si')
+                                  .length;
+      })
+    });
+
+    document.getElementById("default")
+            .querySelector('.card')
+            .querySelectorAll('dd')
+            .forEach((d, i) => {
+              d.innerHTML = sitesSizes[i];
+    });
+}
 
 function markSites(sites){
-    Object.values(markersMap).forEach(m => map.removeLayer(m));
-    Object.keys(markersMap).forEach(k => delete markersMap[k]);
+    Object.values(markersMap).forEach(m => {
+      map.removeLayer(m);
+      delete markersMap[m];
+    });
   
     sites.forEach(sito => {
         if (sito.lat && sito.lon) {
             const marker = L.marker([parseFloat(sito.lat), parseFloat(sito.lon)])
                             .addTo(map)
                             .bindPopup(`
-                              <b>Codice: ${sito.codice}</b><br>
-                              Attività: ${sito.attività}<br>
-                              Indirizzo: ${sito.indirizzo}<br>
-                              ${sito.comune + ', ' + sito.provincia}<br>
-                              <button type="button" class="show-more-btn" data-id="${sito.codice}">Mostra altro</button>
-                              <button type="button" class="modify-btn" data-id="${sito.codice}">Modifica</button>
-                              <button type="button" class="delete-btn" data-id="${sito.codice}">Elimina</button>
+                              <b style='color:#F23041; font-size:medium;'>Codice: ${sito.codice}</b><br>
+                              <b>Attività:</b> ${sito.attività}<br>
+                              <b>Indirizzo:</b> ${sito.indirizzo}<br>
+                              <b>${sito.comune + ', ' + sito.provincia}<br></b>
+                              <button type="button" class="marker-button show-more-btn" data-id="${sito.codice}">Mostra altro</button>
                             `);  
                             
             markersMap[sito.codice] = marker;
@@ -56,189 +98,112 @@ function markSites(sites){
     });
 }
 
-
 function showMore(sito){
-    const infopanel = document.getElementById("infopanel");
-    const tbody = infopanel.querySelector("table tbody");
-    tbody.innerHTML = `<tr>
-      <th>Messa in sicurezza emergenza</th>
-      <td>${sito.messa_sicurezza_emergenza}</td>
-     </tr>
-     <tr>
-      <th>Messa in sicurezza operativa</th>
-      <td>${sito.messa_sicurezza_operativa}</td>
-     </tr>
-     <tr>
-      <th>Messa in sicurezza permanente</th>
-      <td>${sito.messa_sicurezza_permanenete}</td>
-     </tr>
-     <tr>
-      <th>Bonifica</th>
-      <td>${sito.bonifica}</td>
-     </tr>
-     <tr>
-      <th>Bonifica sicurezza</th>
-      <td>${sito.bonifica_sicurezza}</td>
-     </tr>
-     <tr>
-      <th>Procedure</th>
-      <td>${sito.procedura}</td>
-     </tr>
-     <tr>
-      <th>Note</th>
-      <td>${sito.note}</td>
-     </tr>`;
+    const targetKeys = Object.keys(sito).slice(5, 12);
+    let ddArray = document.getElementById('infopanel').querySelector(`.card`).querySelectorAll('dd');
+
+    targetKeys.forEach((t, i) => {
+        ddArray[i].innerHTML = sito[t];
+    });
 
     mostraSezione("infopanel");
 }
 
 function showLess(){
-    document.getElementById("infopanel").style.display = "none";
-    document.getElementById("infopanel").querySelector("table tbody").innerHTML = "";
+
+    document.getElementById('infopanel').querySelector('.card').querySelectorAll('dd').forEach(d => {
+        d.innerHTML = '';
+    })
+
+    document.getElementById("modificaSito").querySelector('form').reset();
+    mostraSezione("default");
 }
 
-async function getSites() {
-    try {
-      const res = await fetch(`/siti`);
-      
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-      const sites = await res.json();
-      return sites;
-      
+let lastSubmitHandler = null;
 
-    } catch (err) {
-      console.error('Errore caricando siti:', err);
+function prepareModificaForm(sito) {
+  const form = document.getElementById("modificaSito").querySelector("form");
+  const keys = Object.keys(sito)
+    .filter(k => k.startsWith('bonifica') || k.startsWith('messa_sicurezza'));
+
+  // Reset dei checkbox
+  form.querySelectorAll("input[type=checkbox]").forEach(i => i.checked = false);
+
+  keys.forEach(k => {
+    if (sito[k] === 'Si') {
+      form.querySelectorAll(`input[name=${k}]`).forEach(i => i.checked = true);
     }
-}
+  });
 
-async function resetFilters() {
-  filterSites('reset', '');
-}
-
-async function filterSites(filterType, filter) {
-    try {
-        console.log(filter);
-        console.log(queryFields);
-        
-        if((filterType === 'codice' || filterType === 'reset')){
-          queryFields = {};
-        }else{
-          delete queryFields['codice'];
-        }
-
-        if(filterType === 'provincia'){
-          delete queryFields['comune'];
-        }
-
-        filter === '' ? delete queryFields[filterType] : queryFields[filterType] = filter;
-
-        console.log(queryFields);
-        const queryString = new URLSearchParams(queryFields).toString()
-        console.log(queryString);
-        const res = await fetch(`/siti?${queryString}`);
-        
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const dati = await res.json();
-        console.log(dati);
-        
-        markSites(dati);
-  } catch (err) {
-    console.error('Errore caricando siti:', err);
+  //Rimuovi handler precedente (se esiste)
+  if (lastSubmitHandler) {
+    form.removeEventListener("submit", lastSubmitHandler);
   }
+
+  //Crea e assegna nuovo handler
+  const newHandler = async function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const objData = Object.fromEntries(formData.entries());
+    Object.assign(sito, objData);
+
+    await modifySite(sito);
+    defaultCard();
+    showPopup('infopanel');
+    showMore(sito);
+  };
+
+  form.addEventListener("submit", newHandler);
+  lastSubmitHandler = newHandler;
+
+  mostraSezione("modificaSito");
 }
 
-async function addSite(params){
-    fetch('/siti', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: params
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Risposta dal server:', data);
-    })
-    .catch(error => console.error('Errore nella POST:', error));
-}
 
-async function modifySite(sito, params) {
-    fetch(`/siti/${sito.codice}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: params
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Aggiornato con successo:', data);
-        })
-        .catch(error => console.error('Errore nella PUT:', error));
-}
+function showPopup(sezione) {
+  const popup = document.getElementById(sezione).querySelector('.popup-confirm');
 
-async function deleteSite(sito) {
-    fetch(`/siti/${sito.codice}`, {
-          method: 'DELETE'
-        })
-        .then(response => {
-          if (response.ok) {
-            console.log('Elemento eliminato');
-          } else {
-            console.error('Errore nella DELETE');
-          }
-        })
-        .catch(error => console.error('Errore:', error));
-      
-      const marker = markersMap[sito.codice];
-      if (marker) {
-        map.removeLayer(marker);
-        delete markersMap[sito.codice];
-        console.log(`Marker con codice ${sito.codice} rimosso`);
-      } else {
-        console.warn(`Nessun marker trovato per il codice ${sito.codice}`);
-      }
-}
+  popup.style.opacity = '1';
+  popup.style.transform = 'translateY(0)';
+  popup.style.pointerEvents = 'auto';
 
+  setTimeout(() => {
+    popup.style.opacity = '0';
+    popup.style.transform = 'translateY(-10px)';
+    popup.style.pointerEvents = 'none';
+  }, 2000);
+}
 
 window.addEventListener("load", async () => {
+    defaultCard();
     markSites(await getSites());
+    populateSelect(document.querySelectorAll("select"), [], true);
+    populateSelect(document.querySelectorAll(".provincia"), province);
+    populateSelect(document.querySelector("#hidden-items").querySelectorAll("select"), filterOptions);
 });
 
 
 /*EventListeners*/
-document.querySelectorAll("select").forEach(el => {
-    const firstOption = document.createElement("option");
-    firstOption.value = "";
-    firstOption.textContent = "-- Seleziona --"
-    el.appendChild(firstOption);
-});
-
 document.getElementById("filters").querySelectorAll("select").forEach(el => {
     el.addEventListener('change', async (e) => {
-        filterSites(e.target.id, e.target.value);
+        markSites(await getSites(e.target.id, e.target.value));
 
         if(e.target.id === "provincia"){
             const selectComune = document.getElementById('comune');
             Array.from(selectComune.children).slice(1).forEach(child => selectComune.removeChild(child));
+            const comuniPresenti = new Set();
 
             if(e.target.value !== ''){
 
               const sites = await getSites();
               sites.forEach(sito  => {
-                  if(sito.provincia === e.target.value){
-                      const optionDefault = document.createElement("option");
-                      optionDefault.value = optionDefault.textContent = sito.comune;
-
-                      const esiste = Array.from(selectComune.children).some(
-                      (figlio) => figlio.innerHTML === optionDefault.innerHTML
-                      );
-
-                      if (!esiste) {
-                        selectComune.appendChild(optionDefault);
-                      }
+                  if(sito.provincia === e.target.value && !comuniPresenti.has(sito.comune)){
+                      comuniPresenti.add(sito.comune);
+                      const comuneOption = document.createElement("option");
+                      comuneOption.value = comuneOption.textContent = sito.comune;
+                      selectComune.appendChild(comuneOption);
                   }
-              })
+              });
 
               document.querySelector('.comune-group').style.display = 'flex';
           }
@@ -249,152 +214,192 @@ document.getElementById("filters").querySelectorAll("select").forEach(el => {
     })  
 });
 
-document.querySelectorAll(".provincia").forEach(el => {
-  province.forEach(val => {
-    const optionDefault = document.createElement("option");
-    optionDefault.value = val;
-    optionDefault.textContent = val;
-    el.appendChild(optionDefault);
-  })
-})
-
 document.addEventListener('click', async (event) => {
-  if (event.target){
+  if(event.target){
     const codice = event.target.getAttribute('data-id');
-    const res = await fetch(`/siti`);
-        
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    const sites = await res.json();
-    const sitoSelezionato = sites.find(s => s.codice === codice);
+    const sites = await getSites();
+    sitoSelezionato = sites.find(s => s.codice === codice);
+
     if (sitoSelezionato) {
-      
-    
-    if(event.target.classList.contains('show-more-btn')) {
-      showMore(sitoSelezionato);
-    }else if(event.target.classList.contains('modify-btn')){
-
-      const targetKeys = [
-                          "messa_sicurezza_emergenza",
-                          "messa_sicurezza_operativa",
-                          "messa_sicurezza_permanenete",
-                          "bonifica",
-                          "bonifica_sicurezza",
-                        ];
-      const modificaForm = document.getElementById("modificadiv").querySelector("form");
-
-      targetKeys.forEach(key => {
-        if(sitoSelezionato[key] === 'Si'){
-          document.getElementById("check-"+key).checked = true;
-        }
-      });
-
-      mostraSezione("modificadiv");
-
-      modificaForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const objData = Object.fromEntries(formData.entries())
-
-        Object.keys(objData).forEach(k => {
-          sitoSelezionato[k] = objData[k];
-        })
-        const data = JSON.stringify(objData);
-      
-        modifySite(sitoSelezionato, data);
-        this.reset();
-        this.style.display = "none";
-      });
-    }else if(event.target.classList.contains('delete-btn')){
-      if (confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")) {
-        deleteSite(sitoSelezionato);
-      } else {
-        console.log("Annullato");
-      }
+      if(event.target.classList.contains('show-more-btn'))
+        showMore(sitoSelezionato);
     }
-  } 
-}});
-
+  }
+});
 
 document.getElementById("cerca").querySelector("form").addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const formData = new FormData(e.target);
     const objData = Object.fromEntries(formData.entries())
-    filterSites('codice', objData.codice)
+    markSites(await getSites('codice', objData.codice));
     e.target.querySelector('input[name="codice"]').value = '';
 });
 
-document.querySelector("#provincia-agg").addEventListener('change', async function (e) {
+document.querySelector("#aggiungiSito").querySelector('.provincia').addEventListener('change', async function (e) {
     const comuneSelect = document.querySelector("#comune-agg");
 
     const res = await fetch('/comuni');
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
     const comuni = await res.json();
+    const comuniPresenti = new Set();
 
     comuni[e.target.value].forEach(c => {
-      const optionDefault = document.createElement("option");
-      optionDefault.value = optionDefault.textContent = c.toUpperCase();
-      
-      const esiste = Array.from(comuneSelect.children).some(
-                      (child) => child.innerHTML === optionDefault.innerHTML
-                      );
-
-      if (!esiste) {
-        comuneSelect.appendChild(optionDefault);
+      if(!comuniPresenti.has(c)){
+        const comuneOption = document.createElement("option");
+        comuneOption.value = comuneOption.textContent = c.toUpperCase();
+        comuneSelect.append(comuneOption);
       }
     })
 });
 
-document.getElementById("aggiungiSito").querySelector("form").addEventListener("submit", function (e) {
+document.getElementById("aggiungiSito").querySelector("form").addEventListener("submit", async function (e) {
     e.preventDefault();
     
     const formData = new FormData(this);
     const objData = Object.fromEntries(formData.entries())
     const data = JSON.stringify(objData);
+    console.log(data);
     
-    addSite(data);
+    await addSite(data);
     this.reset();
-    this.style.display = "none";
-});
-
-document.querySelector("#hidden-items").querySelectorAll("select").forEach(el => {
-    filterOptions.forEach(val => {
-      const optionDefault = document.createElement("option");
-      optionDefault.value = val;
-      optionDefault.textContent = val;
-      el.appendChild(optionDefault);
-    })
+    markSites(await getSites());
+    defaultCard();
+    mostraSezione("default");
 });
 
 document.getElementById("more-filters").addEventListener('click', (e) => {
-  const moreFilters = document.getElementById("hidden-items");
-  const displayStyle = moreFilters.style.display;
+    const moreFilters = document.getElementById("hidden-items");
 
-  if(displayStyle === "none"){
-    moreFilters.style.display = "flex";
-  }else{
-    moreFilters.style.display = "none";
-  }
-
-  if(e.target.textContent === 'Più filtri'){
-    e.target.textContent = 'Meno filtri'
-  }else{
-    e.target.textContent = 'Più filtri'
-  }
+    if(e.target.textContent === 'Più filtri'){
+        moreFilters.style.display = 'grid';
+        e.target.textContent = 'Meno filtri';
+    }else{
+        moreFilters.style.display = 'none';
+        e.target.textContent = 'Più filtri';
+    }
 });
 
-document.getElementById("reset-filters").addEventListener('click', () => {
+document.getElementById("reset-filters").addEventListener('click', async () => {
   document.getElementById("filters").querySelectorAll("select").forEach(sel => {
     sel.value = "";
   })
 
-  resetFilters();
+  markSites(await getSites());
 });
- 
 
+document.querySelector('.modify-btn').addEventListener('click', (e)=> prepareModificaForm(sitoSelezionato));
 
+document.querySelector('.delete-btn').addEventListener('click', async (e) => {
+  console.log(sitoSelezionato);
+  if(confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")){
+    deleteSite(sitoSelezionato.codice);
+    const marker = markersMap[sitoSelezionato.codice];
+    if (marker) {
+      map.removeLayer(marker);
+      delete markersMap[sitoSelezionato.codice];
+      console.log(`Marker con codice ${sitoSelezionato.codice} rimosso`);
+    } else {
+      console.warn(`Nessun marker trovato per il codice ${sitoSelezionato.codice}`);
+    }
+    defaultCard();
+    showPopup('default');
+  } else {
+    console.log("Annullato");
+  }
+});
 
+//Comunicazione col backend
+let queryFields = {};
 
+function buildQueryString(filterType, filter){
+  if (filterType === 'codice') {
+    queryFields = { codice: filter };
+  } else {
+    delete queryFields['codice'];
 
+    if (filterType === 'provincia') {
+      delete queryFields['comune'];
+    }
 
+    if (filter) {
+      queryFields[filterType] = filter;
+    } else {
+      delete queryFields[filterType];
+    }
+  }
+
+  const queryString = Object.keys(queryFields).length > 0
+    ? '?' + new URLSearchParams(queryFields).toString()
+    : '';
+
+    return queryString;
+}
+
+async function getSites(filterType='', filter='') {
+       
+    const queryString = buildQueryString(filterType, filter);
+
+    try {
+      const res = await fetch(`/siti${queryString}`);
+      
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      const sites = await res.json();
+      return sites;
+
+    } catch (err) {
+      console.error('Errore caricando siti:', err);
+    }
+}
+
+async function addSite(payload){
+  try{
+    const res = await fetch('/siti', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: payload
+    });
+    
+    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    const data = await res.json();
+    console.log('Risposta dal server: ' + data);
+  }catch(error){
+    console.log('Errore nella POST: ' + error);
+  }
+}
+
+async function modifySite(sito) {
+  try{
+    console.log(sito.codice);
+    const res = await fetch(`/siti/${sito.codice}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(sito)
+        });
+    
+    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    const data = await res.json();
+    console.log('Aggiornato con successo:', data);
+       
+  }catch(error){ 
+    console.error('Errore nella PUT:', error);
+  }
+}
+
+async function deleteSite(codice) {
+  try{
+    const res = await fetch(`/siti/${codice}`, {
+                  method: 'DELETE'
+                });
+    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    console.log('Elemento eliminato.');
+  }catch(error){
+    console.error('Errore:', error);
+  }
+}

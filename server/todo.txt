@@ -1,7 +1,5 @@
--Aggiungere gestione degli errori
 -Ricontrollare comportamento metodi
--Popup conferma aggiunta/modifica
-
+-Aggiungere commenti?
 
 Per ultimo:
 -Ripulire backend

@@ -60,18 +60,19 @@ async function addSite(payload){
   }
 }
 
-async function modifySite(sito, payload) {
+async function modifySite(sito) {
   try{
+    console.log(sito.codice);
     const res = await fetch(`/siti/${sito.codice}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: payload
+          body: JSON.stringify(sito)
         });
     
     if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-    const data = await response.json();
+    const data = await res.json();
     console.log('Aggiornato con successo:', data);
        
   }catch(error){ 
@@ -81,7 +82,7 @@ async function modifySite(sito, payload) {
 
 async function deleteSite(codice) {
   try{
-    const res = fetch(`/siti/${codice}`, {
+    const res = await fetch(`/siti/${codice}`, {
                   method: 'DELETE'
                 });
     if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
