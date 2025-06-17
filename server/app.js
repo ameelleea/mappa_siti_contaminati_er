@@ -142,13 +142,14 @@ app.get('/siti', (req, res) => {
     if(queryKeys.length === 0){
       return res.json(data);
     }
-
+    console.log(req.query);
     const filtered = data.filter(sito => {
       return queryKeys.every(key => 
         sito[key] && sito[key].trim().toLowerCase() === req.query[key].trim().toLowerCase()
       );
     });
 
+    console.log(filtered);
     res.json(filtered);
   }catch(e){
     console.error(e);

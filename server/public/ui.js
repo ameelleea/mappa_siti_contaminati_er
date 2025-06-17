@@ -1,90 +1,23 @@
-//Frontend
-let markersMap = {};
-let sites = [];
+let markersMap = {}; //Dizionario dei markers sulla mappa
+let sites = []; //I siti caricati dall'ultima chiamata all'API
+//Elenco delle province della RER
 let province = ["CITTA' METROPOLITANA DI BOLOGNA", "MODENA", "REGGIO EMILIA", "FERRARA", "RIMINI", "PIACENZA", "RAVENNA", "PARMA", "FORLI'"];
-let sitoSelezionato;
-let lastSubmitHandler = null;
 
+//Inizializzazione mappa
 const map = L.map('map').setView([44.5, 11.3], 8);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-function populateSelect(selects, values) {
-  selects.forEach(el => {
-    const fragment = document.createDocumentFragment();
-
-
-    const firstOption = document.createElement("option");
-    firstOption.value = "";
-    firstOption.textContent = "-- Seleziona --";
-    fragment.appendChild(firstOption);
-    
-
-    values.forEach(val => {
-      const option = document.createElement("option");
-      option.value = val;
-      option.textContent = val;
-      fragment.appendChild(option);
-    });
-
-    el.appendChild(fragment);
-  });
-}
-
-async function mostraSezione(id) {
-    const sezioni = document.querySelectorAll('section');
-    sezioni.forEach(s => {s.classList.remove('attiva')});
-
-    const sezione = document.getElementById(id);
-    sezione.classList.add('attiva');
-
-    const header = document.querySelector('header');
-    const stile = window.getComputedStyle(header);
-    const headerOffset = header.getBoundingClientRect().height + parseFloat(stile.marginBottom);
-    const elementPosition = sezione.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth"
-    });
-
-    if(id !== 'infopanel' && id !== "modificaSito")
-        markSites(await getSites());
-}
-
-async function defaultCard(){
-  try{
-    sites = await getSites();
-  }catch(e){
-    console.log(e);
-  }
-
-  const sitesSizes = [sites.length, 0, 0];
-
-  sites.forEach(s => {
-    sitesSizes[1] += Object.keys(s).filter(k => k.startsWith('bonifica') && s[k] === 'Si').length;
-    sitesSizes[2] += Object.keys(s).filter(k => k.startsWith('messa') && s[k] === 'Si').length;
-  });
-
-  document.getElementById("default")
-          .querySelector('.card')
-          .querySelectorAll('dd')
-          .forEach((d, i) => {
-            d.innerHTML = sitesSizes[i];
-  });
-
-  markSites(sites);
-}
-
+//Creazione marker per ogni sito:sites
 function markSites(sites){
+    //Pulizia markers
     Object.keys(markersMap).forEach(key => {
       map.removeLayer(markersMap[key]);
       delete markersMap[key];
     });
 
-  
+    //Aggiunta nuovi markers
     sites.forEach(sito => {
         if (sito.lat && sito.lon) {
             const marker = L.marker([parseFloat(sito.lat), parseFloat(sito.lon)])
@@ -107,66 +40,53 @@ function markSites(sites){
     });
 }
 
-function showMore(sito){
-    const targetKeys = Object.keys(sito).slice(5, 12);
-    let ddArray = document.getElementById('infopanel').querySelector(`.card`).querySelectorAll('dd');
+//Aggiorna le stat
+async function updateDefaultCard(){
+  const sitesSizes = [sites.length, 0, 0];
 
-    targetKeys.forEach((t, i) => {
-        ddArray[i].innerHTML = sito[t];
-    });
-
-    mostraSezione("infopanel");
-}
-
-function showLess(){
-
-    document.getElementById('infopanel').querySelector('.card').querySelectorAll('dd').forEach(d => {
-        d.innerHTML = '';
-    })
-
-    document.getElementById("modificaSito").querySelector('form').reset();
-    mostraSezione("default");
-}
-
-function prepareModificaForm(sito) {
-  const form = document.getElementById("modificaSito").querySelector("form");
-  const keys = Object.keys(sito)
-    .filter(k => k.startsWith('bonifica') || k.startsWith('messa_sicurezza'));
-
-  // Reset dei checkbox
-  form.querySelectorAll("input[type=checkbox]").forEach(i => i.checked = false);
-
-  keys.forEach(k => {
-    if (sito[k] === 'Si') {
-      form.querySelectorAll(`input[name=${k}]`).forEach(i => i.checked = true);
-    }
+  sites.forEach(s => {
+    sitesSizes[1] += Object.keys(s).filter(k => k.startsWith('bonifica') && s[k] === 'Si').length;
+    sitesSizes[2] += Object.keys(s).filter(k => k.startsWith('messa') && s[k] === 'Si').length;
   });
 
-  //Rimuovi handler precedente (se esiste)
-  if (lastSubmitHandler) {
-    form.removeEventListener("submit", lastSubmitHandler);
-  }
-
-  //Crea e assegna nuovo handler
-  const newHandler = async function (e) {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const objData = Object.fromEntries(formData.entries());
-    Object.assign(sito, objData);
-
-    await modifySite(sito);
-    defaultCard();
-    showPopup('infopanel');
-    showMore(sito);
-  };
-
-  form.addEventListener("submit", newHandler);
-  lastSubmitHandler = newHandler;
-
-  mostraSezione("modificaSito");
+  document.getElementById("default")
+          .querySelector('.card')
+          .querySelectorAll('dd')
+          .forEach((d, i) => {
+            d.innerHTML = sitesSizes[i];
+  });
 }
 
+//Riempie i select con i valori dentro values
+function populateSelect(selects, values, includeEmpty=false) {
+  const selectList = Array.isArray(selects) || selects instanceof NodeList
+    ? Array.from(selects)
+    : [selects];
 
+  selectList.forEach(el => {
+    const fragment = document.createDocumentFragment();
+
+    if(includeEmpty){
+      //Aggiunta opzione vuota
+      const firstOption = document.createElement("option");
+      firstOption.value = "";
+      firstOption.textContent = "-- Seleziona --";
+      fragment.appendChild(firstOption);
+    }
+    
+    //Aggiunta opzioni
+    values.forEach(val => {
+      const option = document.createElement("option");
+      option.value = val;
+      option.textContent = val;
+      fragment.appendChild(option);
+    });
+
+    el.appendChild(fragment);
+  });
+}
+
+//Mostra popup conferma operazione
 function showPopup(sezione) {
   const popup = document.getElementById(sezione).querySelector('.popup-confirm');
 
@@ -179,20 +99,112 @@ function showPopup(sezione) {
     popup.style.transform = 'translateY(-10px)';
     popup.style.pointerEvents = 'none';
   }, 2000);
+
+  mostraSezione(sezione);
 }
+
+//Cambia sezione attiva
+async function mostraSezione(id) {
+    const sezioni = document.querySelectorAll('section');
+    sezioni.forEach(s => {s.classList.remove('attiva')});
+
+    const sezione = document.getElementById(id);
+    sezione.classList.add('attiva');
+
+    const header = document.querySelector('header');
+    const stile = window.getComputedStyle(header);
+    const headerOffset = header.getBoundingClientRect().height + parseFloat(stile.marginBottom);
+    const elementPosition = sezione.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
+
+    if(id !== 'infopanel' && id !== "modificaSito")
+      markSites(await getSites());
+}
+
+//Mostra informazioni aggiuntive sito
+function showMore(sito){
+    sitoSelezionato = sito;
+    const targetKeys = Object.keys(sito).slice(5, 12);
+    let ddArray = document.getElementById('infopanel').querySelector(`.card`).querySelectorAll('dd');
+
+    targetKeys.forEach((t, i) => {
+        ddArray[i].innerHTML = sito[t];
+    });
+
+    mostraSezione("infopanel");
+}
+
+//Nasconde informazioni aggiuntive sito
+function showLess(){
+
+    document.getElementById('infopanel').querySelector('.card').querySelectorAll('dd').forEach(d => {
+        d.innerHTML = '';
+    })
+
+    document.getElementById("modificaSito").querySelector('form').reset();
+    mostraSezione("default");
+    document.querySelector('.modify-btn').removeAttribute('data-id');
+    document.querySelector('.delete-btn').removeAttribute('data-id');
+}
+
+// Funzione per mostrare il form di modifica 
+function showEditForm(sito) {
+  const form = document.getElementById("modificaSito").querySelector("form");
+
+  const keys = Object.keys(sito)
+                    .filter(k => k.startsWith('bonifica') || k.startsWith('messa_sicurezza'));
+
+  // Reset dei checkbox
+  form.querySelectorAll("input[type=checkbox]").forEach(i => i.checked = false);
+
+  keys.forEach(k => {
+    if (sito[k] === 'Si') {
+      form.querySelectorAll(`input[name=${k}]`).forEach(i => i.checked = true);
+    }
+  });
+
+  form.querySelector('input[name=procedura').value = sito.procedura;
+  form.querySelector('input[name=note]').value = sito.note;
+
+  mostraSezione("modificaSito");
+}
+
 
 /* Setup iniziale pagina */
 window.addEventListener("load", async () => {
-  defaultCard();
+  sites = await getSites();
+  markSites(sites);
+  updateDefaultCard();
   let filterOptions = ["Si", "No"];
 
-  populateSelect(document.querySelectorAll("select"), []);
+  populateSelect(document.querySelectorAll("select"), [], true);
   populateSelect(document.querySelectorAll(".provincia"), province);
   populateSelect(document.querySelector("#hidden-items").querySelectorAll("select"), filterOptions);
 });
 
+//Cerca per codice
+document.getElementById("cerca").querySelector("form").addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const objData = Object.fromEntries(formData.entries());
+    
+    try{
+      sites = await getSites('codice', objData.codice);
+    }catch(e){
+      console.log(e);
+    }
+   
+    markSites(sites);
+    e.target.querySelector('input[name="codice"]').value = '';
+});
 
-/*EventListeners*/
+//Filtraggio siti
 document.getElementById("filters").querySelectorAll("select").forEach(el => {
     el.addEventListener('change', async (e) => {
       try{
@@ -202,24 +214,23 @@ document.getElementById("filters").querySelectorAll("select").forEach(el => {
         console.log(e);
       }
 
+      //Modifica le opzioni del filtro comune in base al valore di provincia
       if(e.target.id === "provincia"){
         const selectComune = document.getElementById('comune');
-        
+        const comuniPresenti = new Set();
+
         while(selectComune.children.length > 1) {
           selectComune.removeChild(selectComune.lastChild);
         }
 
-        const comuniPresenti = new Set();
-
         if(e.target.value !== ''){
           sites.forEach(sito  => {
               if(sito.provincia === e.target.value && !comuniPresenti.has(sito.comune)){
-                  comuniPresenti.add(sito.comune);
-                  const comuneOption = document.createElement("option");
-                  comuneOption.value = comuneOption.textContent = sito.comune;
-                  selectComune.appendChild(comuneOption);
+                comuniPresenti.add(sito.comune.toUpperCase());
               }
           });
+
+          populateSelect(selectComune, comuniPresenti);
 
           document.querySelector('.comune-group').style.display = 'flex';
         }
@@ -230,49 +241,45 @@ document.getElementById("filters").querySelectorAll("select").forEach(el => {
     })  
 });
 
-document.addEventListener('click', async (event) => {
-  if(event.target){
-    const codice = event.target.getAttribute('data-id');
-    sitoSelezionato = sites.find(s => s.codice === codice);
+document.getElementById('filters-buttons').querySelectorAll('button').forEach(b => {
+  b.addEventListener('click', async (e) => {
+    if(e.target.id === 'more-filters'){//Toggle filtri avanzati
+      const moreFilters = document.getElementById("hidden-items");
 
-    if (sitoSelezionato) {
-      if(event.target.classList.contains('show-more-btn'))
-        showMore(sitoSelezionato);
+      if(e.target.textContent === 'Più filtri'){
+          moreFilters.style.display = 'grid';
+          e.target.textContent = 'Meno filtri';
+      }else{
+          moreFilters.style.display = 'none';
+          e.target.textContent = 'Più filtri';
+      }
+    }else if(e.target.id === 'reset-filters'){//Reset filtri
+      document.getElementById("filters").querySelectorAll("select").forEach(sel => {
+        sel.value = "";
+      })
+
+      sites = await getSites();
+      markSites(sites);
     }
-  }
+  });
 });
 
-document.getElementById("cerca").querySelector("form").addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const objData = Object.fromEntries(formData.entries());
-    try{
-      sites = await getSites('codice', objData.codice);
-    }catch(e){
-      console.log(e);
-    }
-
-    markSites(sites);
-    e.target.querySelector('input[name="codice"]').value = '';
-});
-
+//Modifica comuni in form aggiunta sito
 document.querySelector("#aggiungiSito").querySelector('.provincia').addEventListener('change', async function (e) {
-    const comuneSelect = document.querySelector("#comune-agg");
-
     const res = await fetch('/comuni');
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
     const comuni = await res.json();
     const comuniPresenti = new Set();
+    const comuneSelect = document.querySelector("#comune-agg");
 
     comuni[e.target.value].forEach(c => {
       if(!comuniPresenti.has(c)){
-        const comuneOption = document.createElement("option");
-        comuneOption.value = comuneOption.textContent = c.toUpperCase();
-        comuneSelect.append(comuneOption);
+        comuniPresenti.add(c.toUpperCase());
       }
-    })
+    });
+
+    populateSelect(comuneSelect, comuniPresenti);
 });
 
 document.getElementById("aggiungiSito").querySelector("form").addEventListener("submit", async function (e) {
@@ -281,59 +288,79 @@ document.getElementById("aggiungiSito").querySelector("form").addEventListener("
     const formData = new FormData(this);
     const objData = Object.fromEntries(formData.entries())
     const data = JSON.stringify(objData);
-    console.log(data);
     
     try{
       await addSite(data);
-      defaultCard();
+      updateDefaultCard();
     }catch(e){
       console.log(e);
     }
     this.reset();
-    mostraSezione("default");
-});
-
-document.getElementById("more-filters").addEventListener('click', (e) => {
-    const moreFilters = document.getElementById("hidden-items");
-
-    if(e.target.textContent === 'Più filtri'){
-        moreFilters.style.display = 'grid';
-        e.target.textContent = 'Meno filtri';
-    }else{
-        moreFilters.style.display = 'none';
-        e.target.textContent = 'Più filtri';
-    }
-});
-
-document.getElementById("reset-filters").addEventListener('click', async () => {
-  document.getElementById("filters").querySelectorAll("select").forEach(sel => {
-    sel.value = "";
-  })
-
-  defaultCard();
-});
-
-document.querySelector('.modify-btn').addEventListener('click', (e)=> prepareModificaForm(sitoSelezionato));
-
-document.querySelector('.delete-btn').addEventListener('click', async (e) => {
-  console.log(sitoSelezionato);
-  if(confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")){
-    deleteSite(sitoSelezionato.codice);
-    const marker = markersMap[sitoSelezionato.codice];
-
-    if (marker) {
-      map.removeLayer(marker);
-      delete markersMap[sitoSelezionato.codice];
-      console.log(`Marker con codice ${sitoSelezionato.codice} rimosso`);
-    } else {
-      console.warn(`Nessun marker trovato per il codice ${sitoSelezionato.codice}`);
-    }
-    
-    defaultCard();
     showPopup('default');
-  } else {
-    console.log("Annullato");
+});
+
+//Infopanel, modifica, delete
+document.addEventListener('click', async (event) => {
+  const button = event.target.closest('button');
+
+  if (!button) return;
+
+  const codice = button.getAttribute('data-id');
+  const sito = sites.find(s => s.codice === codice);
+
+  // SHOW MORE
+  if (button.classList.contains('show-more-btn')) {
+    if (sito){ 
+      showMore(sito);
+      document.querySelector('.modify-btn').setAttribute('data-id', sito.codice);
+      document.querySelector('.delete-btn').setAttribute('data-id', sito.codice);
+    }
+  }
+
+  // MODIFY
+  if (button.classList.contains('modify-btn')) {
+    showEditForm(sito);
+  }
+
+  //DELETE
+  if(button.classList.contains('delete-btn')){
+    console.log(sito);
+    if(confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")){
+      await deleteSite(sito.codice);
+      const marker = markersMap[sito.codice];
+
+      if (marker) {
+        map.removeLayer(marker);
+        delete markersMap[sito.codice];
+        console.log(`Marker con codice ${sito.codice} rimosso`);
+      } else {
+        console.warn(`Nessun marker trovato per il codice ${sito.codice}`);
+      }
+
+      updateDefaultCard();
+      sites = await getSites();
+      markSites(sites);
+      showLess();
+      showPopup('default');
+    } else {
+      console.log("Annullato");
+    }
   }
 });
 
+//Submit form modifica sito
+document.getElementById('modificaSito').querySelector('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const codice = document.querySelector('.modify-btn').getAttribute('data-id');
+    const sito = sites.find(s => s.codice === codice);
+    const formData = new FormData(e.target);
+    const objData = Object.fromEntries(formData.entries());
+    console.log(objData);
+    Object.assign(sito, objData);
+
+    await modifySite(sito);
+    updateDefaultCard();
+    showPopup('infopanel');
+    showMore(sito);
+});
 

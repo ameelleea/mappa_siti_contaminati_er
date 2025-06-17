@@ -5459,23 +5459,6 @@
 {
 "Comune":"RAVENNA",
 "Provincia":"RAVENNA",
-"Indirizzo":"via CLASSICANA,629",
-"Attività":"punto vendita carburante",
-"Messa in sicurezza d'emergenza":"No",
-"Messa in sicurezza operativa":"No",
-"Messa in sicurezza permanente":"No",
-"Bonifica e ripristino ambientale":"Si",
-"Bonifica e ripristino ambientale con misure di sicurezza":"No",
-"Procedura":"non art. 242 non bonificato",
-"Note":"",
-"Codice":"RAr00057",
-"Longitudine":"12.174665",
-"Latitudine":"44.407815"
-}
-,
-{
-"Comune":"RAVENNA",
-"Provincia":"RAVENNA",
 "Indirizzo":"via D'ALAGGIO,",
 "Attività":"industriale",
 "Messa in sicurezza d'emergenza":"No",

@@ -85,7 +85,9 @@ async function deleteSite(codice) {
     const res = await fetch(`/siti/${codice}`, {
                   method: 'DELETE'
                 });
+
     if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    
     console.log('Elemento eliminato.');
   }catch(error){
     console.error('Errore:', error);

@@ -27,19 +27,19 @@
 
   <section id="default" class="side-gap attiva">
     <div class="popup-confirm">Operazione completata con successo!</div>
-    <h3>Statistiche:</h3>
+    <h3>Siti contaminati attualmente registrati:</h3>
     <div class="card">
       <dl class="flex-clmn" style="margin: 0;">
         <div class="flex-row">
-          <dt><b>Numero totale dei siti contaminati:</b></dt>
+          <dt><b>Totale:</b></dt>
           <dd></dd>
         </div>
         <div class="flex-row">
-          <dt><b>Siti bonificati:</b></dt>
+          <dt><b>Bonificati:</b></dt>
           <dd></dd>
         </div>
         <div class="flex-row">
-          <dt><b>Siti messi in sicurezza:</b></dt>
+          <dt><b>Messi in sicurezza:</b></dt>
           <dd></dd>
         </div>
       </dl>
@@ -183,7 +183,7 @@
 
       <label class="flex-clmn">
         Procedura:
-        <input type="text" name="procedura" placeholder="Procedura" required>
+        <input type="text" name="procedura" placeholder="Procedura">
       </label>
 
       <label class="flex-clmn">
@@ -236,7 +236,7 @@
   </section>
 
   <section class="side-gap" id="modificaSito">
-    <button class="chiudi" onclick="mostraSezione('default')">X</button>
+    <button class="chiudi" onclick="mostraSezione('infopanel')">X</button>
     <h3>Modifica informazioni sito:</h3>
     <form class="card flex-clmn">
       <input type="hidden" name="messa_sicurezza_emergenza" value="No">

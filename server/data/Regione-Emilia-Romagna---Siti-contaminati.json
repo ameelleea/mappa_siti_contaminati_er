@@ -1866,22 +1866,6 @@
     "Longitudine": 10.809884
   },
   {
-    "Codice": "MOPA0006",
-    "Comune": "FRASSINORO",
-    "Provincia": "MODENA",
-    "Indirizzo": "via Fontanaluccia,",
-    "Attività": "altro",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "Raggiunte CSC. In attesa formulari rimozione residuo contaminazione per chiusura procedimento.",
-    "Latitudine": 44.296834,
-    "Longitudine": 10.573
-  },
-  {
     "Codice": "MOSV0013",
     "Comune": "MARANELLO",
     "Provincia": "MODENA",
@@ -3416,22 +3400,6 @@
     "Note": "",
     "Latitudine": 44.35993,
     "Longitudine": 11.722639
-  },
-  {
-    "Codice": "BOP00034",
-    "Comune": "MALALBERGO",
-    "Provincia": "CITTA' METROPOLITANA DI BOLOGNA",
-    "Indirizzo": "statale S.S.64 KM120+441,",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.685827,
-    "Longitudine": 11.49924
   },
   {
     "Codice": "BOP00044",
@@ -5050,22 +5018,6 @@
     "Longitudine": 12.174665
   },
   {
-    "Codice": "RAr00057",
-    "Comune": "RAVENNA",
-    "Provincia": "RAVENNA",
-    "Indirizzo": "via CLASSICANA,629",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.407815,
-    "Longitudine": 12.174665
-  },
-  {
     "Codice": "RAr00058",
     "Comune": "RAVENNA",
     "Provincia": "RAVENNA",
@@ -5384,22 +5336,6 @@
     "Note": "",
     "Latitudine": 44.342917,
     "Longitudine": 11.847999
-  },
-  {
-    "Codice": "FCC00015",
-    "Comune": "BAGNO DI ROMAGNA",
-    "Provincia": "FORLI'",
-    "Indirizzo": "localita' SELVAPIANA,",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 43.8686,
-    "Longitudine": 12.032982
   },
   {
     "Codice": "FCF00016",
@@ -6006,5 +5942,33 @@
     "Note": "",
     "Latitudine": null,
     "Longitudine": null
+  },
+  {
+    "Codice": "pc000025fdfd",
+    "Comune": "MARANELLO",
+    "Provincia": "MODENA",
+    "Indirizzo": "ghh",
+    "Attività": "boh",
+    "Messa in sicurezza d'emergenza": "No",
+    "Messa in sicurezza operativa": "No",
+    "Bonifica e ripristino ambientale": "No",
+    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
+    "Procedura": "",
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
+  },
+  {
+    "Codice": "pc000025dsgfdg",
+    "Comune": "MARANELLO",
+    "Provincia": "CITTA' METROPOLITANA DI BOLOGNA",
+    "Indirizzo": "ghh",
+    "Attività": "dfgdg",
+    "Messa in sicurezza d'emergenza": "No",
+    "Messa in sicurezza operativa": "No",
+    "Bonifica e ripristino ambientale": "No",
+    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
+    "Procedura": "",
+    "Note": ""
   }
 ]
