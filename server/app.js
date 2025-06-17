@@ -124,12 +124,14 @@ loadSitesFromJSON();
 // --- API ---
 app.get('/comuni', (req, res) => {
   try{
-    const comuni = fs.readFileSync(comunePath, 'utf-8');
-    const comuniObj = JSON.parse(comuni);
+    const provincia = req.query.provincia;
+    const totComuni = fs.readFileSync(comunePath, 'utf-8');
+    const comuni = JSON.parse(totComuni);
     
+    const comuniObj = comuni[provincia];
+
     res.json(comuniObj);
   }catch(e){
-    console.error(e);
     res.status(500).json({error: 'Errore nella lettura dei dati'});
   }
 });

@@ -1,8 +1,5 @@
--Ricontrollare comportamento metodi
--Aggiungere commenti?
 -Console loggare le risposte delle api
--Controllare showless
--Aggiungi popup errore 
 
 Per ultimo:
 -Ripulire backend
+-Ripulire codice frontend

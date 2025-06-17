@@ -2,7 +2,9 @@
 let queryFields = {};
 
 function buildQueryString(filterType, filter){
-  if (filterType === 'codice') {
+  if (!filterType && !filter) {
+    queryFields = {};
+  }else if (filterType === 'codice') {
     queryFields = { codice: filter };
   } else {
     delete queryFields['codice'];
@@ -26,7 +28,6 @@ function buildQueryString(filterType, filter){
 }
 
 async function getSites(filterType='', filter='') {
-       
     const queryString = buildQueryString(filterType, filter);
 
     try {
@@ -51,10 +52,11 @@ async function addSite(payload){
                   },
                   body: payload
     });
-    
-    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     const data = await res.json();
-    console.log('Risposta dal server: ' + data);
+    
+    if(!res.ok) throw new Error(`${res.status}, ${data.error}`);
+    
+    console.log('Risposta dal server: ', res.status, data.message);
   }catch(error){
     console.log('Errore nella POST: ' + error);
   }
@@ -71,7 +73,7 @@ async function modifySite(sito) {
           body: JSON.stringify(sito)
         });
     
-    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status, res.error}`);
     const data = await res.json();
     console.log('Aggiornato con successo:', data);
        
@@ -87,7 +89,7 @@ async function deleteSite(codice) {
                 });
 
     if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-    
+
     console.log('Elemento eliminato.');
   }catch(error){
     console.error('Errore:', error);

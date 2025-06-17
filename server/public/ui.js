@@ -87,8 +87,16 @@ function populateSelect(selects, values, includeEmpty=false) {
 }
 
 //Mostra popup conferma operazione
-function showPopup(sezione) {
+function showPopup(sezione, success) {
   const popup = document.getElementById(sezione).querySelector('.popup-confirm');
+
+  if(success === true){
+    popup.style['background-color'] = '#03A65A';
+    popup.innerHTML = 'Operazione completata con successo!';
+  }else{
+    popup.style['background-color'] = '#F23041';
+    popup.innerHTML = 'Errore! Non è stato possibile completare l\'operazione';
+  }
 
   popup.style.opacity = '1';
   popup.style.transform = 'translateY(0)';
@@ -122,8 +130,10 @@ async function mostraSezione(id) {
       behavior: "smooth"
     });
 
-    if(id !== 'infopanel' && id !== "modificaSito")
-      markSites(await getSites());
+    if(id !== 'infopanel' && id !== "modificaSito"){
+      sites = await getSites();
+      markSites(sites);
+    }
 }
 
 //Mostra informazioni aggiuntive sito
@@ -207,12 +217,8 @@ document.getElementById("cerca").querySelector("form").addEventListener('submit'
 //Filtraggio siti
 document.getElementById("filters").querySelectorAll("select").forEach(el => {
     el.addEventListener('change', async (e) => {
-      try{
         sites = await getSites(e.target.id, e.target.value);
         markSites(sites);
-      }catch(e){
-        console.log(e);
-      }
 
       //Modifica le opzioni del filtro comune in base al valore di provincia
       if(e.target.id === "provincia"){
@@ -223,6 +229,7 @@ document.getElementById("filters").querySelectorAll("select").forEach(el => {
           selectComune.removeChild(selectComune.lastChild);
         }
 
+        console.log('Valore provincia:', e.target.value);
         if(e.target.value !== ''){
           sites.forEach(sito  => {
               if(sito.provincia === e.target.value && !comuniPresenti.has(sito.comune)){
@@ -256,30 +263,35 @@ document.getElementById('filters-buttons').querySelectorAll('button').forEach(b 
     }else if(e.target.id === 'reset-filters'){//Reset filtri
       document.getElementById("filters").querySelectorAll("select").forEach(sel => {
         sel.value = "";
+        sel.dispatchEvent(new Event('change'));
       })
-
-      sites = await getSites();
-      markSites(sites);
     }
   });
 });
 
 //Modifica comuni in form aggiunta sito
 document.querySelector("#aggiungiSito").querySelector('.provincia').addEventListener('change', async function (e) {
-    const res = await fetch('/comuni');
+  try{
+    const res = await fetch(`/comuni?provincia=${e.target.value}`);
+
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+    console.log('Risposta dal server: ', res.status);
 
     const comuni = await res.json();
     const comuniPresenti = new Set();
     const comuneSelect = document.querySelector("#comune-agg");
 
-    comuni[e.target.value].forEach(c => {
+    comuni.forEach(c => {
       if(!comuniPresenti.has(c)){
         comuniPresenti.add(c.toUpperCase());
       }
     });
 
     populateSelect(comuneSelect, comuniPresenti);
+  }catch(e){
+    console.error('Errore nella GET: ', e);
+  }
 });
 
 document.getElementById("aggiungiSito").querySelector("form").addEventListener("submit", async function (e) {
@@ -292,11 +304,14 @@ document.getElementById("aggiungiSito").querySelector("form").addEventListener("
     try{
       await addSite(data);
       updateDefaultCard();
+      showPopup('default', true);
     }catch(e){
+      showPopup('default');
       console.log(e);
     }
     this.reset();
-    showPopup('default');
+    sites = await getSites();
+    markSites(sites);
 });
 
 //Infopanel, modifica, delete
@@ -341,8 +356,9 @@ document.addEventListener('click', async (event) => {
       sites = await getSites();
       markSites(sites);
       showLess();
-      showPopup('default');
+      showPopup('default', true);
     } else {
+      showPopup('default');
       console.log("Annullato");
     }
   }
@@ -358,9 +374,14 @@ document.getElementById('modificaSito').querySelector('form').addEventListener('
     console.log(objData);
     Object.assign(sito, objData);
 
-    await modifySite(sito);
-    updateDefaultCard();
-    showPopup('infopanel');
-    showMore(sito);
+    try{
+      await modifySite(sito);
+      updateDefaultCard();
+      showMore(sito);
+      showPopup('infopanel', true);
+    }catch(e){
+      showMore(sito);
+      showPopup('infopanel');
+      console.log(e);
+    }
 });
-
