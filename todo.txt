@@ -1,0 +1,4 @@
+Per ultimo:
+-Ripulire codice frontend
+-Ricorda di tenere il file json corretto
+-L'api get va chiamata SOLO quando cambiano i siti e dopo aver filtrato 

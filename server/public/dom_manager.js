@@ -40,7 +40,7 @@ function markSites(sites){
     });
 }
 
-//Aggiorna le stat
+//Aggiorna le info
 async function updateDefaultCard(){
   const sitesSizes = [sites.length, 0, 0];
 
@@ -130,7 +130,8 @@ async function mostraSezione(id) {
       behavior: "smooth"
     });
 
-    if(id !== 'infopanel' && id !== "modificaSito"){
+    if((id !== 'infopanel' && id !== "modificaSito") && Object.keys(queryFields).length !== 0){
+      console.log(queryFields);
       sites = await getSites();
       markSites(sites);
     }
@@ -192,8 +193,8 @@ window.addEventListener("load", async () => {
   updateDefaultCard();
   let filterOptions = ["Si", "No"];
 
-  populateSelect(document.querySelectorAll("select"), [], true);
-  populateSelect(document.querySelectorAll(".provincia"), province);
+  populateSelect(document.querySelectorAll("select"), [], true); //Aggiunge opzione vuota a tutti i select
+  populateSelect(document.querySelectorAll(".provincia"), province); //Aggiunge un'opzione per ogni provincia ai select .provincia
   populateSelect(document.querySelector("#hidden-items").querySelectorAll("select"), filterOptions);
 });
 
@@ -229,7 +230,6 @@ document.getElementById("filters").querySelectorAll("select").forEach(el => {
           selectComune.removeChild(selectComune.lastChild);
         }
 
-        console.log('Valore provincia:', e.target.value);
         if(e.target.value !== ''){
           sites.forEach(sito  => {
               if(sito.provincia === e.target.value && !comuniPresenti.has(sito.comune)){
@@ -263,8 +263,13 @@ document.getElementById('filters-buttons').querySelectorAll('button').forEach(b 
     }else if(e.target.id === 'reset-filters'){//Reset filtri
       document.getElementById("filters").querySelectorAll("select").forEach(sel => {
         sel.value = "";
-        sel.dispatchEvent(new Event('change'));
-      })
+      });
+
+      const sites = await getSites();
+      markSites(sites);
+
+      // Nascondi il filtro comune
+      document.querySelector('.comune-group').style.display = 'none';
     }
   });
 });
@@ -275,7 +280,7 @@ document.querySelector("#aggiungiSito").querySelector('.provincia').addEventList
     const comuni = await getComuni(e.target.value);
 
     const comuniPresenti = new Set();
-    const comuneSelect = document.querySelector("#comune-agg");
+    const comuneSelect = document.querySelector("#aggiungiSito").querySelector('.comune');
 
     comuni.forEach(c => {
       if(!comuniPresenti.has(c)){
@@ -298,15 +303,16 @@ document.getElementById("aggiungiSito").querySelector("form").addEventListener("
     
     try{
       await addSite(data);
+      sites = await getSites();
+
       updateDefaultCard();
       showPopup('default', true);
     }catch(e){
       showPopup('default');
       console.log(e);
     }
+
     this.reset();
-    sites = await getSites();
-    markSites(sites);
 });
 
 //Infopanel, modifica, delete
@@ -334,26 +340,27 @@ document.addEventListener('click', async (event) => {
 
   //DELETE
   if(button.classList.contains('delete-btn')){
-    console.log(sito);
     if(confirm("Eliminare questo sito dalla mappa? L'operazione non è reversibile.")){
-      await deleteSite(sito.codice);
-      const marker = markersMap[sito.codice];
+      try{
+        await deleteSite(sito.codice);
+        const marker = markersMap[sito.codice];
 
-      if (marker) {
-        map.removeLayer(marker);
-        delete markersMap[sito.codice];
-        console.log(`Marker con codice ${sito.codice} rimosso`);
-      } else {
-        console.warn(`Nessun marker trovato per il codice ${sito.codice}`);
+        if (marker) {
+          map.removeLayer(marker);
+          delete markersMap[sito.codice];
+        } else {
+          console.warn(`Nessun marker trovato per il codice ${sito.codice}`);
+        }
+
+        sites = await getSites();
+        updateDefaultCard();
+        showLess();
+        showPopup('default', true);
+      }catch(e){
+        showPopup('default');
+        console.log(e);
       }
-
-      updateDefaultCard();
-      sites = await getSites();
-      markSites(sites);
-      showLess();
-      showPopup('default', true);
     } else {
-      showPopup('default');
       console.log("Annullato");
     }
   }
@@ -371,6 +378,7 @@ document.getElementById('modificaSito').querySelector('form').addEventListener('
 
     try{
       await modifySite(sito);
+      sites = await getSites();
       updateDefaultCard();
       showMore(sito);
       showPopup('infopanel', true);

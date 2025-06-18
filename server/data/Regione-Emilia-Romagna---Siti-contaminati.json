@@ -266,22 +266,6 @@
     "Longitudine": 9.686409
   },
   {
-    "Codice": "pc000049",
-    "Comune": "PIACENZA",
-    "Provincia": "PIACENZA",
-    "Indirizzo": "via X Giugno,17",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "art. 242 non bonificato",
-    "Note": "Presentato piano di caratterizzazione in data 31/03/2011 e approvato in sede di conferenza dei Servizi in data 21/04/2011. Richiesta di proroga da parte della societ? Cassiopea in data 02/11/2011.",
-    "Latitudine": 45.055807,
-    "Longitudine": 9.698246
-  },
-  {
     "Codice": "pc000016",
     "Comune": "SAN GIORGIO PIACENTINO",
     "Provincia": "PIACENZA",
@@ -2122,22 +2106,6 @@
     "Longitudine": 10.934154
   },
   {
-    "Codice": "MOPA0007",
-    "Comune": "PAVULLO NEL FRIGNANO",
-    "Provincia": "MODENA",
-    "Indirizzo": "via Marchiani,90",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "art. 242 non bonificato",
-    "Note": "Rimozione parziale suoli contaminati. AdR rischio non accettabile avviato C SG",
-    "Latitudine": 44.334345,
-    "Longitudine": 10.832611
-  },
-  {
     "Codice": "MOMO0024",
     "Comune": "SAN CESARIO SUL PANARO",
     "Provincia": "MODENA",
@@ -3160,22 +3128,6 @@
     "Note": "Enhanced MNA",
     "Latitudine": 44.50977,
     "Longitudine": 11.465686
-  },
-  {
-    "Codice": "BOM00010",
-    "Comune": "CASTIGLIONE DEI PEPOLI",
-    "Provincia": "CITTA' METROPOLITANA DI BOLOGNA",
-    "Indirizzo": "autostrada AUTOSTRADA A1 KM 242+600,",
-    "Attività": "punto vendita carburante",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "P&T Pump & Treat;  Soil Vapour Extraction ( 7 pozzi );  Air Sparging ( 9 pozzi )",
-    "Latitudine": 44.154526,
-    "Longitudine": 11.206335
   },
   {
     "Codice": "BOP00035",
@@ -4216,22 +4168,6 @@
     "Note": "",
     "Latitudine": 44.764381,
     "Longitudine": 11.338244
-  },
-  {
-    "Codice": "FE000035",
-    "Comune": "GORO",
-    "Provincia": "FERRARA",
-    "Indirizzo": "piazzale Pertini,",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.847371,
-    "Longitudine": 12.293393
   },
   {
     "Codice": "RaF00024",
@@ -5983,5 +5919,18 @@
     "Note": "",
     "Latitudine": null,
     "Longitudine": null
+  },
+  {
+    "Codice": "pc000025hhfhfh",
+    "Comune": "CASTELLO D'ARGILE",
+    "Provincia": "CITTA' METROPOLITANA DI BOLOGNA",
+    "Indirizzo": "ghh",
+    "Attività": "dfgdg",
+    "Messa in sicurezza d'emergenza": "No",
+    "Messa in sicurezza operativa": "No",
+    "Bonifica e ripristino ambientale": "No",
+    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
+    "Procedura": "",
+    "Note": ""
   }
 ]
