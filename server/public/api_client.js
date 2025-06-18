@@ -1,6 +1,7 @@
 //Comunicazione col backend
-let queryFields = {};
+let queryFields = {}; //Ultimi filtri richiesti
 
+//Costruzione querystring
 function buildQueryString(filterType, filter){
   if (!filterType && !filter) {
     queryFields = {};
@@ -24,9 +25,10 @@ function buildQueryString(filterType, filter){
     ? '?' + new URLSearchParams(queryFields).toString()
     : '';
 
-    return queryString;
+  return queryString;
 }
 
+//Chiamata API GET comuni
 async function getComuni(provincia) {
     const url = `/comuni?${new URLSearchParams({'provincia': provincia}).toString()}`;
 
@@ -50,6 +52,7 @@ async function getComuni(provincia) {
     }
 }
 
+//Chiamata API GET siti
 async function getSites(filterType='', filter='') {
     const queryString = buildQueryString(filterType, filter);
     const url = `/siti${queryString}`;
@@ -74,6 +77,7 @@ async function getSites(filterType='', filter='') {
     }
 }
 
+//Chiamata API POST
 async function addSite(payload){
   console.log(`\n---\nRequest POST:\nURL: /siti\nBody:\n`, payload);
 
@@ -94,6 +98,7 @@ async function addSite(payload){
   }
 }
 
+//Chiamata API PUT
 async function modifySite(sito) {
   console.log(`\n---\nRequest PUT:\nURL: /siti/${sito.codice}\nBody:\n`, sito);
 
@@ -114,6 +119,7 @@ async function modifySite(sito) {
   }
 }
 
+//Chiamata API DELETE
 async function deleteSite(codice) {
   console.log(`\n---\nRequest DELETE:\nURL: /siti/${codice}`);
   try{
