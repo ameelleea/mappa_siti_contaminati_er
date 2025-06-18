@@ -27,16 +27,47 @@ function buildQueryString(filterType, filter){
     return queryString;
 }
 
-async function getSites(filterType='', filter='') {
-    const queryString = buildQueryString(filterType, filter);
+async function getComuni(provincia) {
+    const url = `/comuni?${new URLSearchParams({'provincia': provincia}).toString()}`;
 
     try {
-      const res = await fetch(`/siti${queryString}`);
-      
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      console.log(`\n---\nRequest:\nGET ${url}\n`);
 
-      const sites = await res.json();
-      return sites;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      console.groupCollapsed(`Response GET: (${data.results.length} risultati)`);
+      console.log('Status:', res.status);
+      console.log('Body:', data);
+      console.groupEnd();
+
+      if (!res.ok || !data.success) throw new Error(`${res.status} ${data.error}`);
+
+      return data.results;
+
+    } catch (err) {
+      console.error('Errore caricando siti:', err);
+    }
+}
+
+async function getSites(filterType='', filter='') {
+    const queryString = buildQueryString(filterType, filter);
+    const url = `/siti${queryString}`;
+
+    try {
+      console.log(`\n---\nRequest:\nGET ${url}\n`);
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      console.groupCollapsed(`Response GET: (${data.results.length} risultati)`);
+      console.log('Status:', res.status);
+      console.log('Body:', data);
+      console.groupEnd();
+
+      if (!res.ok || !data.success) throw new Error(`${res.status} ${data.error}`);
+
+      return data.results;
 
     } catch (err) {
       console.error('Errore caricando siti:', err);
@@ -44,6 +75,8 @@ async function getSites(filterType='', filter='') {
 }
 
 async function addSite(payload){
+  console.log(`\n---\nRequest POST:\nURL: /siti\nBody:\n`, payload);
+
   try{
     const res = await fetch('/siti', {
                   method: 'POST',
@@ -52,19 +85,19 @@ async function addSite(payload){
                   },
                   body: payload
     });
+
     const data = await res.json();
     
-    if(!res.ok) throw new Error(`${res.status}, ${data.error}`);
-    
-    console.log('Risposta dal server: ', res.status, data.message);
+    console.log(`Response POST:\nStatus: ${res.status}\nBody:\n`, data, '\n---\n');
   }catch(error){
     console.log('Errore nella POST: ' + error);
   }
 }
 
 async function modifySite(sito) {
+  console.log(`\n---\nRequest PUT:\nURL: /siti/${sito.codice}\nBody:\n`, sito);
+
   try{
-    console.log(sito.codice);
     const res = await fetch(`/siti/${sito.codice}`, {
           method: 'PUT',
           headers: {
@@ -72,10 +105,9 @@ async function modifySite(sito) {
           },
           body: JSON.stringify(sito)
         });
-    
-    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status, res.error}`);
+  
     const data = await res.json();
-    console.log('Aggiornato con successo:', data);
+    console.log(`Response PUT:\nStatus: ${res.status}\nBody:\n`, data, '\n---\n');
        
   }catch(error){ 
     console.error('Errore nella PUT:', error);
@@ -83,15 +115,15 @@ async function modifySite(sito) {
 }
 
 async function deleteSite(codice) {
+  console.log(`\n---\nRequest DELETE:\nURL: /siti/${codice}`);
   try{
     const res = await fetch(`/siti/${codice}`, {
                   method: 'DELETE'
                 });
 
-    if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-
-    console.log('Elemento eliminato.');
+    const data = await res.json();
+    console.log(`Response DELETE:\nStatus: ${res.status}\nBody:\n`, data, '\n---\n');
   }catch(error){
-    console.error('Errore:', error);
+    console.error('Errore nella DELETE:', error);
   }
 }

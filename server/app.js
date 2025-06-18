@@ -119,8 +119,6 @@ function saveData(data, jsonFilePath) {
 
 loadSitesFromJSON();
 
-
-
 // --- API ---
 app.get('/comuni', (req, res) => {
   try{
@@ -130,37 +128,64 @@ app.get('/comuni', (req, res) => {
     
     const comuniObj = comuni[provincia];
 
-    res.json(comuniObj);
+    const response = {
+      success: true,
+      message: `Tutti i comuni restituiti con successo`,
+      results: comuniObj
+    };
+
+    console.log(`Response:\n${JSON.stringify(response, null, 2)}\n---`);
+    res.json(response);
   }catch(e){
     res.status(500).json({error: 'Errore nella lettura dei dati'});
   }
 });
 
 app.get('/siti', (req, res) => {
-  try{
+  try {
+    // Logging della richiesta
+    console.log(`\n---\nRequest:\nGET ${req.originalUrl}\n`);
+
     const queryKeys = Object.keys(req.query);
     const data = loadSitesFromJSON();
 
-    if(queryKeys.length === 0){
-      return res.json(data);
-    }
-    console.log(req.query);
-    const filtered = data.filter(sito => {
-      return queryKeys.every(key => 
-        sito[key] && sito[key].trim().toLowerCase() === req.query[key].trim().toLowerCase()
-      );
-    });
+    if (queryKeys.length === 0) {
+      const response = {
+        success: true,
+        message: 'Tutti i siti restituiti con successo',
+        results: data
+      };
 
-    console.log(filtered);
-    res.json(filtered);
-  }catch(e){
+      console.log(`Response:\n${JSON.stringify(response, null, 2)}\n---`);
+      return res.json(response);
+    }
+
+    const filtered = data.filter(sito =>
+      queryKeys.every(key =>
+        sito[key] && sito[key].trim().toLowerCase() === req.query[key].trim().toLowerCase()
+      )
+    );
+
+    const response = {
+      success: true,
+      message: `${filtered.length} i siti restituiti con successo`,
+      results: filtered
+    };
+
+    console.log(`Response:\n${JSON.stringify(response, null, 2)}\n---`);
+    res.json(response);
+
+  } catch (e) {
     console.error(e);
-    res.status(500).json({error: 'Errore nella lettura dei dati'});
+    res.status(500).json({ error: 'Errore nella lettura dei dati' });
   }
 });
 
+
 // API POST
 app.post('/siti', (req, res) => {
+  console.log(`\n---\nRequest:\nPOST ${req.originalUrl}`);
+  console.log('Body:', JSON.stringify(req.body, null, 2));
   const newSito = req.body;
   const data = loadSitesFromJSON();
 
@@ -169,9 +194,12 @@ app.post('/siti', (req, res) => {
   }
 
   data.push(newSito);
+
   try {
     saveData(data, jsonFilePath);
-    res.status(201).json({ message: 'Sito aggiunto' });
+    const response = { success: true, message: 'Sito aggiunto', sito: newSito };
+    console.log(`Response:\n${JSON.stringify(response, null, 2)}\n---`);
+    res.status(201).json(response);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Errore nel salvataggio del file' });
@@ -180,25 +208,38 @@ app.post('/siti', (req, res) => {
 
 // API PUT
 app.put('/siti/:codice', (req, res) => {
+  console.log(`\n---\nRequest:\nPUT ${req.originalUrl}`);
+  console.log('Body:', JSON.stringify(req.body, null, 2));
+
   const codice = req.params.codice;
   const updated = req.body;
   const data = loadSitesFromJSON();
   const index = data.findIndex(s => s.codice === codice);
+
   if (index === -1) return res.status(404).json({ error: 'Sito non trovato' });
   data[index] = updated;
   saveData(data, jsonFilePath);
-  res.status(200).json({ message: 'Sito aggiornato' });
+
+  const response = { success: true, message: 'Sito aggiornato', sito: updated };
+  console.log(`Response:\n${JSON.stringify(response, null, 2)}\n---`);
+  res.status(200).json(response);
 });
+
 
 // API DELETE
 app.delete('/siti/:codice', (req, res) => {
+  console.log(`\n---\nRequest:\nDELETE ${req.originalUrl}`);
+
   const codice = req.params.codice;
   let data = loadSitesFromJSON();
   const originalLength = data.length;
   data = data.filter(s => s.codice !== codice);
   if (data.length === originalLength) return res.status(404).json({ error: 'Sito non trovato' });
   saveData(data, jsonFilePath);
-  res.status(200).json({ message: 'Sito rimosso' });
+
+  const response = { success: true, message: `Sito con codice ${req.params.codice} eliminato` };
+  console.log(`Response:\n${JSON.stringify(response, null, 2)}\n---`);
+  res.status(200).json(response);
 });
 
 // Avvia server

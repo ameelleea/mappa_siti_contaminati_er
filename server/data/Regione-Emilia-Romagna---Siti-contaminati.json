@@ -211,7 +211,7 @@
     "Messa in sicurezza operativa": "No",
     "Messa in sicurezza permanente": "Si",
     "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
+    "Bonifica e ripristino ambientale con misure di sicurezza": "Si",
     "Procedura": "non art. 242 non bonificato",
     "Note": "soggetto obbligato non individuato: Confinamento dei rifiuti contenenti amianto",
     "Latitudine": 44.792755,
@@ -424,22 +424,6 @@
     "Note": "",
     "Latitudine": 44.691088,
     "Longitudine": 10.101676
-  },
-  {
-    "Codice": "PR000018",
-    "Comune": "LESIGNANO DE'BAGNI",
-    "Provincia": "PARMA",
-    "Indirizzo": "strada Provinciale di Mulazzano,",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.611988,
-    "Longitudine": 10.293001
   },
   {
     "Codice": "PR000046",
@@ -2314,22 +2298,6 @@
     "Longitudine": 11.022138
   },
   {
-    "Codice": "MOSV0025",
-    "Comune": "SPILAMBERTO",
-    "Provincia": "MODENA",
-    "Indirizzo": "strada STATALE SS623 PASSO BRASA,1965",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "No",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "Rimozione parziale: rifiuti rimossi in attesa di trattamento. Richiesto completamento caratterizzazione.",
-    "Latitudine": 44.520312,
-    "Longitudine": 10.375118
-  },
-  {
     "Codice": "BOU00190",
     "Comune": "ANZOLA DELL'EMILIA",
     "Provincia": "CITTA' METROPOLITANA DI BOLOGNA",
@@ -3864,22 +3832,6 @@
     "Note": "",
     "Latitudine": 44.745096,
     "Longitudine": 11.29725
-  },
-  {
-    "Codice": "FE000026",
-    "Comune": "CENTO",
-    "Provincia": "FERRARA",
-    "Indirizzo": "via Mussolina,0",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "No",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "No",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
-    "Procedura": "non art. 242 non bonificato",
-    "Note": "",
-    "Latitudine": 44.715986,
-    "Longitudine": 11.26291
   },
   {
     "Codice": "FE000024",

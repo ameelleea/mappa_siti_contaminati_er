@@ -272,13 +272,8 @@ document.getElementById('filters-buttons').querySelectorAll('button').forEach(b 
 //Modifica comuni in form aggiunta sito
 document.querySelector("#aggiungiSito").querySelector('.provincia').addEventListener('change', async function (e) {
   try{
-    const res = await fetch(`/comuni?provincia=${e.target.value}`);
+    const comuni = await getComuni(e.target.value);
 
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
-    console.log('Risposta dal server: ', res.status);
-
-    const comuni = await res.json();
     const comuniPresenti = new Set();
     const comuneSelect = document.querySelector("#comune-agg");
 
