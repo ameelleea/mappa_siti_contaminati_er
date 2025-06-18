@@ -1,3 +1,2 @@
 Per ultimo:
--Ripulire backend
 -Ripulire codice frontend
