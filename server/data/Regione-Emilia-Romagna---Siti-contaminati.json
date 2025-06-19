@@ -3914,22 +3914,6 @@
     "Longitudine": 11.814376
   },
   {
-    "Codice": "FE000013",
-    "Comune": "COPPARO",
-    "Provincia": "FERRARA",
-    "Indirizzo": "via Stazione,175",
-    "Attività": "industriale",
-    "Messa in sicurezza d'emergenza": "Si",
-    "Messa in sicurezza operativa": "Si",
-    "Messa in sicurezza permanente": "No",
-    "Bonifica e ripristino ambientale": "Si",
-    "Bonifica e ripristino ambientale con misure di sicurezza": "Si",
-    "Procedura": "",
-    "Note": "",
-    "Latitudine": 44.88224,
-    "Longitudine": 11.772501
-  },
-  {
     "Codice": "FE000015",
     "Comune": "FERRARA",
     "Provincia": "FERRARA",
@@ -5931,6 +5915,23 @@
     "Bonifica e ripristino ambientale": "No",
     "Bonifica e ripristino ambientale con misure di sicurezza": "No",
     "Procedura": "",
-    "Note": ""
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
+  },
+  {
+    "Codice": "200495vgvgvg",
+    "Comune": "CASTEL SAN PIETRO TERME",
+    "Provincia": "CITTA' METROPOLITANA DI BOLOGNA",
+    "Indirizzo": "boh",
+    "Attività": "boh",
+    "Messa in sicurezza d'emergenza": "No",
+    "Messa in sicurezza operativa": "No",
+    "Bonifica e ripristino ambientale": "No",
+    "Bonifica e ripristino ambientale con misure di sicurezza": "No",
+    "Procedura": "",
+    "Note": "",
+    "Latitudine": null,
+    "Longitudine": null
   }
 ]

@@ -79,7 +79,7 @@ async function getSites(filterType='', filter='') {
 
 //Chiamata API POST
 async function addSite(payload){
-  console.log(`\n---\nRequest POST:\nURL: /siti\nBody:\n`, payload);
+  console.log(`\n---\nRequest:\nPOST /siti\nBody:\n`, payload);
 
   try{
     const res = await fetch('/siti', {
@@ -100,7 +100,7 @@ async function addSite(payload){
 
 //Chiamata API PUT
 async function modifySite(sito) {
-  console.log(`\n---\nRequest PUT:\nURL: /siti/${sito.codice}\nBody:\n`, sito);
+  console.log(`\n---\nRequest:\nPUT /siti/${sito.codice}\nBody:\n`, sito);
 
   try{
     const res = await fetch(`/siti/${sito.codice}`, {
@@ -121,7 +121,7 @@ async function modifySite(sito) {
 
 //Chiamata API DELETE
 async function deleteSite(codice) {
-  console.log(`\n---\nRequest DELETE:\nURL: /siti/${codice}`);
+  console.log(`\n---\nRequest:\nDELETE /siti/${codice}`);
   try{
     const res = await fetch(`/siti/${codice}`, {
                   method: 'DELETE'

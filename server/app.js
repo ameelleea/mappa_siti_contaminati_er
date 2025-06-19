@@ -74,11 +74,21 @@ app.get('/comuni', (req, res) => {
     const totComuni = fs.readFileSync(comunePath, 'utf-8');
     const comuni = JSON.parse(totComuni);
     
+    if (!provincia) {
+      const response = {
+        success: true,
+        message: 'Tutti i comuni restituiti con successo',
+        results: data
+      };
+
+      return res.json(response);
+    }
+    
     const comuniObj = comuni[provincia];
 
     const response = {
       success: true,
-      message: `Tutti i comuni restituiti con successo`,
+      message: `Tutti i comuni della provincia restituiti con successo`,
       results: comuniObj
     };
 
