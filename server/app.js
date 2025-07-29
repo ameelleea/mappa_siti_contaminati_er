@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const jsonFilePath = path.join(__dirname, "data/Regione-Emilia-Romagna---Siti-contaminati.json");
 const comunePath = path.join(__dirname, "data/comuni_emilia_romagna.json")
 
-const campoMappa = {
+const campiSito = {
   codice: "Codice",
   comune: "Comune",
   provincia: "Provincia",
@@ -20,7 +20,7 @@ const campoMappa = {
   attività: "Attività",
   messa_sicurezza_emergenza: "Messa in sicurezza d'emergenza",
   messa_sicurezza_operativa: "Messa in sicurezza operativa",
-  messa_sicurezza_permanenete: "Messa in sicurezza permanente",
+  messa_sicurezza_permanente: "Messa in sicurezza permanente",
   bonifica: "Bonifica e ripristino ambientale",
   bonifica_sicurezza: "Bonifica e ripristino ambientale con misure di sicurezza",
   procedura: "Procedura",
@@ -37,7 +37,7 @@ function loadSitesFromJSON() {
   return rawData.map(entry => {
     const site = {};
 
-    for (const [key, originalKey] of Object.entries(campoMappa)) {
+    for (const [key, originalKey] of Object.entries(campiSito)) {
       site[key] = (key === "lat" || key === "lon")
         ? parseFloat(entry[originalKey])
         : entry[originalKey];
@@ -51,7 +51,7 @@ function loadSitesFromJSON() {
 function saveData(data, jsonFilePath) {
   const mappedData = data.map(entry => {
     const mapped = {};
-    for (const [key, originalKey] of Object.entries(campoMappa)) {
+    for (const [key, originalKey] of Object.entries(campiSito)) {
       mapped[originalKey] = entry[key];
     }
     return mapped;
@@ -83,7 +83,7 @@ app.get('/comuni', (req, res) => {
 
       return res.json(response);
     }
-    
+
     const comuniObj = comuni[provincia];
 
     const response = {
@@ -108,7 +108,7 @@ app.get('/siti', (req, res) => {
     const data = loadSitesFromJSON();
 
     if (queryKeys.length === 0) {
-      const response = {
+      let response = {
         success: true,
         message: 'Tutti i siti restituiti con successo',
         results: data
@@ -123,11 +123,19 @@ app.get('/siti', (req, res) => {
       )
     );
 
-    const response = {
-      success: true,
-      message: `${filtered.length} i siti restituiti con successo`,
-      results: filtered
-    };
+    if(filtered.length > 0){
+      response = {
+        success: true,
+        message: `${filtered.length} i siti restituiti con successo`,
+        results: filtered
+      }
+    }else{
+      response = {
+        success: true,
+        message: 'Nessun sito trovato corrispondente ai parametri',
+        results: filtered
+      }
+    }
 
     console.log(`Response:\n${JSON.stringify(response, null, 2)}\n---`);
     res.json(response);

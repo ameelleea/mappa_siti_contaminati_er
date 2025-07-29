@@ -1,4 +1,0 @@
-Per ultimo:
--Ripulire codice frontend
--Ricorda di tenere il file json corretto
--Modificare campomappa 
